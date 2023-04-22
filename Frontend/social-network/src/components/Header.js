@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import LoginForm from "./LoginForm";
+import RegisterForm from "./RegisterForm";
 
 function Header() {
     let isLoggedIn = false;
@@ -11,9 +12,14 @@ function Header() {
     }
     if(!isLoggedIn) {
         return (
-        <div>
-            <LoginForm />
-        </div>
+            <div>
+                <div>
+                    <LoginForm />
+                </div>
+                <div>
+                    <RegisterForm />
+                </div>
+            </div>
         );
     } else {
         return (

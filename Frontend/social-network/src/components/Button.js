@@ -25,6 +25,42 @@ async function logout() {
     window.location.reload();
 }
 
+async function register() {
+  const username = document.getElementById('register_username').value;
+  const password = document.getElementById('register_password').value;
+  const email = document.getElementById('email').value;
+  const first_name = document.getElementById('first_name').value;
+  const last_name = document.getElementById('last_name').value;
+  const about_me = document.getElementById('about_me').value;
+  const birthdate = document.getElementById('birthdate').value;
+
+  const requestOptions = {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+    body: JSON.stringify({
+      "username": username,
+      "password": password,
+      "email": email,
+      "first_name": first_name,
+      "last_name": last_name,
+      "about_me": about_me,
+      "birthdate": birthdate
+    })
+  };
+
+  const response = await fetch('http://localhost:8393/api/register', requestOptions);
+  const data = await response.json();
+
+  console.log(data);
+  if (response.ok) {
+    console.log("Register successful!");
+    localStorage.setItem('token', data.token);
+    window.location.reload();
+  } else {
+    console.log("Register failed!");
+  }
+}
+
 function Button({ buttonType }) {
   function handleButton(event) {
     event.preventDefault();
@@ -40,6 +76,11 @@ function Button({ buttonType }) {
         // do something when the cancel button is clicked
         console.log("logout button clicked!");
         logout();
+        break;
+      case 'register':
+        // do something when the cancel button is clicked
+        console.log("register button clicked!");
+        register();
         break;
       default:
         // handle any other button type
