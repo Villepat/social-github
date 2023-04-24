@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	sqlite "social-network/apiAndDb/pkg/db/sqlite"
+	"strings"
 
 	uuid "github.com/gofrs/uuid"
 )
@@ -67,9 +68,15 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	uuidString := uuid.String()
-
+	user.Username = strings.ToLower(user.Username)
 	// Add the user to the database
-	sqlite.AddUser(user.Username, user.Email, user.Password, uuidString, user.Name, user.Surname, user.Birthdate, user.Aboutme)
+	err = sqlite.AddUser(user.Username, user.Email, user.Password, uuidString, user.Name, user.Surname, user.Birthdate, user.Aboutme)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
+		log.Println(err)
+		return
+	}
 
 	// Return the response
 	w.WriteHeader(http.StatusOK)

@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/base64"
 	"fmt"
+	"log"
 	"net/http"
 	sqlite "social-network/apiAndDb/pkg/db/sqlite"
 	"strings"
@@ -50,18 +51,28 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "{\"status\": 401, \"message\": \"unauthorized\"}")
 		return
 	}
-	username := credentials[0]
+	username := strings.ToLower(credentials[0])
 	password := credentials[1]
 	// Encrypt the password to match the one in the database...
 
 	// Verify the user in the database
 	if sqlite.VerifyUser(username, password) >= 0 {
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, "{\"status\": 200, \"message\": \"success\", \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"}")
+		userKey, err := sqlite.GetUserKey(username)
+		log.Println(userKey)
+		fmt.Fprintf(w, "{\"status\": 200, \"message\": \"success\", \"token\": \"%s\"}", userKey)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
+		}
 		return
-	} else {
+	} else if sqlite.VerifyUser(username, password) == -1 {
 		w.WriteHeader(http.StatusUnauthorized)
 		fmt.Fprintf(w, "{\"status\": 401, \"message\": \"unauthorized\"}")
+		return
+	} else {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
 		return
 	}
 }

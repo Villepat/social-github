@@ -13,10 +13,8 @@ function Header() {
     if(!isLoggedIn) {
         return (
             <div>
-                <div>
+                <div className="loginregister-container">
                     <LoginForm />
-                </div>
-                <div>
                     <RegisterForm />
                 </div>
             </div>
@@ -25,7 +23,7 @@ function Header() {
         return (
             <div>
                 <h1>Logged in</h1>
-                <Button buttonType="logout"/>
+                <Button buttonType="Logout"/>
             </div>
         );
     }

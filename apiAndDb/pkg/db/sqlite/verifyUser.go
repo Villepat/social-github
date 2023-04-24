@@ -13,7 +13,8 @@ func VerifyUser(username string, password string) int {
 	log.Println("Verifying user")
 	db, err := OpenDb()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		return -1
 	}
 	defer db.Close()
 

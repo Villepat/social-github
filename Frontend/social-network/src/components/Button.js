@@ -22,7 +22,11 @@ async function login(newUsername, newPassword) {
       console.log("Login successful!");
       localStorage.setItem('token', data.token);
       window.location.reload();
-    } else {
+    } else if (data.status === 401) {
+      alert("Wrong username or password! Please try again.");
+      console.log("Login failed!");
+    } else if (data.status === 500) {
+      alert("Something went wrong! Please try again.");
       console.log("Login failed!");
     }
 }
@@ -65,7 +69,8 @@ async function register() {
     if (response.ok) {
       console.log("Register successful!");
       login(usernameInput.value, passwordInput.value);
-    } else {
+    } else if (data.status === 500) {
+      alert("Username or email already exists! Please try again.");
       console.log("Register failed!");
     }
   } else {
@@ -80,17 +85,17 @@ function Button({ buttonType }) {
     console.log("Button clicked!");
 
     switch (buttonType) {
-      case 'login':
+      case 'Login':
         // do something when the submit button is clicked
         console.log("login button clicked!");
         login()
         break;
-      case 'logout':
+      case 'Logout':
         // do something when the cancel button is clicked
         console.log("logout button clicked!");
         logout();
         break;
-      case 'register':
+      case 'Register':
         // do something when the cancel button is clicked
         console.log("register button clicked!");
         register();
@@ -104,7 +109,7 @@ function Button({ buttonType }) {
 
   return (
     <div>
-      <button className="btn btn-primary" onClick={handleButton}>
+      <button className="btn" onClick={handleButton}>
         {buttonType}
       </button>
     </div>
