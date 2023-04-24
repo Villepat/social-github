@@ -1,14 +1,21 @@
 import React from 'react';
 
-async function login() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+async function login(newUsername, newPassword) {
+    let username = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+    if (newUsername && newPassword) {
+      username = newUsername;
+      password = newPassword;
+    }
+
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({"username": username, "password": password})
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': 'Basic ' + btoa(username + ":" + password)
+        },
     }
-    const response = await fetch('http://localhost:8393/api/login', {requestOptions});
+    const response = await fetch('http://localhost:8393/api/login', requestOptions);
     const data = await response.json();
     console.log(data);
     if (response.ok) {
@@ -33,18 +40,20 @@ async function register() {
   const last_name = document.getElementById('last_name').value;
   const about_me = document.getElementById('about_me').value;
   const birthdate = document.getElementById('birthdate').value;
+  console.log(username);
+  console.log(password);
 
   const requestOptions = {
     headers: { 'Content-Type': 'application/json' },
     method: 'POST',
     body: JSON.stringify({
       "username": username,
-      "password": password,
       "email": email,
-      "first_name": first_name,
-      "last_name": last_name,
-      "about_me": about_me,
-      "birthdate": birthdate
+      "password": password,
+      "name": first_name,
+      "surname": last_name,
+      "birthdate": birthdate,
+      "aboutme": about_me
     })
   };
 
@@ -54,8 +63,7 @@ async function register() {
   console.log(data);
   if (response.ok) {
     console.log("Register successful!");
-    localStorage.setItem('token', data.token);
-    window.location.reload();
+    login(username, password);
   } else {
     console.log("Register failed!");
   }

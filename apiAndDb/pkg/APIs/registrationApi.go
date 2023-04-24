@@ -7,6 +7,8 @@ import (
 	"log"
 	"net/http"
 	sqlite "social-network/apiAndDb/pkg/db/sqlite"
+
+	uuid "github.com/gofrs/uuid"
 )
 
 // regiserUser is the struct that will be used to decode the json
@@ -33,28 +35,41 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "{\"status\": 405, \"message\": \"method not allowed\"}")
 		return
 	}
-	// Limit the size of the request body
-	maxSize := int64(1024 * 1024) // 1MB
-	r.Body = http.MaxBytesReader(w, r.Body, maxSize)
 
-	// Read the entire request body
-	body, err := io.ReadAll(r.Body)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "{\"status\": 400, \"message\": \"bad request\"}")
+	if r.Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "{\"status\": 200, \"message\": \"success\"}")
 		return
 	}
-	log.Println(string(body))
 
-	// Decode the json
 	var user RegisterUser
-	err = json.Unmarshal(body, &user)
+	err := json.NewDecoder(r.Body).Decode(&user)
+	log.Printf("Received request with data: %v\n", user)
 	if err != nil {
-		log.Fatal(err)
+		if err == io.EOF {
+			w.WriteHeader(http.StatusBadRequest)
+			fmt.Fprintf(w, "{\"status\": 400, \"message\": \"bad request\"}")
+			return
+		}
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
+		log.Println(err)
+		return
 	}
 
+	// Generate a new UUID for the user
+	uuid, err := uuid.NewV4()
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
+		log.Println(err)
+		return
+	}
+
+	uuidString := uuid.String()
+
 	// Add the user to the database
-	sqlite.AddUser(user.Username, user.Email, user.Password, "1", user.Name, user.Surname, user.Birthdate, user.Aboutme)
+	sqlite.AddUser(user.Username, user.Email, user.Password, uuidString, user.Name, user.Surname, user.Birthdate, user.Aboutme)
 
 	// Return the response
 	w.WriteHeader(http.StatusOK)
