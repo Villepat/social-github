@@ -23,7 +23,7 @@ func InitDb() {
 			name TEXT NOT NULL,
 			surname TEXT NOT NULL,
 			birthdate TEXT NOT NULL,
-			aboutme TEXT NOT NULL
+			aboutme TEXT
 		);
 	`)
 	if err != nil {
