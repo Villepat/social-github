@@ -22,7 +22,11 @@ async function login(newUsername, newPassword) {
       console.log("Login successful!");
       localStorage.setItem('token', data.token);
       window.location.reload();
-    } else {
+    } else if (data.status === 401) {
+      alert("Wrong username or password! Please try again.");
+      console.log("Login failed!");
+    } else if (data.status === 500) {
+      alert("Something went wrong! Please try again.");
       console.log("Login failed!");
     }
 }
@@ -65,7 +69,8 @@ async function register() {
     if (response.ok) {
       console.log("Register successful!");
       login(usernameInput.value, passwordInput.value);
-    } else {
+    } else if (data.status === 500) {
+      alert("Username or email already exists! Please try again.");
       console.log("Register failed!");
     }
   } else {
