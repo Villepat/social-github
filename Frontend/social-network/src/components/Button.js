@@ -85,17 +85,17 @@ function Button({ buttonType }) {
     console.log("Button clicked!");
 
     switch (buttonType) {
-      case 'login':
+      case 'Login':
         // do something when the submit button is clicked
         console.log("login button clicked!");
         login()
         break;
-      case 'logout':
+      case 'Logout':
         // do something when the cancel button is clicked
         console.log("logout button clicked!");
         logout();
         break;
-      case 'register':
+      case 'Register':
         // do something when the cancel button is clicked
         console.log("register button clicked!");
         register();
@@ -109,7 +109,7 @@ function Button({ buttonType }) {
 
   return (
     <div>
-      <button className="btn btn-primary" onClick={handleButton}>
+      <button className="btn" onClick={handleButton}>
         {buttonType}
       </button>
     </div>

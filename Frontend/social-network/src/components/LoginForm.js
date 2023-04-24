@@ -15,7 +15,7 @@ function LoginForm() {
                     <label htmlFor="password">Password: </label>
                     <input type="password" id="password" className="form-control" placeholder="Enter password" />
                 </div>
-                <Button buttonType="login"/>
+                <Button buttonType="Login"/>
             </form>
         </div>
     );
