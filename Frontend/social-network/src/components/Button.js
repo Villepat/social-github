@@ -33,39 +33,44 @@ async function logout() {
 }
 
 async function register() {
-  const username = document.getElementById('register_username').value;
-  const password = document.getElementById('register_password').value;
-  const email = document.getElementById('email').value;
-  const first_name = document.getElementById('first_name').value;
-  const last_name = document.getElementById('last_name').value;
-  const about_me = document.getElementById('about_me').value;
-  const birthdate = document.getElementById('birthdate').value;
-  console.log(username);
-  console.log(password);
-
-  const requestOptions = {
-    headers: { 'Content-Type': 'application/json' },
-    method: 'POST',
-    body: JSON.stringify({
-      "username": username,
-      "email": email,
-      "password": password,
-      "name": first_name,
-      "surname": last_name,
-      "birthdate": birthdate,
-      "aboutme": about_me
-    })
-  };
-
-  const response = await fetch('http://localhost:8393/api/register', requestOptions);
-  const data = await response.json();
-
-  console.log(data);
-  if (response.ok) {
-    console.log("Register successful!");
-    login(username, password);
+  const usernameInput = document.getElementById('register_username');
+  const passwordInput = document.getElementById('register_password');
+  const confirmPasswordInput = document.getElementById('confirm_password');
+  const emailInput = document.getElementById('email');
+  const firstNameInput = document.getElementById('first_name');
+  const lastNameInput = document.getElementById('last_name');
+  const aboutMeInput = document.getElementById('about_me');
+  const birthdateInput = document.getElementById('birthdate');
+  
+  // Check if all required fields are filled
+  if (usernameInput.value && passwordInput.value && emailInput.value && firstNameInput.value && birthdateInput.value && passwordInput === confirmPasswordInput) {
+    const requestOptions = {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify({
+        "username": usernameInput.value,
+        "email": emailInput.value,
+        "password": passwordInput.value,
+        "name": firstNameInput.value,
+        "surname": lastNameInput.value,
+        "birthdate": birthdateInput.value,
+        "aboutme": aboutMeInput.value
+      })
+    };
+  
+    const response = await fetch('http://localhost:8393/api/register', requestOptions);
+    const data = await response.json();
+  
+    console.log(data);
+    if (response.ok) {
+      console.log("Register successful!");
+      login(usernameInput.value, passwordInput.value);
+    } else {
+      console.log("Register failed!");
+    }
   } else {
-    console.log("Register failed!");
+    // If not all required fields are filled, show an error message
+    alert("No funny business be civilized.");
   }
 }
 

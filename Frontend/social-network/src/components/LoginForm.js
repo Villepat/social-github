@@ -4,7 +4,7 @@ import Button from "./Button";
 function LoginForm() {
     // return a login form
     return (
-        <div>
+        <div className="Login">
             <h1>Login</h1>
             <form>
                 <div className="form-group">
