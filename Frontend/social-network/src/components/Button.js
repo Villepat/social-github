@@ -43,7 +43,7 @@ async function register() {
   const birthdateInput = document.getElementById('birthdate');
   
   // Check if all required fields are filled
-  if (usernameInput.value && passwordInput.value && emailInput.value && firstNameInput.value && birthdateInput.value && passwordInput === confirmPasswordInput) {
+  if (usernameInput.value && passwordInput.value && emailInput.value && firstNameInput.value && birthdateInput.value && (passwordInput.value === confirmPasswordInput.value)) {
     const requestOptions = {
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
