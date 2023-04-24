@@ -14,7 +14,7 @@ function RegisterForm() {
                 <input type="password" placeholder="Confirm Password: " id="confirm_password" required/>
                 <input type="text" placeholder="about me: " id="about_me" />
                 <input type="text" placeholder="dd/mm/yyyy: " id="birthdate" required/>
-                <Button buttonType="register"/>
+                <Button buttonType="Register"/>
             </form>
         </div>
     );
