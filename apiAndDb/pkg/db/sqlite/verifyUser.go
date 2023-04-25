@@ -5,12 +5,13 @@ import (
 	"log"
 
 	_ "github.com/mattn/go-sqlite3"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // VerifyUser checks if the user exists and if the password is correct
 
 func VerifyUser(username string, password string) int {
-	log.Println("Verifying user")
+	log.Println("Verifying user!!")
 	db, err := OpenDb()
 	if err != nil {
 		log.Println(err)
@@ -34,8 +35,15 @@ func VerifyUser(username string, password string) int {
 		return -1
 	}
 
-	if userPassword == password {
+	if checkPasswordHash(password, userPassword) {
+		log.Println(userPassword)
 		return userId
 	}
 	return -1
+}
+
+func checkPasswordHash(password string, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	log.Println(err)
+	return err == nil
 }
