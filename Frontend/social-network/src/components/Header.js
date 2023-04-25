@@ -15,6 +15,7 @@ function Header() {
             <div>
                 <div className="loginregister-container">
                     <LoginForm />
+             
                     <RegisterForm />
                 </div>
             </div>
