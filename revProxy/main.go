@@ -36,7 +36,7 @@ func main() {
 	}
 
 	// start the server
-	log.Println("Starting server on :8080")
+	log.Println("Starting server on :-D")
 	log.Fatal(server.ListenAndServe())
 	if err != nil {
 		log.Fatal(err)
