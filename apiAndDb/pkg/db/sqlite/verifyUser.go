@@ -24,7 +24,7 @@ func VerifyUser(username string, password string) int {
 	err = db.QueryRow(`
 	SELECT password, id
 	FROM users
-	WHERE username = ?;
+	WHERE nickname = ?;
 `, username).Scan(&userPassword, &userId)
 	if err != nil {
 		if err == sql.ErrNoRows {

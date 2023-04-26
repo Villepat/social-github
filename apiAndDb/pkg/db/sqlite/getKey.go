@@ -16,9 +16,9 @@ func GetUserKey(username string) (string, error) {
 
 	var userKey string
 	err = db.QueryRow(`
-		SELECT key
+		SELECT secret_key
 		FROM users
-		WHERE username = ?;
+		WHERE nickname = ?;
 	`, username).Scan(&userKey)
 	if err != nil {
 		log.Println(err)

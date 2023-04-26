@@ -22,7 +22,7 @@ func AddUser(username string, email string, password string, key string, name st
 	}
 
 	_, err = db.Exec(`
-		INSERT INTO users (username, email, password, key, name, surname, birthdate, aboutme) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+	INSERT INTO users (nickname, email, password, secret_key, first_name, last_name, date_of_birth, about_me) VALUES (?, ?, ?, ?, ?, ?, ?, ?); 
 	`, username, email, newPW, key, name, surname, birthdate, aboutme)
 	if err != nil {
 		log.Println(err)

@@ -1,23 +1,44 @@
-import React from "react";
-import './Home.css';
+import React, { useState } from "react";
+import CreatePostModal from "./CreatePostModal";
+import "./Home.css";
 
 function Home() {
-    return (
-        <div className="topnav">
-            <a className="active" href="#home">Home</a>
-            <a href="#profile">Profile</a>
-            <a href="#chat">Chat</a>
-            <a href="#createpost">Create a Post</a>
-            <a href="#groups">Groups</a>
-            
-            <div className="search-container">
-                <form action="/search">
-                    <input type="text" placeholder="Search.." name="search" />
-                    <button type="submit">Search</button>
-                </form>
-            </div>
+  const [showCreatePost, setShowCreatePost] = useState(false);
+
+  const toggleCreatePost = () => {
+    setShowCreatePost((prevShowCreatePost) => !prevShowCreatePost);
+    // Add class to body to hide navbar
+    document.body.classList.toggle("modal-open");
+  };
+
+  return (
+    <>
+      <div className="topnav">
+        <a className="active" href="#home">
+          Home
+        </a>
+        <a href="#profile">Profile</a>
+        <a href="#bals">Chat</a>
+        <a href="#" onClick={toggleCreatePost}>
+          Create a Post
+        </a>
+        <div className="search-container">
+          <form action="/search">
+            <input type="text" placeholder="Search.." name="search" />
+            <a href="#sus" type="submit">
+              Search
+            </a>
+          </form>
         </div>
-    );
+      </div>
+      {showCreatePost && (
+        <CreatePostModal
+          show={showCreatePost}
+          toggleCreatePost={toggleCreatePost}
+        />
+      )}
+    </>
+  );
 }
 
 export default Home;
