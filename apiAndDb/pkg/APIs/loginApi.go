@@ -2,10 +2,13 @@ package api
 
 import (
 	"encoding/base64"
+	"encoding/hex"
 	"fmt"
 	"log"
 	"net/http"
 	sqlite "social-network/apiAndDb/pkg/db/sqlite"
+	"social-network/apiAndDb/pkg/encrypt"
+	"strconv"
 	"strings"
 )
 
@@ -55,18 +58,42 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	password := credentials[1]
 	// Encrypt the password to match the one in the database...
 
+	userID := sqlite.VerifyUser(username, password)
+
 	// Verify the user in the database
-	if sqlite.VerifyUser(username, password) >= 0 {
+	if userID >= 0 {
 		w.WriteHeader(http.StatusOK)
+		userIDstring := strconv.Itoa(userID)
 		userKey, err := sqlite.GetUserKey(username)
+		if err != nil {
+			log.Println(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
+			return
+		}
+		key, err := hex.DecodeString(userKey)
+		if err != nil {
+			log.Println(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
+			return
+		}
+		token, err := encrypt.EncryptUserID(userIDstring, string(key))
+		if err != nil {
+			log.Println(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
+			return
+		}
+
 		log.Println(userKey)
-		fmt.Fprintf(w, "{\"status\": 200, \"message\": \"success\", \"token\": \"%s\"}", userKey)
+		fmt.Fprintf(w, "{\"status\": 200, \"message\": \"success\", \"token\": \"%s\"}", token)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
 		}
 		return
-	} else if sqlite.VerifyUser(username, password) == -1 {
+	} else if userID == -1 {
 		w.WriteHeader(http.StatusUnauthorized)
 		fmt.Fprintf(w, "{\"status\": 401, \"message\": \"unauthorized\"}")
 		return

@@ -1,4 +1,5 @@
 import React from "react";
+import Cookies from "js-cookie";
 
 async function login(newUsername, newPassword) {
   let username = document.getElementById("username").value;
@@ -22,20 +23,29 @@ async function login(newUsername, newPassword) {
   const data = await response.json();
   console.log(data);
   if (response.ok) {
-    console.log("Login successful!");
-    localStorage.setItem("token", data.token);
+    // set the cookie with the token
+    document.cookie = "token=" + data.token + "; path=/";
+
+    // retrieve the token from the cookie
+    function getCookie(name) {
+      var match = document.cookie.match(
+        new RegExp("(^| )" + name + "=([^;]+)")
+      );
+      if (match) {
+        return match[2];
+      }
+    }
+    var token = getCookie("token");
+    console.log(token);
     window.location.reload();
-  } else if (data.status === 401) {
-    alert("Wrong username or password! Please try again.");
-    console.log("Login failed!");
-  } else if (data.status === 500) {
-    alert("Something went wrong! Please try again.");
-    console.log("Login failed!");
+  } else {
+    alert("Incorrect username or password! Please try again.");
   }
 }
 
 async function logout() {
-  localStorage.removeItem("token");
+  // remove the cookie
+  Cookies.remove("token");
   window.location.reload();
 }
 

@@ -2,6 +2,7 @@ import "./App.css";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import React from "react";
+import Cookies from "js-cookie";
 import Ws from "./components/Ws";
 
 function App() {
@@ -9,7 +10,7 @@ function App() {
 
   React.useEffect(() => {
     // check if the user is already logged in
-    if (localStorage.getItem("token") !== null) {
+    if (Cookies.get("token") !== undefined) {
       setIsLoggedIn(true);
     }
   }, []);

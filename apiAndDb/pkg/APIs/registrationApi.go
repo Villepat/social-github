@@ -7,9 +7,8 @@ import (
 	"log"
 	"net/http"
 	sqlite "social-network/apiAndDb/pkg/db/sqlite"
+	"social-network/apiAndDb/pkg/encrypt"
 	"strings"
-
-	uuid "github.com/gofrs/uuid"
 )
 
 // regiserUser is the struct that will be used to decode the json
@@ -41,44 +40,42 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, "{\"status\": 200, \"message\": \"success\"}")
 		return
-	}
-
-	var user RegisterUser
-	err := json.NewDecoder(r.Body).Decode(&user)
-	log.Printf("Received request with data: %v\n", user)
-	if err != nil {
-		if err == io.EOF {
-			w.WriteHeader(http.StatusBadRequest)
-			fmt.Fprintf(w, "{\"status\": 400, \"message\": \"bad request\"}")
+	} else if r.Method == "POST" {
+		var user RegisterUser
+		err := json.NewDecoder(r.Body).Decode(&user)
+		log.Printf("Received request with data: %v\n", user)
+		if err != nil {
+			if err == io.EOF {
+				w.WriteHeader(http.StatusBadRequest)
+				fmt.Fprintf(w, "{\"status\": 400, \"message\": \"bad request\"}")
+				return
+			}
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
+			log.Println(err)
 			return
 		}
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
-		log.Println(err)
-		return
-	}
 
-	// Generate a new UUID for the user
-	uuid, err := uuid.NewV4()
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
-		log.Println(err)
-		return
-	}
+		// generate the secret key as a hex string
+		secretKey, err := encrypt.GenerateSecretKey()
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
+			log.Println(err)
+			return
+		}
+		user.Username = strings.ToLower(user.Username)
+		// Add the user to the database
+		err = sqlite.AddUser(user.Username, user.Email, user.Password, secretKey, user.Name, user.Surname, user.Birthdate, user.Aboutme)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
+			log.Println(err)
+			return
+		}
 
-	uuidString := uuid.String()
-	user.Username = strings.ToLower(user.Username)
-	// Add the user to the database
-	err = sqlite.AddUser(user.Username, user.Email, user.Password, uuidString, user.Name, user.Surname, user.Birthdate, user.Aboutme)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
-		log.Println(err)
-		return
+		// Return the response
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprintf(w, "{\"status\": 200, \"message\": \"success\"}")
 	}
-
-	// Return the response
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "{\"status\": 200, \"message\": \"success\"}")
 }
