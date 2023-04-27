@@ -1,36 +1,38 @@
 import "./App.css";
-import Header from "./components/Header";
+// import Header from "./components/Header";
 import Home from "./components/Home";
 import React from "react";
 import Cookies from "js-cookie";
-import Ws from "./components/Ws";
+import { Routes, Route } from "react-router-dom";
+import LoginForm from "./components/LoginForm";
+import RegisterForm from "./components/RegisterForm";
+
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
-  React.useEffect(() => {
-    // check if the user is already logged in
-    if (Cookies.get("token") !== undefined) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  function handleLogin() {
-    setIsLoggedIn(true);
+  let logeedIn = false;
+  if (Cookies.get("token") === undefined) {
+    logeedIn = false;
+  } else {
+    logeedIn = true;
   }
-
-  function handleLogout() {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-  }
+  
 
   return (
+    <>
     <div className="App">
-      <Header onLogin={handleLogin} onLogout={handleLogout} />
-      {isLoggedIn && <Home />}
-      {/* {isLoggedIn && <Ws />} */}
+      <Routes>
+    {logeedIn ? ( 
+      <Route path="/" element={<Home />} /> 
+      ) : (
+        <Route path="/" element={<div><LoginForm/><RegisterForm/></div>}  />
+        ) }
+      </Routes>
     </div>
+    </>
   );
 }
+
+
 
 export default App;

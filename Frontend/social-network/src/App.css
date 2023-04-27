@@ -3,17 +3,17 @@ h1 {
 }
 
 html {
-  background-color: #282c34;
+  background-color: #2e424d;
 }
 .App {
   color: white;
   
   text-align: center;
-  background-color: #282c34;
+  background-color: #2e424d;
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #2e424d;
   min-height: 40vh;
   display: flex;
   flex-direction: column;
@@ -45,32 +45,38 @@ html {
 }
 
 .Login {
-  background-color: #282c34;
-  min-height: 40vh;
-  display: flex;
+  background-color: #98dad9;
+  min-height: 45vh;
+  min-width: 30vh;
+  max-width: 35vh;
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
-  margin-top: -320px;
+  color: #5b8291;
+  margin-top: 20vh;
 }
 
 .Register {
-  background-color: #282c34;
-  min-height: 53vh;
-  display: flex;
+  background-color: #5b8291;
+  min-height: 45vh;
+  min-width: 30vh;
+  max-width: 35vh;
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: relative;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #98dad9;
+
 }
 
 .Register form {
   display: flex;
   flex-direction: column;
   align-items: center;
+
 }
 
 .Register form input {
@@ -95,7 +101,7 @@ html {
 
 .btn {
   
-  color: #282c34;
+  color: #2e424d;
   border-radius: 3px;
   border: none;
   padding: 5px 15px;
