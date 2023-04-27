@@ -5,7 +5,7 @@ CREATE TABLE users (
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     date_of_birth DATE NOT NULL,
-    avatar TEXT,
+    avatar BLOB,
     nickname TEXT,
     about_me TEXT,
     is_private BOOLEAN NOT NULL DEFAULT 0,

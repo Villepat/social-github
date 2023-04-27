@@ -1,10 +1,11 @@
 CREATE TABLE posts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
+    title TEXT NOT NULL,
     content TEXT NOT NULL,
-    image TEXT,
-    privacy TEXT NOT NULL,
+    image BLOB,
+    privacy INTEGER NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users (id)
 );
