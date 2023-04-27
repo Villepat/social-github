@@ -1,13 +1,36 @@
 import React, { useState } from "react";
+import "./PostModal.css";
 
 function CreatePostModal(props) {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isPublic, setIsPublic] = useState(true);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Submit post data to backend
+    const post = {
+      user_id: 2,
+      title: title,
+      content: content,
+      privacy: 0,
+    };
+
+    const response = await fetch("http://localhost:6969/api/posting", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    });
+
+    const data = await response.json();
+    console.log(data);
+    if (data.message === "success") {
+      alert("Post created successfully!");
+    } else {
+      alert("Post creation failed!");
+    }
+
     props.onHide();
   };
 
@@ -26,7 +49,7 @@ function CreatePostModal(props) {
   return (
     <div className="modal" style={{ display: props.show ? "block" : "none" }}>
       <div className="modal-content">
-        <form onSubmit={handleSubmit}>
+        <form className="post-form" onSubmit={handleSubmit}>
           <label htmlFor="title">Title:</label>
           <input
             type="text"

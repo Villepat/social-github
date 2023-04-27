@@ -13,6 +13,7 @@ func main() {
 	sqlite.InitDb()
 	http.HandleFunc("/api/login", api.Login)
 	http.HandleFunc("/api/register", api.Register)
+	http.HandleFunc("/api/posting", api.ServePosting)
 
 	websocket.SetupRoutes()
 	// Listen and serve on 8393
