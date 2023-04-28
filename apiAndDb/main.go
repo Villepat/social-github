@@ -10,10 +10,12 @@ import (
 )
 
 func main() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	sqlite.InitDb()
 	http.HandleFunc("/api/login", api.Login)
 	http.HandleFunc("/api/register", api.Register)
 	http.HandleFunc("/api/posting", api.ServePosting)
+	http.HandleFunc("/api/posts", api.ServePosts)
 
 	websocket.SetupRoutes()
 	// Listen and serve on 8393
