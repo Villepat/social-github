@@ -78,7 +78,7 @@ func LoginAPI(w http.ResponseWriter, r *http.Request) {
 		Name:    "session_token",
 		Value:   sessionToken,
 		Expires: expiresAt,
-		Path:   "/",
+		Path:    "/",
 	})
 
 	Sessions[sessionToken] = Session{userID, nickname, expiresAt}
