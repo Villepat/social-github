@@ -11,7 +11,6 @@ import (
 
 // struct for the post
 type Post struct {
-	UserID  int    `json:"user_id"`
 	Content string `json:"content"`
 	Privacy string `json:"privacy"`
 }
@@ -19,6 +18,7 @@ type Post struct {
 // AddPosts adds a post to the database
 func ServePosting(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
@@ -42,7 +42,26 @@ func ServePosting(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 
-	err = sqlite.AddPosts(post.UserID, post.Content, time.Now().Format("2006-01-02 15:04:05"), post.Privacy)
+	// get the user id from the session
+	//check if the request cookie is in the sessions map
+	cookie, err := r.Cookie("session_token")
+	if err != nil {
+		log.Println("Error getting cookie:", err)
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+	session, ok := Sessions[cookie.Value]
+	if !ok {
+		log.Println("session not found")
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+	log.Println("session found", session.UserID)
+
+	// get the user data from the database
+	userId := session.UserID
+
+	err = sqlite.AddPosts(userId, post.Content, time.Now().Format("2006-01-02 15:04:05"), post.Privacy)
 	if err != nil {
 		fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
 		return

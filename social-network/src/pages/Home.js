@@ -37,9 +37,10 @@ function Home() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        content: post,
-        privacy: privacyInput.value,
+        'content': post,
+        'privacy': privacyInput.value,
       }),
+      credentials: "include",
     };
     const response = await fetch(
       "http://localhost:6969/api/posting",
