@@ -1,79 +1,78 @@
-
 .post-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 0 20px;
-    box-sizing: border-box;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    background-color: #fff;
-    word-break: break-word;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  word-break: break-word;
 }
 
 .post {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 20px 0;
-    border-bottom: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px 0;
+  border-bottom: 1px solid #ccc;
 }
 
 .post input {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 }
 
 .post-box {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-left: 10px;
-    width: 80%;
-    box-sizing: border-box;
-    padding: 10px 10px;
-    max-width: 50vh;
-    max-height: 30vh;
-    min-height: 10vh;
-    min-width: 20vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 10px;
+  width: 80%;
+  box-sizing: border-box;
+  padding: 10px 10px;
+  max-width: 50vh;
+  max-height: 30vh;
+  min-height: 10vh;
+  min-width: 20vh;
 }
 
 .post-header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-left: 150px;
-    width: 80%;
-    box-sizing: border-box;
-    padding: 10px 10px;
-    max-width: 50vh;
-    max-height: 30vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 150px;
+  width: 80%;
+  box-sizing: border-box;
+  padding: 10px 10px;
+  max-width: 50vh;
+  max-height: 30vh;
 }
 
 #privacy {
-    margin-left: 10px;
-    height: 25px;
+  margin-left: 10px;
+  height: 25px;
 }
 
 .submit-post {
-    width: 100px;
-    height: 25px;
-    margin-left: 20px;
-    margin-top: 7px;
-    border-radius: 5px;
-    border: none;
-    background-color: #98dad9;
-    color: #2e424d;
-    font-size: 1rem;
-    cursor: pointer;
+  width: 100px;
+  height: 25px;
+  margin-left: 20px;
+  margin-top: 7px;
+  border-radius: 5px;
+  border: none;
+  background-color: #98dad9;
+  color: #2e424d;
+  font-size: 1rem;
+  cursor: pointer;
 }
 
 .social-network-header {
-    margin-left: 10px;
+  margin-left: 10px;
 }

@@ -52,6 +52,7 @@ func RegisterAPI(w http.ResponseWriter, r *http.Request) {
 	lastName := r.FormValue("lastName")
 	birthday := r.FormValue("birthday")
 	aboutMe := r.FormValue("aboutMe")
+	fullname := firstName + " " + lastName
 
 	// Access uploaded file
 	file, fileHeader, err := r.FormFile("profilePicture")
@@ -93,7 +94,7 @@ func RegisterAPI(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Perform registration logic (e.g. insert user into database)
-	err = sqlite.RegisterUser(email, nickname, password, birthday, aboutMe, firstName, lastName, fileName, fileContent)
+	err = sqlite.RegisterUser(email, nickname, password, birthday, aboutMe, firstName, lastName, fullname, fileName, fileContent)
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Error registering user", http.StatusInternalServerError)
