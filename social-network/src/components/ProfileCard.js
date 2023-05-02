@@ -15,9 +15,9 @@ function ProfileCard(props) {
           {user.firstName} {user.lastName}
         </h5>
         <img src={avatarSrc} alt="Avatar" className="card-img" />
-        <p className="card-text">{user.email}</p>
-        <p className="card-text">{user.nickname}</p>
-        <p className="card-text">{user.aboutme}</p>
+        <p className="card-text">email: {user.email}</p>
+        <p className="card-text">nickname: {user.nickname}</p>
+        <p className="card-text">about me: {user.aboutme}</p>
       </div>
     </div>
   );
