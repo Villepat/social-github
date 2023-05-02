@@ -2,7 +2,7 @@ import React from "react";
 import { useAuth } from "../AuthContext";
 import PostContainer from "../components/PostContainer";
 import "../styles/PostContainer.css";
-
+import UserList from "../components/UserList";
 async function fetchPosts() {
   const response = await fetch("http://localhost:6969/api/posts");
   const data = await response.json();
@@ -14,11 +14,10 @@ async function fetchPosts() {
     alert("Error fetching posts.");
   }
 }
-
 function Home() {
   const { loggedIn, nickname } = useAuth();
   const [posts, setPosts] = React.useState([]);
-  
+
   React.useEffect(() => {
     const getPosts = async () => {
       const posts = await fetchPosts();
@@ -26,14 +25,14 @@ function Home() {
     };
     getPosts();
   }, []);
-  
+
   console.log("posts:", posts);
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("post submitted");
     // send post to database
     const post = document.getElementById("post").value;
-    const privacyInput = document.getElementById('privacy');
+    const privacyInput = document.getElementById("privacy");
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -43,7 +42,6 @@ function Home() {
       }),
       credentials: "include",
     };
-
     const response = await fetch(
       "http://localhost:6969/api/posting",
       requestOptions
@@ -59,7 +57,6 @@ function Home() {
     }
     setPosts(await fetchPosts());
   };
-
   return (
     <div className="social-network-header">
       <h1>Welcome to My Social Network</h1>
@@ -69,18 +66,30 @@ function Home() {
           <div>
             <p>hello {nickname}! Start connecting with your friends now.</p>
             <form>
-              <textarea className="post-box" type="text" rows="10" placeholder="What's on your mind?" id="post" /> 
+              <textarea
+                className="post-box"
+                type="text"
+                rows="10"
+                placeholder="What's on your mind?"
+                id="post"
+              />
               <select id="privacy">
                 <option value="public">Public</option>
                 <option value="friends">Friends</option>
                 <option value="onlyme">Only me</option>
               </select>
-              <button className="submit-post" onClick={handleSubmit}>Post</button>
+              <button className="submit-post" onClick={handleSubmit}>
+                Post
+              </button>
             </form>
           </div>
           <div className="posts-container">
             <h1 className="post-header">Posts</h1>
             <PostContainer posts={posts} setPosts={setPosts} />
+          </div>
+          <div className="user-list-container">
+            <h1 className="user-list-header">Users</h1>
+            <UserList />
           </div>
         </div>
       ) : (
@@ -89,5 +98,4 @@ function Home() {
     </div>
   );
 }
-
 export default Home;

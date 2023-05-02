@@ -4,6 +4,7 @@ CREATE TABLE users (
     password TEXT NOT NULL,
     firstname TEXT NOT NULL,
     lastname TEXT NOT NULL,
+    fullname TEXT NOT NULL,
     birthdate DATE NOT NULL,
     avatarname TEXT,
     avatar BLOB,

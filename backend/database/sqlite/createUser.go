@@ -6,7 +6,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func RegisterUser(email, nickname, password, age, aboutme, firstName, lastName, fileName string, avatar []byte) error {
+func RegisterUser(email, nickname, password, age, aboutme, firstName, lastName, fullname, fileName string, avatar []byte) error {
 	// open the database connection
 	db, err := OpenDb()
 	if err != nil {
@@ -32,7 +32,7 @@ func RegisterUser(email, nickname, password, age, aboutme, firstName, lastName, 
 	}
 
 	// insert user into table
-	statement, err := tx.Prepare("INSERT INTO users (email, nickname, password, birthdate, aboutme, firstName, lastName, avatarname, avatar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+	statement, err := tx.Prepare("INSERT INTO users (email, nickname, password, birthdate, aboutme, firstName, lastName, fullname, avatarname, avatar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		log.Println(err)
 		tx.Rollback()
@@ -40,7 +40,7 @@ func RegisterUser(email, nickname, password, age, aboutme, firstName, lastName, 
 	}
 
 	// execute the prepared statement and insert the new user
-	result, err := statement.Exec(email, nickname, password, age, aboutme, firstName, lastName, fileName, avatar)
+	result, err := statement.Exec(email, nickname, password, age, aboutme, firstName, lastName, fullname, fileName, avatar)
 	if err != nil {
 		log.Println(err)
 		tx.Rollback()
