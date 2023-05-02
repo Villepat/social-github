@@ -12,9 +12,8 @@ import (
 // struct for the post
 type Post struct {
 	UserID  int    `json:"user_id"`
-	Title   string `json:"title"`
 	Content string `json:"content"`
-	Privacy int    `json:"privacy"`
+	Privacy string `json:"privacy"`
 }
 
 // AddPosts adds a post to the database
@@ -43,7 +42,7 @@ func ServePosting(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 
-	err = sqlite.AddPosts(post.UserID, post.Title, post.Content, time.Now().Format("2006-01-02 15:04:05"), post.Privacy)
+	err = sqlite.AddPosts(post.UserID, post.Content, time.Now().Format("2006-01-02 15:04:05"), post.Privacy)
 	if err != nil {
 		fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
 		return

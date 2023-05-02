@@ -17,7 +17,6 @@ type Response struct {
 type PostForResponse struct {
 	Id      int    `json:"id"`
 	UserId  int    `json:"userId"`
-	Title   string `json:"title"`
 	Content string `json:"content"`
 	Date    string `json:"date"`
 }
@@ -25,8 +24,9 @@ type PostForResponse struct {
 func ServePosts(w http.ResponseWriter, r *http.Request) {
 	// set the response headers
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 
 	if r.Method != "GET" && r.Method != "OPTIONS" {
 		w.WriteHeader(http.StatusMethodNotAllowed)
@@ -76,7 +76,7 @@ func GetPosts() ([]PostForResponse, error) {
 	// get the posts
 	posts := []PostForResponse{}
 
-	rows, err := db.Query("SELECT id, user_id, title, content, created_at FROM posts")
+	rows, err := db.Query("SELECT id, user_id, content, created_at FROM posts")
 	if err != nil {
 		log.Println("Error getting the posts, GetPosts(): ", err)
 	}
@@ -85,7 +85,7 @@ func GetPosts() ([]PostForResponse, error) {
 
 	for rows.Next() {
 		var post PostForResponse
-		err := rows.Scan(&post.Id, &post.UserId, &post.Title, &post.Content, &post.Date)
+		err := rows.Scan(&post.Id, &post.UserId, &post.Content, &post.Date)
 		if err != nil {
 			log.Println("Error scanning the posts, GetPosts(): ", err)
 		}
