@@ -6,7 +6,6 @@ import About from "./pages/About";
 import NavBar from "./components/NavBar";
 import Login from "./pages/Login";
 import React from "react";
-import Register from "./pages/Register";
 import { AuthProvider } from "./AuthContext";
 
 function App() {
@@ -16,7 +15,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<div><Login /><Register /></div>} />
+          <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/about" element={<About />} />
         </Routes>

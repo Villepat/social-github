@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuth } from "../AuthContext";
 import PostContainer from "../components/PostContainer";
+import "../styles/PostContainer.css";
 
 async function fetchPosts() {
   const response = await fetch("http://localhost:6969/api/posts");
@@ -59,25 +60,25 @@ function Home() {
   };
 
   return (
-    <div>
+    <div className="social-network-header">
       <h1>Welcome to My Social Network</h1>
-      <p>Connect with friends, share your thoughts, and more!</p>
+      {/* <p>Connect with friends, share your thoughts, and more!</p> */}
       {loggedIn ? (
         <div>
           <div>
             <p>hello {nickname}! Start connecting with your friends now.</p>
             <form>
-              <input type="text" placeholder="What's on your mind?" id="post" />
+              <textarea className="post-box" type="text" rows="10" placeholder="What's on your mind?" id="post" /> 
               <select id="privacy">
                 <option value="public">Public</option>
                 <option value="friends">Friends</option>
                 <option value="onlyme">Only me</option>
               </select>
-              <button onClick={handleSubmit}>Post</button>
+              <button className="submit-post" onClick={handleSubmit}>Post</button>
             </form>
           </div>
           <div className="posts-container">
-            <h1>Posts</h1>
+            <h1 className="post-header">Posts</h1>
             <PostContainer posts={posts} setPosts={setPosts} />
           </div>
         </div>
