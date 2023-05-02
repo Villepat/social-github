@@ -5,8 +5,11 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"social-network/backend/database/sqlite"
 )
+
+const defaultProfilePicturePath = "./database/pictures/pepega.png"
 
 type RegisterRequest struct {
 	Email     string `json:"email"`
@@ -52,22 +55,45 @@ func RegisterAPI(w http.ResponseWriter, r *http.Request) {
 
 	// Access uploaded file
 	file, fileHeader, err := r.FormFile("profilePicture")
-	if err != nil {
-		log.Println(err)
-		http.Error(w, "Error retrieving profile picture", http.StatusBadRequest)
-		return
-	}
-	defer file.Close()
+	var fileContent []byte
+	var fileName string
 
-	// Read the file's content
-	fileContent, err := io.ReadAll(file)
+	// Use default profile picture if no file was uploaded
 	if err != nil {
-		http.Error(w, "Error reading profile picture", http.StatusInternalServerError)
-		return
+		log.Println("No profile picture uploaded, using default")
+
+		defaultFile, err := os.Open(defaultProfilePicturePath)
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "Error opening default profile picture", http.StatusInternalServerError)
+			return
+		}
+		defer defaultFile.Close()
+
+		fileContent, err = io.ReadAll(defaultFile)
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "Error reading default profile picture", http.StatusInternalServerError)
+			return
+		}
+
+		fileName = "default_profile_picture.jpg"
+	} else {
+		defer file.Close()
+
+		// Read the file's content
+		fileContent, err = io.ReadAll(file)
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "Error reading profile picture", http.StatusInternalServerError)
+			return
+		}
+
+		fileName = fileHeader.Filename
 	}
 
 	// Perform registration logic (e.g. insert user into database)
-	err = sqlite.RegisterUser(email, nickname, password, birthday, aboutMe, firstName, lastName, fileHeader.Filename, fileContent)
+	err = sqlite.RegisterUser(email, nickname, password, birthday, aboutMe, firstName, lastName, fileName, fileContent)
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Error registering user", http.StatusInternalServerError)
@@ -79,34 +105,4 @@ func RegisterAPI(w http.ResponseWriter, r *http.Request) {
 		Message: "User registered successfully",
 	}
 	json.NewEncoder(w).Encode(response)
-
-	// // Parse the JSON request body into a RegisterRequest struct
-	// var request RegisterRequest
-	// err := json.NewDecoder(r.Body).Decode(&request)
-	// if err != nil {
-	// 	w.WriteHeader(http.StatusBadRequest)
-	// 	return
-	// }
-
-	// // Perform validation on the request fields
-	// if request.Email == "" || request.Nickname == "" || request.Password == "" {
-	// 	w.WriteHeader(http.StatusBadRequest)
-	// 	return
-	// }
-
-	// log.Println(request)
-
-	// // Perform registration logic (e.g. insert user into database)
-	// err = sqlite.RegisterUser(request.Email, request.Nickname, request.Password, request.Birthdate, request.AboutMe, request.FirstName, request.LastName)
-	// if err != nil {
-	// 	log.Println(err)
-	// 	w.WriteHeader(http.StatusInternalServerError)
-	// 	return
-	// }
-
-	// // Send a success response to the client
-	// response := RegisterResponse{
-	// 	Message: "User registered successfully",
-	// }
-	// json.NewEncoder(w).Encode(response)
 }
