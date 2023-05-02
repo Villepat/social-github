@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/base64"
 	"log"
 	"net/http"
 	"social-network/backend/database/sqlite"
@@ -13,6 +14,7 @@ type User struct {
 	Email     string `json:"email"`
 	Nickname  string `json:"nickname"`
 	AboutMe   string `json:"aboutme"`
+	Avatar    string `json:"avatar"`
 }
 
 func ServeUser(w http.ResponseWriter, r *http.Request) {
@@ -61,7 +63,7 @@ func ServeUser(w http.ResponseWriter, r *http.Request) {
 
 	// send the response
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"status": 200, "message": "success", "user": {"firstName": "` + user.FirstName + `", "lastName": "` + user.LastName + `", "email": "` + user.Email + `", "nickname": "` + user.Nickname + `", "aboutme": "` + user.AboutMe + `"}}`))
+	w.Write([]byte(`{"status": 200, "message": "success", "user": {"firstName": "` + user.FirstName + `", "lastName": "` + user.LastName + `", "email": "` + user.Email + `", "nickname": "` + user.Nickname + `", "aboutme": "` + user.AboutMe + `", "avatar": "` + user.Avatar + `"}}`))
 }
 
 func getUser(userId int) (User, error) {
@@ -73,12 +75,15 @@ func getUser(userId int) (User, error) {
 	defer db.Close()
 
 	var user User
+	var avatar []byte
 
-	err = db.QueryRow("SELECT firstname, lastname, email, nickname, aboutme FROM users WHERE user_id = ?", userId).Scan(&user.FirstName, &user.LastName, &user.Email, &user.Nickname, &user.AboutMe)
+	err = db.QueryRow("SELECT firstname, lastname, email, nickname, aboutme, avatar FROM users WHERE user_id = ?", userId).Scan(&user.FirstName, &user.LastName, &user.Email, &user.Nickname, &user.AboutMe, &avatar)
 	if err != nil {
 		log.Println(err)
 		return user, err
 	}
+
+	user.Avatar = base64.StdEncoding.EncodeToString(avatar)
 
 	return user, nil
 }
