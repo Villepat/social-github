@@ -6,8 +6,8 @@ function PostContainer({ posts, setPosts }) {
         <div className="post-container">
             {posts.map((post) => (
                 <div className="post">
-                    <p>{post.content}</p>
-                    <p>{post.date}</p>
+                    <h3>{post.content}</h3>
+                    <h4>{post.date}</h4>
                 </div>
             ))}
         </div>
