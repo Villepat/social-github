@@ -1,8 +1,6 @@
 import React from "react";
-import { useAuth } from "../AuthContext";
 import { useState, useEffect } from "react";
 import ProfileCard from "../components/ProfileCard";
-
 
 function Profile() {
   const [user, setUser] = useState(null);
