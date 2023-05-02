@@ -40,7 +40,8 @@ function Home() {
       body: JSON.stringify({
         'content': post,
         'privacy': privacyInput.value,
-    }),
+      }),
+      credentials: "include",
     };
 
     const response = await fetch(
