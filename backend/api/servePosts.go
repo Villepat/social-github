@@ -16,7 +16,7 @@ type Response struct {
 // struct for the posts
 type PostForResponse struct {
 	Id      int    `json:"id"`
-	UserId  int    `json:"userId"`
+	UserId  int    `json:"user_id"`
 	Content string `json:"content"`
 	Date    string `json:"date"`
 }
