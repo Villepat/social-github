@@ -5,12 +5,20 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 
 function Profile() {
+  let ownProfile = false;
   const [user, setUser] = useState(null);
   let { userId } = useParams();
   const { userID } = useAuth();
+
+  // this happens when clicking own profile
   if (!userId) {
     userId = userID;
   }
+
+  if (userId === userID) {
+    ownProfile = true;
+  }
+  console.log(ownProfile);
 
   useEffect(() => {
     async function fetchUserData(userId) {
