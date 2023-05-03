@@ -16,7 +16,7 @@ func CreateGroup(groupName string, groupDescription string, creatorId int) error
 
 	defer db.Close()
 
-	_, err = db.Exec("INSERT INTO groups (creator_id, title, description, created_at ) VALUES (?, ?, ?, ?)", groupName, groupDescription, creatorId, time)
+	_, err = db.Exec("INSERT INTO groups (creator_id, title, description, created_at ) VALUES (?, ?, ?, ?)", creatorId, groupName, groupDescription, time)
 	if err != nil {
 		log.Print(err)
 		return err

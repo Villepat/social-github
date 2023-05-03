@@ -20,10 +20,11 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:userId" element={<Profile />} />
           <Route path="/about" element={<About />} />
           <Route path="/groups" element={<Groups />} />
           <Route path="/groups/:groupId" element={<GroupPage />} />
-          <Route path="*" element={<ErrorPage errorType={'404'} />} />
+          <Route path="*" element={<ErrorPage errorType={"404"} />} />
         </Routes>
       </AuthProvider>
     </Router>

@@ -1,11 +1,11 @@
 import React from "react";
 import useFetchUserList from "./FetchuserList.js";
+import { Link } from "react-router-dom";
 
 function UserListItem({ user }) {
   return (
     <div className="user-list-item">
-      {/* <span>ID: {user.id}</span> */}
-      <span>{user.fullname}</span>
+      <Link to={`/profile/${user.id}`}>{user.fullname}</Link>
     </div>
   );
 }

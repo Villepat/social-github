@@ -5,6 +5,8 @@ import (
 	"log"
 	"net/http"
 	"social-network/backend/database/sqlite"
+	"strconv"
+	"strings"
 )
 
 // struct for the response
@@ -26,34 +28,32 @@ func ServeUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 
-	if r.Method != "GET" && r.Method != "OPTIONS" {
-		w.WriteHeader(http.StatusMethodNotAllowed)
-		return
-	}
-
 	if r.Method == "OPTIONS" {
+		log.Println("Method options")
 		w.WriteHeader(http.StatusOK)
 		return
 	}
 
-	log.Println(Sessions)
-	//check if the request cookie is in the sessions map
-	cookie, err := r.Cookie("session_token")
+	if r.Method != "GET" {
+		log.Println("Method not allowed")
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Extract userId from the request URL
+	urlPath := r.URL.Path
+	pathParts := strings.Split(urlPath, "/")
+	userIdStr := pathParts[len(pathParts)-1]
+	userId, err := strconv.Atoi(userIdStr)
 	if err != nil {
-		log.Println("Error getting cookie:", err)
-		w.WriteHeader(http.StatusUnauthorized)
+		log.Println("Error converting userId to int:", err)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	session, ok := Sessions[cookie.Value]
-	if !ok {
-		log.Println("session not found")
-		w.WriteHeader(http.StatusUnauthorized)
-		return
-	}
-	log.Println("session found", session.UserID)
+
+	log.Println("userId:", userId)
 
 	// get the user data from the database
-	userId := session.UserID
 	user, err := getUser(userId)
 	if err != nil {
 		log.Println(err)
