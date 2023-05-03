@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import ErrorPage from "./pages/ErrorPage";
 import React from "react";
 import { AuthProvider } from "./AuthContext";
+import Groups from "./pages/Groups";
+import GroupPage from "./pages/GroupPage";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/about" element={<About />} />
+          <Route path="/groups" element={<Groups />} />
+          <Route path="/groups/:groupId" element={<GroupPage />} />
           <Route path="*" element={<ErrorPage errorType={'404'} />} />
         </Routes>
       </AuthProvider>
