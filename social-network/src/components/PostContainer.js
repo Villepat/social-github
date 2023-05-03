@@ -7,6 +7,7 @@ function PostContainer({ posts, setPosts }) {
         <div className="post">
           <h3>{post.content}</h3>
           <h4>{post.date}</h4>
+          <h4>{post.full_name}</h4>
         </div>
       ))}
     </div>
