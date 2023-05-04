@@ -77,7 +77,7 @@ func GetPosts() ([]PostForResponse, error) {
 	// get the posts
 	posts := []PostForResponse{}
 
-	rows, err := db.Query("SELECT id, user_id, content, created_at FROM posts ORDER BY created_at DESC")
+	rows, err := db.Query("SELECT id, user_id, content, author, created_at FROM posts ORDER BY created_at DESC")
 	if err != nil {
 		log.Println("Error getting the posts, GetPosts(): ", err)
 	}
@@ -86,18 +86,10 @@ func GetPosts() ([]PostForResponse, error) {
 
 	for rows.Next() {
 		var post PostForResponse
-		err := rows.Scan(&post.Id, &post.UserId, &post.Content, &post.Date)
+		err := rows.Scan(&post.Id, &post.UserId, &post.FullName, &post.Content, &post.Date)
 		if err != nil {
 			log.Println("Error scanning the posts, GetPosts(): ", err)
 		}
-		// get the user's full name
-		user, err := sqlite.GetUserById(post.UserId)
-		log.Println("user: ", user)
-		if err != nil {
-			log.Println("Error getting the user, GetPosts(): ", err)
-		}
-		post.FullName = user.FullName
-
 		posts = append(posts, post)
 	}
 
