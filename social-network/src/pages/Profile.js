@@ -52,7 +52,7 @@ function Profile() {
     return <div>log in to see your profile here!</div>;
   }
 
-  return <ProfileCard user={user} />;
+  return <ProfileCard user={user} ownProfile={ownProfile} setUser={setUser} userId={userId} />; 
 }
 
 export default Profile;
