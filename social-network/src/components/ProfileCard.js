@@ -18,6 +18,7 @@ function ProfileCard(props) {
         <p className="card-text">email: {user.email}</p>
         <p className="card-text">nickname: {user.nickname}</p>
         <p className="card-text">about me: {user.aboutme}</p>
+        <p className="card-text">date of birth: {user.birthday}</p>
       </div>
     </div>
   );

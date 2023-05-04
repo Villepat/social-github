@@ -60,8 +60,14 @@ func ServePosting(w http.ResponseWriter, r *http.Request) {
 
 	// get the user data from the database
 	userId := session.UserID
+	poster, err := sqlite.GetUserById(userId)
+	if err != nil {
+		log.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 
-	err = sqlite.AddPosts(userId, post.Content, time.Now().Format("2006-01-02 15:04:05"), post.Privacy)
+	err = sqlite.AddPosts(userId, post.Content, time.Now().Format("2006-01-02 15:04:05"), poster.FullName, post.Privacy)
 	if err != nil {
 		fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
 		return

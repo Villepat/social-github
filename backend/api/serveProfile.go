@@ -16,6 +16,7 @@ type User struct {
 	Email     string `json:"email"`
 	Nickname  string `json:"nickname"`
 	AboutMe   string `json:"aboutme"`
+	Birthday  string `json:"birthday"`
 	Avatar    string `json:"avatar"`
 }
 
@@ -61,9 +62,11 @@ func ServeUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	log.Println("user:", user.AboutMe, user.Birthday, user.Email, user.FirstName, user.LastName, user.Nickname)
+
 	// send the response
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"status": 200, "message": "success", "user": {"firstName": "` + user.FirstName + `", "lastName": "` + user.LastName + `", "email": "` + user.Email + `", "nickname": "` + user.Nickname + `", "aboutme": "` + user.AboutMe + `", "avatar": "` + user.Avatar + `"}}`))
+	w.Write([]byte(`{"status": 200, "message": "success", "user": {"firstName": "` + user.FirstName + `", "lastName": "` + user.LastName + `", "birthday": "` + user.Birthday + `", "email": "` + user.Email + `", "nickname": "` + user.Nickname + `", "aboutme": "` + user.AboutMe + `", "avatar": "` + user.Avatar + `"}}`))
 }
 
 func getUser(userId int) (User, error) {
@@ -77,7 +80,7 @@ func getUser(userId int) (User, error) {
 	var user User
 	var avatar []byte
 
-	err = db.QueryRow("SELECT firstname, lastname, email, nickname, aboutme, avatar FROM users WHERE user_id = ?", userId).Scan(&user.FirstName, &user.LastName, &user.Email, &user.Nickname, &user.AboutMe, &avatar)
+	err = db.QueryRow("SELECT firstname, lastname, birthdate, email, nickname, aboutme, avatar FROM users WHERE user_id = ?", userId).Scan(&user.FirstName, &user.LastName, &user.Birthday, &user.Email, &user.Nickname, &user.AboutMe, &avatar)
 	if err != nil {
 		log.Println(err)
 		return user, err
