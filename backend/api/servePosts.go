@@ -86,6 +86,7 @@ func GetPosts() ([]PostForResponse, error) {
 
 	for rows.Next() {
 		var post PostForResponse
+		log.Println("user_id: ", post.UserId)
 		err := rows.Scan(&post.Id, &post.UserId, &post.Content, &post.Date)
 		if err != nil {
 			log.Println("Error scanning the posts, GetPosts(): ", err)

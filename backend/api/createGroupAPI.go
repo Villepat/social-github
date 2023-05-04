@@ -14,6 +14,7 @@ type CreateGroupRequest struct {
 
 // CreateGroupAPI is the API handler for creating a new group
 func CreateGroupAPI(w http.ResponseWriter, r *http.Request) {
+	log.Println("CreateGroupAPI called")
 	// set cors headers
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")

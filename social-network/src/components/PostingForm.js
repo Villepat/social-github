@@ -27,9 +27,8 @@ const PostingForm = ({ fetchPosts, setPosts }) => {
           document.getElementById("post").value = "";
           // fetch posts again
           setPosts(await fetchPosts());
-          alert("Post submitted successfully!");
         } else {
-          alert("Error submitting post.");
+          alert("Error posting.");
         }
       };
   return (
