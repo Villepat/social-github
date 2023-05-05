@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -19,6 +20,7 @@ type PostForResponse struct {
 	UserId   int    `json:"user_id"`
 	FullName string `json:"full_name"`
 	Content  string `json:"content"`
+	Picture  string `json:"picture"`
 	Date     string `json:"date"`
 }
 
@@ -49,6 +51,8 @@ func ServePosts(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
 	}
 
+	log.Println(posts)
+
 	// create the response
 	response := Response{
 		Posts: posts,
@@ -77,7 +81,7 @@ func GetPosts() ([]PostForResponse, error) {
 	// get the posts
 	posts := []PostForResponse{}
 
-	rows, err := db.Query("SELECT id, user_id, content, author, created_at FROM posts ORDER BY created_at DESC")
+	rows, err := db.Query("SELECT id, user_id, content, author, created_at, image FROM posts ORDER BY created_at DESC")
 	if err != nil {
 		log.Println("Error getting the posts, GetPosts(): ", err)
 	}
@@ -86,10 +90,18 @@ func GetPosts() ([]PostForResponse, error) {
 
 	for rows.Next() {
 		var post PostForResponse
-		err := rows.Scan(&post.Id, &post.UserId, &post.Content, &post.FullName, &post.Date)
+		var imageData []byte
+		err := rows.Scan(&post.Id, &post.UserId, &post.Content, &post.FullName, &post.Date, &imageData)
 		if err != nil {
 			log.Println("Error scanning the posts, GetPosts(): ", err)
 		}
+
+		// Encode the image data to base64
+		if imageData != nil {
+			post.Picture = base64.StdEncoding.EncodeToString(imageData)
+			log.Println("has image")
+		}
+
 		posts = append(posts, post)
 	}
 
