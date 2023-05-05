@@ -15,11 +15,12 @@ function Profile() {
     userId = userID;
   }
 
+  // make userId into int
+  userId = parseInt(userId);
+
   if (userId === userID) {
     ownProfile = true;
   }
-  console.log(ownProfile);
-
   useEffect(() => {
     async function fetchUserData(userId) {
       console.log("fetching user data for user id: " + userId);
@@ -52,7 +53,14 @@ function Profile() {
     return <div>log in to see your profile here!</div>;
   }
 
-  return <ProfileCard user={user} ownProfile={ownProfile} setUser={setUser} userId={userId} />; 
+  return (
+    <ProfileCard
+      user={user}
+      ownProfile={ownProfile}
+      setUser={setUser}
+      userId={userId}
+    />
+  );
 }
 
 export default Profile;

@@ -1,183 +1,122 @@
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 
-import "../styles/ProfileCard.css"; 
+import "../styles/ProfileCard.css";
 
-import EditProfileModal from "./EditProfileModal"; 
+import EditProfileModal from "./EditProfileModal";
 
- 
- 
+function ProfileCard(props) {
+  const { user, ownProfile, setUser, userId } = props;
 
-function ProfileCard(props) { 
+  const [showEditModal, setShowEditModal] = useState(false);
 
-const { user, ownProfile, setUser, userId } = props; 
+  console.log("user", user);
 
-const [showEditModal, setShowEditModal] = useState(false); 
+  console.log("userid", userId);
 
-console.log('user', user); 
+  const handleModalClose = () => {
+    setShowEditModal(false);
+  };
 
-console.log("user id", userId); 
+  const handleFollow = () => {
+    console.log("follow button pressed");
+  };
 
- 
- 
+  const handleModalSave = async (updatedData) => {
+    const { userId, email, nickname, aboutMe, newAvatar, newAvatarBase64 } =
+      updatedData;
 
-const handleModalClose = () => { 
+    const formData = new FormData();
 
-setShowEditModal(false); 
+    formData.append("userId", userId);
 
-}; 
+    formData.append("email", email);
 
- 
- 
+    formData.append("nickname", nickname);
 
-const handleModalSave = async (updatedData) => { 
+    formData.append("aboutMe", aboutMe);
 
-const { userId, email, nickname, aboutMe, newAvatar, newAvatarBase64 } = updatedData; 
+    if (newAvatar) {
+      formData.append("avatar", newAvatar);
+    }
 
- 
- 
+    const requestOptions = {
+      method: "POST",
 
-const formData = new FormData(); 
+      headers: {
+        // "Content-Type": "multipart/form-data" should NOT be set manually
+        // The browser will automatically set the correct boundary
+      },
 
-formData.append("userId", userId); 
+      body: formData,
 
-formData.append("email", email); 
+      credentials: "include",
+    };
 
-formData.append("nickname", nickname); 
+    const response = await fetch(
+      "http://localhost:6969/api/user/update",
+      requestOptions
+    );
 
-formData.append("aboutMe", aboutMe); 
+    if (response.ok) {
+      const updatedUser = { ...user, email, nickname, aboutMe };
 
- 
- 
+      if (newAvatar) {
+        updatedUser.avatar = newAvatarBase64;
+      }
 
-if (newAvatar) { 
+      setUser(updatedUser);
 
-formData.append("avatar", newAvatar); 
+      setShowEditModal(false);
+    } else {
+      const errorData = await response.json();
 
-} 
+      console.error("Error updating user profile:", errorData.message);
+    }
+  };
 
- 
- 
+  const avatarSrc = user.avatar
+    ? `data:image/jpeg;base64,${user.avatar}`
+    : "path/to/default/avatar.jpg"; // Replace with the path to a default avatar if necessary
 
-const requestOptions = { 
+  return (
+    <div className="card">
+      <div className="card-body">
+        <h5 className="card-title">
+          {user.firstName} {user.lastName}
+        </h5>
 
-method: "POST", 
+        <img src={avatarSrc} alt="Avatar" className="card-img" />
 
-headers: { 
+        <p className="card-text">email: {user.email}</p>
 
-// "Content-Type": "multipart/form-data" should NOT be set manually 
+        <p className="card-text">nickname: {user.nickname}</p>
 
-// The browser will automatically set the correct boundary 
+        <p className="card-text">about me: {user.aboutme}</p>
 
-}, 
+        <p className="card-text">date of birth: {user.birthday}</p>
 
-body: formData, 
-
-credentials: "include", 
-
-}; 
-
- 
- 
-
-const response = await fetch("http://localhost:6969/api/user/update", requestOptions); 
-
- 
- 
-
-if (response.ok) { 
-
-const updatedUser = { ...user, email, nickname, aboutMe }; 
-
-if (newAvatar) { 
-
-updatedUser.avatar = newAvatarBase64; 
-
-} 
-
-setUser(updatedUser); 
-
-setShowEditModal(false); 
-
-} else { 
-
-const errorData = await response.json(); 
-
-console.error("Error updating user profile:", errorData.message); 
-
-} 
-
-}; 
-
- 
- 
-
-const avatarSrc = user.avatar 
-
-? `data:image/jpeg;base64,${user.avatar}` 
-
-: "path/to/default/avatar.jpg"; // Replace with the path to a default avatar if necessary 
-
- 
- 
-
-return ( 
-
-<div className="card"> 
-
-<div className="card-body"> 
-
-<h5 className="card-title"> 
-
-{user.firstName} {user.lastName} 
-
-</h5> 
-
-<img src={avatarSrc} alt="Avatar" className="card-img" /> 
-
-<p className="card-text">email: {user.email}</p> 
-
-<p className="card-text">nickname: {user.nickname}</p> 
-
-<p className="card-text">about me: {user.aboutme}</p> 
-
-<p className="card-text">date of birth: {user.birthday}</p>
-
-{ownProfile && ( 
-
-<button className="btn btn-primary" onClick={() => setShowEditModal(true)}> 
-
-Edit Profile 
-
-</button> 
-
-)} 
-
-</div> 
-
-<EditProfileModal 
-
-show={showEditModal} 
-
-handleClose={handleModalClose} 
-
-handleSave={handleModalSave} 
-
-userId={userId} // Pass the user.user_id as the userId prop 
-
-/> 
-
-</div> 
-
-); 
-
-} 
-
- 
- 
-
-export default ProfileCard; 
-
- 
- 
-
- 
+        {ownProfile ? (
+          <button
+            className="btn btn-primary"
+            onClick={() => setShowEditModal(true)}
+          >
+            Edit Profile
+          </button>
+        ) : (
+          <button className="btn btn-primary" onClick={handleFollow}>
+            Follow
+          </button>
+        )}
+      </div>
+
+      <EditProfileModal
+        show={showEditModal}
+        handleClose={handleModalClose}
+        handleSave={handleModalSave}
+        userId={userId} // Pass the user.user_id as the userId prop
+      />
+    </div>
+  );
+}
+
+export default ProfileCard;
