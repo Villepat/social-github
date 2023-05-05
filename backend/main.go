@@ -22,6 +22,7 @@ func main() {
 	http.HandleFunc("/api/userlist", api.UserListAPI)
 	http.HandleFunc("/api/create-group", api.CreateGroupAPI)
 	http.HandleFunc("/api/groups", api.ServeGroups)
+	http.HandleFunc("/api/user/update", api.UpdateProfileAPI)
 
 	log.Println("Server running on port 6969")
 	log.Fatal(http.ListenAndServe(":6969", nil))

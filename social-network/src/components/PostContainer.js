@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/PostContainer.css";
 import PostingForm from "./PostingForm";
+import { Link } from "react-router-dom";
 
 async function fetchPosts() {
     const response = await fetch("http://localhost:6969/api/posts");
@@ -33,9 +34,9 @@ function PostContainer() {
       <PostingForm fetchPosts={fetchPosts} setPosts={setPosts} />
       {posts.map((post) => (
         <div key={post.id} className="post">
+          <Link to={`/profile/${post.user_id}`}>{post.full_name}</Link>
           <h3>{post.content}</h3>
           <h4>{post.date}</h4>
-          <h4>{post.full_name}</h4>
         </div>
       ))}
     </div>
