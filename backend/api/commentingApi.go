@@ -2,10 +2,11 @@ package api
 
 import (
 	"encoding/base64"
-	"encoding/json"
 	"log"
 	"net/http"
 	"social-network/backend/database/sqlite"
+	"strconv"
+	Time "time"
 )
 
 // request body:
@@ -44,15 +45,6 @@ func CommentingAPI(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// parse the JSON request body into a Comment struct
-	var comment Comment
-	err := json.NewDecoder(r.Body).Decode(&comment)
-	if err != nil {
-		log.Println(err)
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-
 	// get the user id from the session
 	//check if the request cookie is in the sessions map
 	cookie, err := r.Cookie("session_token")
@@ -67,24 +59,46 @@ func CommentingAPI(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
+	log.Println(r.Form)
 
-	// modify image to []byte
-	image, err := base64.StdEncoding.DecodeString(comment.Image)
+	postIdStr := r.FormValue("post_id")
+	if postIdStr == "" {
+		log.Println("post_id is empty")
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	postId, err := strconv.Atoi(postIdStr)
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	if image != nil {
-		err = sqlite.AddComment(comment.PostId, session.UserID, comment.Content, image, comment.CreatedAt)
+	
+
+	userId := session.UserID
+	content := r.FormValue("content")
+	image := r.FormValue("image")
+	createdAt := Time.Now().Format("2006-01-02 15:04:05")
+	log.Println("post_id:", postId)
+
+	// modify image to []byte
+	img, err := base64.StdEncoding.DecodeString(image)
+	if err != nil {
+		log.Println(err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	if img != nil {
+		err = sqlite.AddComment(postId, userId, content, img, createdAt)
 		if err != nil {
 			log.Println(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 	} else {
-		err = sqlite.AddComment(comment.PostId, session.UserID, comment.Content, nil, comment.CreatedAt)
+		err = sqlite.AddComment(postId, userId, content, nil, createdAt)
 		if err != nil {
 			log.Println(err)
 			w.WriteHeader(http.StatusInternalServerError)
