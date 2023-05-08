@@ -199,6 +199,15 @@
   resize: none;
 }
 
+.comment-box {
+  margin-top: 20px;
+  resize: none;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  height: 120px;
+}
+
 @media screen and (max-width: 1000px) {
   .user-list-container {
     position: static;
