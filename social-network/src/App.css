@@ -1,5 +1,6 @@
 html {
-  background-color: #2e424d;}
+  background-color: #2e424d;
+}
 h1 {
   font-size: 36px;
   color: #f2f2f2;
@@ -56,16 +57,17 @@ p {
 
 nav {
   display: flex;
+
   justify-content: space-between;
   align-items: center;
   height: 80px;
-  padding: 0 20px;
-  background-color: #f8f8f8;
+  background-color: #f2eded;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 ul {
   display: flex;
+
   list-style: none;
 }
 

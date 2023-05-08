@@ -1,21 +1,41 @@
 .card {
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-  }
-  
-  .card-body {
-    padding: 20px;
-  }
-  
-  .card-title {
-    margin-bottom: 10px;
-    font-size: 22px;
-  }
-  
-  .card-text {
-    font-size: 16px;
-    color: #666;
-  }
-  
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.card-body {
+  padding: 20px;
+  text-align: center;
+}
+
+.card-title {
+  margin-bottom: 10px;
+  font-size: 22px;
+}
+
+.card-text {
+  font-size: 16px;
+  color: #666;
+}
+
+.card-email {
+  font-size: 16px;
+  color: #666;
+}
+
+.card-nickname {
+  font-size: 16px;
+  color: #666;
+}
+
+.card-aboutme {
+  font-size: 16px;
+  color: #666;
+}
+
+.card-birthday {
+  font-size: 16px;
+  color: #666;
+}
