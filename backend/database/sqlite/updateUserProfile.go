@@ -3,9 +3,10 @@ package sqlite
 import (
 	"bytes"
 	"fmt"
+	"log"
 )
 
-func UpdateUserProfile(userID, email, nickname, aboutMe, fileName string, fileContent []byte) error {
+func UpdateUserProfile(userID, email, nickname, aboutMe, fileName string, fileContent []byte, newPassword string) error {
 	db, err := OpenDb()
 	if err != nil {
 		return err
@@ -17,6 +18,18 @@ func UpdateUserProfile(userID, email, nickname, aboutMe, fileName string, fileCo
 	// Update user data
 	var updateFields bytes.Buffer
 	var updateValues []interface{}
+
+	if newPassword != "" {
+		password, err := hashPassword(newPassword)
+		if err != nil {
+			log.Println(err)
+			//tx.Rollback() is this essential?
+			return err
+		}
+
+		updateFields.WriteString(" password = ?,")
+		updateValues = append(updateValues, password)
+	}
 
 	if email != "" {
 		updateFields.WriteString("email = ?,")
