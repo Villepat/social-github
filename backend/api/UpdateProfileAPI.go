@@ -4,6 +4,7 @@ package api
 import (
 	// ... other imports ...
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -60,7 +61,10 @@ func UpdateProfileAPI(w http.ResponseWriter, r *http.Request) {
 		}
 
 		fileName = fileHeader.Filename
+
 	}
+	fmt.Println("Filename:", fileName)                    // Print the filename
+	fmt.Println("File content length:", len(fileContent)) // Print the content length
 	if newPassword != "" && newPassword != confirmPassword {
 		http.Error(w, "Error updating user profile: Passwords do not match", http.StatusBadRequest)
 		return

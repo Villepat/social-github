@@ -12,8 +12,6 @@ func UpdateUserProfile(userID, email, nickname, aboutMe, fileName string, fileCo
 		return err
 	}
 	defer db.Close()
-	//print received data
-	fmt.Println(userID, email, nickname, aboutMe, fileName, "at updateuserprofile in sqlite")
 
 	// Update user data
 	var updateFields bytes.Buffer
@@ -62,20 +60,16 @@ func UpdateUserProfile(userID, email, nickname, aboutMe, fileName string, fileCo
 		}
 	}
 
-	// Update avatar if a new one was uploaded
+	// Update avatar and avatarname if a new one was uploaded
 	if fileName != "" {
-		stmt, err := db.Prepare("UPDATE users SET avatar = ? WHERE user_id = ?")
+		stmt, err := db.Prepare("UPDATE users SET avatar = ?, avatarname = ? WHERE user_id = ?")
 		if err != nil {
-			fmt.Println("error at updateuserprofile in sqlite")
 			return err
 		}
-		_, err = stmt.Exec(fileContent, userID)
+		_, err = stmt.Exec(fileContent, fileName, userID)
 		if err != nil {
-			fmt.Println("error at updateuserprofile in sqlite")
 			return err
 		}
 	}
-	fmt.Println("no error at updateuserprofile in sqlite")
-
 	return nil
 }
