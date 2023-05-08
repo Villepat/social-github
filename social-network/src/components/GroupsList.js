@@ -51,7 +51,7 @@ const createGroup = async () => {
     return 200;
   } else {
     alert("Error creating group.");
-    return
+    return;
   }
 };
 
@@ -92,9 +92,9 @@ const GroupsList = () => {
             id="group-name"
           />
           <label className="group-form-label">Group Description</label>
-          <input
+          <textarea
             className="group-form-input"
-            type="text"
+            type="textarea"
             placeholder="Group Description"
             id="group-description"
           />
@@ -103,24 +103,24 @@ const GroupsList = () => {
           </button>
         </form>
       </div>
-        {groups ? (
-          <div>
-            <h1 className="group-header">Groups</h1>
-            <div className="group-list">
-              <div className="group">
-                {groups.map((group) => (
-                  <div key={group.Id} className="group">
-                    <h3 className="group-listview-title">{group.Title}</h3>
-                    <h4 className="group-listview-description">{group.Description}</h4>
-                    <h4 className="timestamp">{group.CreatedAt}</h4>
-                    <Link to={`/groups/${group.Id}`}>
-                      <button className="group-button">View Group</button>
-                    </Link>
-                  </div>
-                ))}
+      {groups ? (
+        <div>
+          <h1 className="group-header">Groups</h1>
+          <div className="group-list">
+            {groups.map((group) => (
+              <div key={group.Id} className="group">
+                <h3 className="group-listview-title">{group.Title}</h3>
+                <h4 className="group-listview-description">
+                  {group.Description}
+                </h4>
+                <h4 className="timestamp">{group.CreatedAt}</h4>
+                <Link to={`/groups/${group.Id}`}>
+                  <button className="group-button">View Group</button>
+                </Link>
               </div>
-            </div>
+            ))}
           </div>
+        </div>
       ) : (
         <h1 className="group-header">No Groups</h1>
       )}

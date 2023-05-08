@@ -15,12 +15,18 @@
   font-size: 2.5rem;
   font-weight: 500;
   margin-bottom: 10px;
-  color: red;
 }
 .group {
   width: 500px;
   font-size: 2.5rem;
   font-weight: 500;
   margin-bottom: 10px;
-  color: red;
+}
+
+.group-form-container {
+  text-align: center;
+}
+
+.group-form {
+  text-align: center;
 }
