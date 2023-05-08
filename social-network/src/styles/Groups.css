@@ -1,96 +1,101 @@
 .group-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  .group-form {
-    width: 50%;
-    margin-bottom: 40px;
-  }
-  
-  .group-form-header {
-    font-size: 28px;
-    margin-bottom: 20px;
-  }
-  
-  .group-form-label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .group-form-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  .group-form-button {
-    padding: 10px 20px;
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .group-header {
-    font-size: 28px;
-    margin-bottom: 20px;
-  }
-  
-  .group-list {
-    width: 50%;
-  }
-  
-  .group {
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  .group h3 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .group h4 {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .group-button {
-    padding: 10px 20px;
-    background-color: #008CBA;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
 
-  .group-listview-title {
-    font-size: 28px;
-    margin-bottom: 20px;
-    color: #fff;
-  }
+.group-form {
+  margin-bottom: 40px;
+}
 
-  .group-listview-description {
-    font-size: 18px;
-    margin-bottom: 20px;
-    color: #fff;
-  }
+.group-form-header {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
 
-  .group-form-label {
-    color: #fff;
-  }
+.group-form-label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.group-form-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.group-form-button {
+  padding: 10px 20px;
+  background-color: #008cba;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.group-header {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.group-list {
+  width: 50%;
+}
+
+.group {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.group h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.group h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.group-button {
+  padding: 10px 20px;
+  background-color: #008cba;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.group-listview-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.group-listview-description {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.group-form-label {
+  font-size: large;
+  color: #fdfdfd;
+}
 
 .timestamp {
   font-size: 12px;
   color: #ccc;
+}
+
+#group-description {
+  height: 200px;
+  resize: none;
 }

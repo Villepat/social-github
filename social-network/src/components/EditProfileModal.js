@@ -33,6 +33,8 @@ function EditProfileModal(props) {
                 <label htmlFor="avatar" className="form-avatar">
                   New Avatar
                 </label>
+              </div>
+              <div className="input-wrapper">
                 <input
                   type="file"
                   className="avatar-box"
@@ -44,9 +46,11 @@ function EditProfileModal(props) {
                 <label htmlFor="nickname" className="form-nickname">
                   New Nickname
                 </label>
+              </div>
+              <div className="input-wrapper">
                 <input
                   type="text"
-                  className="form-control"
+                  className="nickname-box"
                   id="nickname"
                   value={nickname}
                   onChange={(e) => setNickname(e.target.value)}
@@ -56,9 +60,11 @@ function EditProfileModal(props) {
                 <label htmlFor="email" className="form-email">
                   New Email
                 </label>
+              </div>
+              <div className="input-wrapper">
                 <input
                   type="email"
-                  className="form-control"
+                  className="email-box"
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -68,6 +74,8 @@ function EditProfileModal(props) {
                 <label htmlFor="about-me" className="form-about">
                   New 'About Me' Text
                 </label>
+              </div>
+              <div className="input-wrapper">
                 <textarea
                   className="about-textarea"
                   id="about-me"

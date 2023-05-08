@@ -97,12 +97,14 @@ func ServePosting(w http.ResponseWriter, r *http.Request) {
 	if !pic {
 		err = sqlite.AddPosts(userId, content, time.Now().Format("2006-01-02 15:04:05"), poster.FullName, privacy)
 		if err != nil {
+			log.Println(err)
 			fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
 			return
 		}
 	} else {
 		err = sqlite.AddPosts2(userId, content, time.Now().Format("2006-01-02 15:04:05"), poster.FullName, privacy, fileName, fileContent)
 		if err != nil {
+			log.Println(err)
 			fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
 			return
 		}

@@ -96,7 +96,7 @@
 
 .user-list-header {
   color: #fff;
-  background-color: #2e424d;
+
   margin-left: 1px;
   font-size: 20px;
   font-weight: bold;
@@ -153,6 +153,13 @@
 }
 
 .avatar-box {
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  resize: none;
+}
+
+.avatar-box {
   font-size: 20px;
   font-weight: bold;
   text-align: center;
@@ -160,10 +167,20 @@
 
 .newnickname {
   display: flex;
+  flex-direction: column;
   font-size: 20px;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
+.title-wrapper {
+  margin-bottom: 5px;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
 .newemail {
   font-size: 20px;
   font-weight: bold;

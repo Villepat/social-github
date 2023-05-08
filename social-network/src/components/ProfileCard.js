@@ -17,6 +17,10 @@ function ProfileCard(props) {
     setShowEditModal(false);
   };
 
+  const handleFollow = () => {
+    console.log("follow button pressed");
+  };
+
   const handleModalSave = async (updatedData) => {
     const { userId, email, nickname, aboutMe, newAvatar, newAvatarBase64 } =
       updatedData;
@@ -91,12 +95,16 @@ function ProfileCard(props) {
 
         <p className="card-birthday">date of birth: {user.birthday}</p>
 
-        {ownProfile && (
+        {ownProfile ? (
           <button
             className="editprofile-button"
             onClick={() => setShowEditModal(true)}
           >
             Edit Profile
+          </button>
+        ) : (
+          <button className="btn btn-primary" onClick={handleFollow}>
+            Follow
           </button>
         )}
       </div>
