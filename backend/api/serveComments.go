@@ -103,7 +103,8 @@ func GetComments(PostID int) ([]CommentForResponse, error) {
 		if err != nil {
 			return nil, err
 		}
-		db.QueryRow("SELECT fullName FROM users WHERE id = ?", comment.UserID).Scan(&comment.FullName)
+		log.Println("comment.UserID:", comment.UserID)
+		db.QueryRow("SELECT fullname FROM users WHERE user_id = ?", comment.UserID).Scan(&comment.FullName)
 
 		// append the comment to the slice
 		comments = append(comments, comment)
