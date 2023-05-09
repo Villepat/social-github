@@ -24,7 +24,6 @@ const fetchGroupData = async (groupNumber) => {
 };
 
 
-
 const GroupPage = () => {
   const url = window.location.href;
   const pattern = /groups\/(\d+)/;
@@ -41,16 +40,15 @@ const GroupPage = () => {
     getGroupData();
   }, []);
 
+
   return (
     <div className="group-page">
       <div className="group-page-header">
         <h1>{groupData.name}</h1>
         <p>{groupData.description}</p>
+      <button className="join-button">Join Group</button>
       </div>
-      <button className="group-page-join-button">Join Group</button>
-
-      <div className="group-page-body">
-        <div className="group-page-body-left">
+        <div className="group-page-body">
           <h1>Members</h1>
           <p>User 1</p>
           <p>User 2</p>
@@ -60,32 +58,38 @@ const GroupPage = () => {
             ))}
           </ul> */}
         </div>
-        <div className="group-page-body-right">
+
+
+
+        <div className="group-page-body">
           <h1>Posts</h1>
-          <p>Post 1</p>
-          <p>Post 2</p>
-          {/* <ul>
-            {groupData.posts.map((post) => (
-              <li key={post}>{post}</li>
-            ))}
-          </ul> */}
+          <div className="post-container">
+            <textarea
+              className="post-textarea"
+              placeholder="What's on your mind?"
+              id="post-textarea"
+            />
+            <button className="post-button">Post</button>
+            <h2>display the post here:</h2>
+            </div>
+            </div>
           <div className="group-page-event">
             <h1>Events</h1>
             <p>Event 1</p>
           </div>
-
           <div className="group-chat-modal">
-            <button className="group-chat-modal-button">Open Groupchat</button>
+            <button className="chat-button">Open Groupchat</button>
+          </div>
 
-            {/* //popup-modal in the right corner */}
+            {/* popup-modal for the group-chat */}
             <div className="group-chat-modal-content">
               <div className="group-chat-modal-header">
                 <span className="group-chat-modal-close">&times;</span>
-                <h2>Group Chat</h2>
-
+                <h1>Group Chat</h1>
+              </div>
                 <div className="group-chat-modal-body">
-                  <p>Some text</p>
-                  <p>Some other text...</p>
+                  <p>Chat here ... </p>
+                      </div>
                     <div className="group-chat-modal-footer-input">
                       <input
                         type="text"
@@ -93,24 +97,13 @@ const GroupPage = () => {
                         name="msg"
                         required
                       />
-                      <button type="submit" className="group-chat-modal-send">
+                      <button type="submit" className="chat-send-button">
                         Send
                       </button>
-                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-
-
-        </div>
-      </div>
-  );
+          );
 };
-
-
-
-
 
 export default GroupPage;
