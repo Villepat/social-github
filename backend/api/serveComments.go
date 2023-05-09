@@ -15,6 +15,7 @@ type CommentForResponse struct {
 	CommentID int    `json:"comment_id"`
 	PostID    int    `json:"post_id"`
 	UserID    int    `json:"user_id"`
+	FullName  string `json:"full_name"`
 	Content   string `json:"content"`
 	Image     string `json:"image"`
 	CreatedAt string `json:"created_at"`
@@ -22,7 +23,7 @@ type CommentForResponse struct {
 
 func ServeComments(w http.ResponseWriter, r *http.Request) {
 	// set cors headers
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
@@ -54,6 +55,7 @@ func ServeComments(w http.ResponseWriter, r *http.Request) {
 	// get the posts from the database
 	comments, err := GetComments(PostIDInt)
 	if err != nil {
+		log.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -64,6 +66,7 @@ func ServeComments(w http.ResponseWriter, r *http.Request) {
 		Comments []CommentForResponse `json:"comments"`
 	}{Comments: comments})
 	if err != nil {
+		log.Println("Error encoding JSON:", err)
 		fmt.Println("Error encoding JSON:", err)
 		return
 	}
@@ -72,6 +75,8 @@ func ServeComments(w http.ResponseWriter, r *http.Request) {
 
 // GetComments gets all the comments from the database
 func GetComments(PostID int) ([]CommentForResponse, error) {
+	log.Println("GetComments")
+	log.Println("PostID:", PostID)
 	db, err := sqlite.OpenDb()
 	if err != nil {
 		return nil, err
@@ -80,7 +85,7 @@ func GetComments(PostID int) ([]CommentForResponse, error) {
 	defer db.Close()
 
 	// get all the comments from the database
-	rows, err := db.Query("SELECT * FROM comments WHERE post_id = ?", PostID)
+	rows, err := db.Query("SELECT id, post_id, user_id, content, image, created_at FROM comments WHERE post_id = ?", PostID)
 	if err != nil {
 		return nil, err
 	}
@@ -98,6 +103,7 @@ func GetComments(PostID int) ([]CommentForResponse, error) {
 		if err != nil {
 			return nil, err
 		}
+		db.QueryRow("SELECT fullName FROM users WHERE id = ?", comment.UserID).Scan(&comment.FullName)
 
 		// append the comment to the slice
 		comments = append(comments, comment)
