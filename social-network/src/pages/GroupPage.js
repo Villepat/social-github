@@ -1,44 +1,116 @@
 import React from "react";
 import "../styles/GroupPage.css";
 
-const GroupPage = (groupNumber) => {
+const fetchGroupData = async (groupNumber) => {
+  const requestOptions = {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  };
+
+  const response = await fetch(
+    `http://localhost:6969/api/serve-group-data?id=${groupNumber}`,
+    requestOptions
+  );
+
+  const data = await response.json();
+  if (response.status === 200) {
+    console.log("group data fetched");
+    console.log(data);
+    return data.group;
+  } else {
+    alert("Error fetching group data.");
+  }
+};
+
+
+
+const GroupPage = () => {
+  const url = window.location.href;
+  const pattern = /groups\/(\d+)/;
+  const match = url.match(pattern);
+  console.log(match);
+  const groupNumber = match[1];
+  const [groupData, setGroupData] = React.useState([]);
+
+  React.useEffect(() => {
+    const getGroupData = async () => {
+      const groupDataFromServer = await fetchGroupData(groupNumber);
+      setGroupData(groupDataFromServer);
+    };
+    getGroupData();
+  }, []);
+
   return (
-    <div className="group-container">
-      <h1 className="group-name">GroupName</h1>
-      <div className="group-posts">
-        <div className="group-post">
-          <h2>Post 1</h2>
-          <p>Post 1 description</p>
-          <h2>Post 2</h2>
-          <p>Post 2 description</p>
-        </div>
+    <div className="group-page">
+      <div className="group-page-header">
+        <h1>{groupData.name}</h1>
+        <p>{groupData.description}</p>
       </div>
-      <div className="group-members">
-        <h1 className="group-members-header">Members</h1>
-        <div className="group-members-list">
-          <div className="group-member">
-            <h2>Member 1</h2>
-            <h2>Member 2</h2>
-            <h3>Member 3</h3>
+      <button className="group-page-join-button">Join Group</button>
+
+      <div className="group-page-body">
+        <div className="group-page-body-left">
+          <h1>Members</h1>
+          <p>User 1</p>
+          <p>User 2</p>
+          {/* <ul>
+            {groupData.members.map((member) => (
+              <li key={member}>{member}</li>  
+            ))}
+          </ul> */}
+        </div>
+        <div className="group-page-body-right">
+          <h1>Posts</h1>
+          <p>Post 1</p>
+          <p>Post 2</p>
+          {/* <ul>
+            {groupData.posts.map((post) => (
+              <li key={post}>{post}</li>
+            ))}
+          </ul> */}
+          <div className="group-page-event">
+            <h1>Events</h1>
+            <p>Event 1</p>
           </div>
-        </div>
-      </div>
-      <div className="group-join">
-        <button className="join-button">Join Group</button>
-      </div>
-      <div className="event-list">
-        <h1 className="event-list-header">Events</h1>
-        <div className="event-list-container">
-          <div className="event">
-            <h2>Event 1</h2>
-            <p>Event 1 description</p>
-            <h2>Event 2</h2>
-            <p>Event 2 description</p>
+
+          <div className="group-chat-modal">
+            <button className="group-chat-modal-button">Open Groupchat</button>
+
+            {/* //popup-modal in the right corner */}
+            <div className="group-chat-modal-content">
+              <div className="group-chat-modal-header">
+                <span className="group-chat-modal-close">&times;</span>
+                <h2>Group Chat</h2>
+
+                <div className="group-chat-modal-body">
+                  <p>Some text</p>
+                  <p>Some other text...</p>
+                    <div className="group-chat-modal-footer-input">
+                      <input
+                        type="text"
+                        placeholder="Type a message"
+                        name="msg"
+                        required
+                      />
+                      <button type="submit" className="group-chat-modal-send">
+                        Send
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+
+
         </div>
       </div>
-    </div>
   );
 };
+
+
+
+
 
 export default GroupPage;

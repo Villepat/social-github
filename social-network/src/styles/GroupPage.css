@@ -1,11 +1,10 @@
-.group-container {
+.group-page {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
+  margin: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
-.group-container .group-name {
+/* .group-container .group-name {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,18 +14,14 @@
   font-size: 2.5rem;
   font-weight: 500;
   margin-bottom: 10px;
-}
-.group {
-  width: 500px;
-  font-size: 2.5rem;
-  font-weight: 500;
-  margin-bottom: 10px;
-}
+} */
 
-.group-form-container {
-  text-align: center;
-}
-
-.group-form {
-  text-align: center;
+.group-page-body-left {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  width: 70%;
+  margin-bottom: 20px;
+  margin-left: 20px;
 }
