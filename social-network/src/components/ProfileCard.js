@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-
 import "../styles/ProfileCard.css";
-
 import EditProfileModal from "./EditProfileModal";
+import Follow from "./Follow";
 
 function ProfileCard(props) {
   const { user, ownProfile, setUser, userId } = props;
@@ -18,7 +17,8 @@ function ProfileCard(props) {
   };
 
   const handleFollow = () => {
-    console.log("follow button pressed");
+    console.log("follow");
+    Follow(userId);
   };
 
   const handleModalSave = async (updatedData) => {

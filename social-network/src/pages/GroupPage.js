@@ -23,8 +23,6 @@ const fetchGroupData = async (groupNumber) => {
   }
 };
 
-
-
 const GroupPage = () => {
   const url = window.location.href;
   const pattern = /groups\/(\d+)/;
@@ -39,7 +37,7 @@ const GroupPage = () => {
       setGroupData(groupDataFromServer);
     };
     getGroupData();
-  }, []);
+  }, [groupNumber]);
 
   return (
     <div className="group-page">
@@ -86,31 +84,25 @@ const GroupPage = () => {
                 <div className="group-chat-modal-body">
                   <p>Some text</p>
                   <p>Some other text...</p>
-                    <div className="group-chat-modal-footer-input">
-                      <input
-                        type="text"
-                        placeholder="Type a message"
-                        name="msg"
-                        required
-                      />
-                      <button type="submit" className="group-chat-modal-send">
-                        Send
-                      </button>
-                    </div>
+                  <div className="group-chat-modal-footer-input">
+                    <input
+                      type="text"
+                      placeholder="Type a message"
+                      name="msg"
+                      required
+                    />
+                    <button type="submit" className="group-chat-modal-send">
+                      Send
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
+    </div>
   );
 };
-
-
-
-
 
 export default GroupPage;

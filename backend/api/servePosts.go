@@ -51,7 +51,6 @@ func ServePosts(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
 	}
 
-	log.Println(posts)
 
 	// create the response
 	response := Response{
@@ -99,7 +98,6 @@ func GetPosts() ([]PostForResponse, error) {
 		// Encode the image data to base64
 		if imageData != nil {
 			post.Picture = base64.StdEncoding.EncodeToString(imageData)
-			log.Println("has image")
 		}
 
 		posts = append(posts, post)

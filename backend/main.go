@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"social-network/backend/api"
 	"social-network/backend/database/sqlite"
+	"social-network/backend/ws"
 )
 
 func main() {
@@ -26,6 +27,8 @@ func main() {
 	http.HandleFunc("/api/commenting", api.CommentingAPI)
 	http.HandleFunc("/api/serve-group-data", api.ServeSingleGroup)
 	http.HandleFunc("/api/serve-comments", api.ServeComments)
+
+	ws.SetupRoutes()
 
 	log.Println("Server running on port 6969")
 	log.Fatal(http.ListenAndServe(":6969", nil))

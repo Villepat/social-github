@@ -7,6 +7,7 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
+  const [ws, setWs] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [userID, setUserID] = useState(null);
   const [nickname, setNickname] = useState(null);
@@ -24,6 +25,12 @@ export function AuthProvider({ children }) {
         setLoggedIn(true);
         setUserID(data.userID);
         setNickname(data.nickname);
+
+        // Create a WebSocket connection when the user is logged in
+        if (!ws) {
+          const newWebSocket = new WebSocket("ws://localhost:6969/ws");
+          setWs(newWebSocket);
+        }
       } else {
         setLoggedIn(false);
         setUserID(null);
@@ -47,6 +54,12 @@ export function AuthProvider({ children }) {
         setLoggedIn(false);
         setUserID(null);
         setNickname(null);
+
+        // Close the WebSocket connection when the user logs out
+        if (ws) {
+          ws.close();
+          setWs(null);
+        }
       }
     } catch (error) {
       console.error("Error logging out:", error);
@@ -65,6 +78,7 @@ export function AuthProvider({ children }) {
     nickname,
     checkLoginStatus,
     logout,
+    ws,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
