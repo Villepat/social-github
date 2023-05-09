@@ -44,11 +44,11 @@ func UpdateUserProfile(userID, email, nickname, aboutMe, fileName string, fileCo
 		updateValues = append(updateValues, aboutMe)
 	}
 
-	// Remove the trailing comma
-	updateFields.Truncate(updateFields.Len() - 1)
-
 	// Prepare the statement only if there are fields to update
 	if updateFields.Len() > 0 {
+
+		// Remove the trailing comma
+		updateFields.Truncate(updateFields.Len() - 1)
 		stmt, err := db.Prepare(fmt.Sprintf("UPDATE users SET %s WHERE user_id = ?", updateFields.String()))
 		if err != nil {
 			return err
