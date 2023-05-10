@@ -1,35 +1,15 @@
-.group-page {
-  display: flex;
-  flex-direction: column;
-  margin: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+*{box-sizing: border-box;
 }
-/* .group-container .group-name {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: 20px;
-  font-size: 2.5rem;
-  font-weight: 500;
-  margin-bottom: 10px;
-} */
-.group-page-header {
+  .group-page-header {
   border: 1px solid #ccc;
   border-radius: 5px;
   margin: 20px;
   padding: 20px;
 }
 
-*{box-sizing: border-box;
-}
-
-.group-page-body {
-  float: left;
-  flex-wrap: nowrap;
-  width: 50%;
+.group-page-post {
+  position: relative;
+  width: 9%;
   padding: 20px;
   /* display: flex;
   flex-direction: column;
@@ -39,8 +19,8 @@
   margin-left: 20px; */
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 20px;
-  margin: 20px;
+  padding: 10px;
+  margin: 10px;
 }
 
 .group-chat-modal-content {
@@ -112,4 +92,17 @@
   max-width: 500px;
   min-height: 250px;
   max-height: 500px;
+}
+
+.group-page-members, .group-page-post {
+  position: flex;
+  top: 20px;
+  left: 20px;
+  width: 200px;
+  min-height: 190px;
+  z-index: 2;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 20px;
+  padding: 20px;
 }
