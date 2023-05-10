@@ -38,11 +38,8 @@ const postGroupPost = async (groupNumber) => {
     requestOptions
   );
 
-  const data = await response.json();
   if (response.status === 200) {
     console.log("group post submitted");
-    console.log(data);
-    return data.group;
   } else {
     alert("Error posting to group.");
   }
