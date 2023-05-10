@@ -10,6 +10,8 @@ import React from "react";
 import { AuthProvider } from "./AuthContext";
 import Groups from "./pages/Groups";
 import GroupPage from "./pages/GroupPage";
+import SinglePostView from "./pages/SinglePostView";
+
 
 function App() {
   return (
@@ -22,8 +24,10 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/:userId" element={<Profile />} />
           <Route path="/about" element={<About />} />
+          <Route path="/post/:postId" element={<SinglePostView/>} />
           <Route path="/groups" element={<Groups />} />
           <Route path="/groups/:groupId" element={<GroupPage />} />
+
           <Route path="*" element={<ErrorPage errorType={"404"} />} />
         </Routes>
       </AuthProvider>

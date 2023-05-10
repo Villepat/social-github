@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"social-network/backend/database/sqlite"
+	"strconv"
 )
 
 // struct for the response
@@ -40,6 +41,42 @@ func ServePosts(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "OPTIONS" {
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, "{\"status\": 200, \"message\": \"success\"}")
+		return
+	}
+
+	postID := r.URL.Query().Get("id")
+	if postID != "" {
+		log.Println("request is for single post", postID)
+		postIDInt, err := strconv.Atoi(postID)
+		if err != nil {
+			log.Println(err)
+			fmt.Println(err)
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+		posts, err := fetchSinglePost(postIDInt)
+		if err != nil {
+			log.Println(err)
+			fmt.Println(err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		// create the response
+		response := Response{
+			Posts: []PostForResponse{posts},
+		}
+
+		// convert the response to json
+		responseJSON, err := json.Marshal(response)
+		if err != nil {
+			fmt.Println(err)
+			// send a response with the error
+			fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
+		}
+
+		// write the response
+		w.Write(responseJSON)
 		return
 	}
 
@@ -106,4 +143,40 @@ func GetPosts() ([]PostForResponse, error) {
 	}
 
 	return posts, nil
+}
+
+func fetchSinglePost(PostID int) (PostForResponse, error) {
+	db, err := sqlite.OpenDb()
+	if err != nil {
+		log.Println("Error opening the database, GetPosts(): ", err)
+	}
+
+	defer db.Close()
+
+	// get the post
+	post := PostForResponse{}
+
+	rows, err := db.Query("SELECT id, user_id, content, author, created_at, image FROM posts WHERE id = ?", PostID)
+
+	if err != nil {
+		log.Println("Error getting the posts, GetPosts(): ", err)
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var imageData []byte
+		err := rows.Scan(&post.Id, &post.UserId, &post.Content, &post.FullName, &post.Date, &imageData)
+		if err != nil {
+			log.Println("Error scanning the posts, GetPosts(): ", err)
+		}
+
+		// Encode the image data to base64
+		if imageData != nil {
+			post.Picture = base64.StdEncoding.EncodeToString(imageData)
+			log.Println("has image")
+		}
+	}
+
+	return post, nil
 }
