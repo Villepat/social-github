@@ -5,6 +5,7 @@ import Follow from "./Follow";
 
 function ProfileCard(props) {
   const { user, ownProfile, setUser, userId } = props;
+  const [shouldFollow, setShouldFollow] = useState(false);
 
   const [showEditModal, setShowEditModal] = useState(false);
 
@@ -17,10 +18,9 @@ function ProfileCard(props) {
   };
 
   const handleFollow = () => {
-    console.log("follow");
-    Follow(userId);
+    console.log("handleFollow called");
+    setShouldFollow(true);
   };
-
   const handleModalSave = async (updatedData) => {
     const { userId, email, nickname, aboutMe, newAvatar, newAvatarBase64 } =
       updatedData;
@@ -103,9 +103,10 @@ function ProfileCard(props) {
             Edit Profile
           </button>
         ) : (
-          <button className="btn btn-primary" onClick={handleFollow}>
-            Follow
-          </button>
+          <>
+            <button onClick={handleFollow}>Follow</button>
+            {shouldFollow && <Follow userId={userId} />}
+          </>
         )}
       </div>
 

@@ -27,6 +27,7 @@ func main() {
 	http.HandleFunc("/api/commenting", api.CommentingAPI)
 	http.HandleFunc("/api/serve-group-data", api.ServeSingleGroup)
 	http.HandleFunc("/api/serve-comments", api.ServeComments)
+	http.HandleFunc("/api/follow", api.FollowAPI)
 
 	ws.SetupRoutes()
 
