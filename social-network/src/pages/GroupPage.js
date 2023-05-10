@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/GroupPage.css";
+import "../styles/Groups.css";
 
 const fetchGroupData = async (groupNumber) => {
   const requestOptions = {
@@ -78,58 +78,51 @@ const GroupPage = () => {
       <div className="group-page-header">
         <h1>{groupData.name}</h1>
         <p>{groupData.description}</p>
-      <button className="join-button">Join Group</button>
+      <button className="join-group-button">Join Group</button>
       </div>
-        <div className="group-page-body">
-          <h1>Members</h1>
-          <p>User 1</p>
-          <p>User 2</p>
-          {/* <ul>
-            {groupData.members.map((member) => (
-              <li key={member}>{member}</li>  
-            ))}
-          </ul> */}
-        </div>
+      <div className="group-page-members">
+      <h1>Members</h1>
+      <p>User 1</p>
+      </div>
 
+          <div className="group-page-event">
+            <h1>Events</h1>
+            <p>Event 1</p>
+          </div>
 
-
-        <div className="group-page-body">
+        <div className="group-page-post">
           <h1>Posts</h1>
-          <div className="post-container">
+          <div className="group-post-container">
             <textarea
               className="post-textarea"
               placeholder="What's on your mind?"
               id="post-textarea"
             />
-            <button type="submit" className="post-button" onClick={handleSubmit}>Post</button>
-            <h2>display the post here:</h2>
+            <button type="submit" className="group-button-post" onClick={handleSubmit}>Post</button>
+            <div className="post-display">
+            <h3>display the post here: <br></br>. <br></br>.</h3>
             </div>
             </div>
-          <div className="group-page-event">
-            <h1>Events</h1>
-            <p>Event 1</p>
-          </div>
+            </div>
           <div className="group-chat-modal">
-            <button className="chat-button">Open Groupchat</button>
+            <button className="group-button">Open Groupchat</button>
           </div>
-
-            {/* popup-modal for the group-chat */}
             <div className="group-chat-modal-content">
               <div className="group-chat-modal-header">
                 <span className="group-chat-modal-close">&times;</span>
                 <h1>Group Chat</h1>
               </div>
                 <div className="group-chat-modal-body">
-                  <p>Chat here ... </p>
+                  <p>Messages here ... </p>
                       </div>
                     <div className="group-chat-modal-footer-input">
-                      <input
+                      <input className="group-chat-modal-input"
                         type="text"
                         placeholder="Type a message"
                         name="msg"
                         required
                       />
-                      <button type="submit" className="chat-send-button">
+                      <button type="submit" className="group-button">
                         Send
                       </button>
                   </div>
