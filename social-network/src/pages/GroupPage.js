@@ -23,6 +23,28 @@ const fetchGroupData = async (groupNumber) => {
   }
 };
 
+const postGroupPost = async (groupNumber) => {
+  const postInput = document.getElementById("post-textarea");
+  const post = postInput.value;
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ group_id: groupNumber, content: post }),
+  };
+
+  const response = await fetch(
+    `http://localhost:6969/api/group-posting`,
+    requestOptions
+  );
+
+  if (response.status === 200) {
+    console.log("group post submitted");
+  } else {
+    alert("Error posting to group.");
+  }
+};
+
 
 const GroupPage = () => {
   const url = window.location.href;
@@ -39,6 +61,16 @@ const GroupPage = () => {
     };
     getGroupData();
   }, []);
+
+  if (!groupData) {
+    return <div>loading...</div>;
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("post submitted");
+    postGroupPost(groupNumber);
+  }
 
 
   return (
@@ -69,7 +101,7 @@ const GroupPage = () => {
               placeholder="What's on your mind?"
               id="post-textarea"
             />
-            <button className="post-button">Post</button>
+            <button type="submit" className="post-button" onClick={handleSubmit}>Post</button>
             <h2>display the post here:</h2>
             </div>
             </div>
