@@ -1,22 +1,43 @@
 import React, { useState } from "react";
 
 function EditProfileModal(props) {
-  const { show, handleClose, handleSave, userId } = props;
-  const [nickname, setNickname] = useState("");
-  const [email, setEmail] = useState("");
-  const [aboutMe, setAboutMe] = useState("");
-  const [avatar, setAvatar] = useState(null);
+  const { show, handleClose, handleSave, userId, currentUserData } = props;
+  const [nickname, setNickname] = useState(currentUserData.nickname);
+  const [email, setEmail] = useState(currentUserData.email);
+  const [aboutMe, setAboutMe] = useState(currentUserData.aboutMe);
+  const [avatar, setAvatar] = useState(
+    currentUserData.avatar
+      ? `data:image/jpeg;base64,${currentUserData.avatar}`
+      : null
+  );
+  const [avatarFile, setAvatarFile] = useState(null); // New state for storing the File object of the avatar
+
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleFileChange = (e) => {
-    setAvatar(e.target.files[0]);
+    const file = e.target.files[0];
+    setAvatarFile(file);
+
+    // Read the file and convert it to a base64 string
+    const reader = new FileReader();
+    reader.onloadend = function () {
+      setAvatar(reader.result);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = () => {
-    console.log("submitting edit profile form");
-    console.log({ userId, nickname, email, aboutMe, avatar });
-    handleSave({ userId, nickname, email, aboutMe, avatar });
+    handleSave({
+      userId,
+      nickname,
+      email,
+      aboutMe,
+      avatar: avatarFile, // Pass the File object of the avatar, not the base64 string
+      newPassword,
+      confirmPassword,
+    });
   };
-
   return (
     <div
       className={`modal ${show ? "show" : ""}`}
@@ -70,6 +91,35 @@ function EditProfileModal(props) {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
+
+              <div className="newpassword">
+                <label htmlFor="newPassword" className="form-newpassword">
+                  New Password
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="newPassword"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+              </div>
+              <div className="confirmPassword">
+                <label
+                  htmlFor="confirmPassword"
+                  className="form-confirmPassword"
+                >
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
+
               <div className="newabout">
                 <label htmlFor="about-me" className="form-about">
                   New 'About Me' Text
