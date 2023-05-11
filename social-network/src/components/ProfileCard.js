@@ -8,6 +8,11 @@ function ProfileCard(props) {
   const [shouldFollow, setShouldFollow] = useState(false);
 
   const [showEditModal, setShowEditModal] = useState(false);
+  const [avatarSrc, setAvatarSrc] = useState(
+    user.avatar
+      ? `data:image/jpeg;base64,${user.avatar}`
+      : "path/to/default/avatar.jpg"
+  );
 
   console.log("user", user);
 
@@ -22,21 +27,26 @@ function ProfileCard(props) {
     setShouldFollow(true);
   };
   const handleModalSave = async (updatedData) => {
-    const { userId, email, nickname, aboutMe, newAvatar, newAvatarBase64 } =
-      updatedData;
+    const {
+      userId,
+      email,
+      nickname,
+      aboutMe,
+      avatar,
+      newPassword,
+      confirmPassword,
+    } = updatedData;
 
     const formData = new FormData();
 
     formData.append("userId", userId);
-
-    formData.append("email", email);
-
-    formData.append("nickname", nickname);
-
-    formData.append("aboutMe", aboutMe);
-
-    if (newAvatar) {
-      formData.append("avatar", newAvatar);
+    if (email) formData.append("email", email);
+    if (nickname) formData.append("nickname", nickname);
+    if (aboutMe) formData.append("aboutMe", aboutMe);
+    if (newPassword) formData.append("password", newPassword);
+    if (confirmPassword) formData.append("confirmPassword", confirmPassword);
+    if (avatar) {
+      formData.append("avatar", avatar);
     }
 
     const requestOptions = {
@@ -56,14 +66,28 @@ function ProfileCard(props) {
       "http://localhost:6969/api/user/update",
       requestOptions
     );
-
     if (response.ok) {
-      const updatedUser = { ...user, email, nickname, aboutMe };
+      const updatedUser = { ...user };
 
-      if (newAvatar) {
-        updatedUser.avatar = newAvatarBase64;
+      if (email) updatedUser.email = email;
+      if (nickname) updatedUser.nickname = nickname;
+      if (aboutMe) updatedUser.aboutme = aboutMe;
+      if (newPassword) updatedUser.newPassword = newPassword;
+      if (confirmPassword) updatedUser.confirmPassword = confirmPassword;
+
+      if (avatar) {
+        const reader = new FileReader();
+        reader.onloadend = function () {
+          // Update the user's avatar data and the avatar source
+          updatedUser.avatar = reader.result;
+          setAvatarSrc(reader.result);
+          setUser(updatedUser);
+        };
+        reader.readAsDataURL(avatar);
+      } else {
+        updatedUser.avatar = user.avatar;
+        setUser(updatedUser);
       }
-
       setUser(updatedUser);
 
       setShowEditModal(false);
@@ -73,10 +97,6 @@ function ProfileCard(props) {
       console.error("Error updating user profile:", errorData.message);
     }
   };
-
-  const avatarSrc = user.avatar
-    ? `data:image/jpeg;base64,${user.avatar}`
-    : "path/to/default/avatar.jpg"; // Replace with the path to a default avatar if necessary
 
   return (
     <div className="card">
@@ -114,7 +134,8 @@ function ProfileCard(props) {
         show={showEditModal}
         handleClose={handleModalClose}
         handleSave={handleModalSave}
-        userId={userId} // Pass the user.user_id as the userId prop
+        userId={userId}
+        currentUserData={user}
       />
     </div>
   );

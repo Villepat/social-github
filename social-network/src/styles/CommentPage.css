@@ -1,0 +1,156 @@
+.comment-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  margin: 10px 10px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  word-break: break-word;
+  position: relative; /* Add position property */
+  z-index: 1;
+  position: absolute;
+  top: 54%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.og-content {
+  width: 100%;
+  height: 180px;
+  padding: 10px;
+  text-align: center;
+}
+
+.og-timecreated {
+  width: 200px;
+  height: 30px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.og-author {
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  text-decoration: underline;
+}
+
+.comment-box {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+}
+
+.submit-comment {
+  width: 100px;
+  height: 25px;
+  display: block;
+  margin: 0 auto;
+
+  border-radius: 5px;
+  border: none;
+  background-color: #98dad9;
+  color: #2e424d;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.comment-section {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  text-align: center;
+}
+
+.commentator {
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  text-decoration: underline;
+}
+
+.new-comment {
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+}
+
+.comment-time {
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+}
+
+.yourcomment {
+  border: 1px solid black;
+  width: 100%;
+}
+
+.commentbox-container {
+  max-height: 450px;
+  overflow-y: scroll;
+}
+
+@media screen and (max-width: 1000px) {
+  .nav {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    background-color: #f2eded;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+  }
+
+  .comment-container {
+    /* Existing styles for comment container */
+    position: absolute;
+    top: 52%;
+    left: 48%;
+    transform: translate(-50%, -50%);
+    width: 95%;
+  }
+  .og-content {
+    /* Existing styles for og-content */
+    height: 120px;
+  }
+  .yourcomment {
+    /* Existing styles for og-content */
+    height: 120px;
+  }
+  .commentator {
+    /* Existing styles for og-content */
+    height: 30px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .nav {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    background-color: #f2eded;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+  }
+
+  .comment-container {
+    /* Existing styles for comment container */
+    position: absolute;
+    top: 75%;
+    left: 47%;
+    transform: translate(-50%, -50%);
+    width: 95%;
+  }
+  .og-content {
+    /* Existing styles for og-content */
+    height: 100px;
+  }
+}

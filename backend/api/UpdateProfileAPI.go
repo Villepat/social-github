@@ -4,6 +4,7 @@ package api
 import (
 	// ... other imports ...
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -37,6 +38,8 @@ func UpdateProfileAPI(w http.ResponseWriter, r *http.Request) {
 	email := r.FormValue("email")
 	nickname := r.FormValue("nickname")
 	aboutMe := r.FormValue("aboutMe")
+	newPassword := r.FormValue("password")
+	confirmPassword := r.FormValue("confirmPassword")
 	//print received data
 	log.Println(userID, email, nickname, aboutMe)
 
@@ -58,10 +61,17 @@ func UpdateProfileAPI(w http.ResponseWriter, r *http.Request) {
 		}
 
 		fileName = fileHeader.Filename
+
+	}
+	fmt.Println("Filename:", fileName)                    // Print the filename
+	fmt.Println("File content length:", len(fileContent)) // Print the content length
+	if newPassword != "" && newPassword != confirmPassword {
+		http.Error(w, "Error updating user profile: Passwords do not match", http.StatusBadRequest)
+		return
 	}
 
 	// Perform update logic (e.g. update user in the database)
-	err = sqlite.UpdateUserProfile(userID, email, nickname, aboutMe, fileName, fileContent)
+	err = sqlite.UpdateUserProfile(userID, email, nickname, aboutMe, fileName, fileContent, newPassword)
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Error updating user profile", http.StatusInternalServerError)

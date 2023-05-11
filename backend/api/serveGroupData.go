@@ -9,9 +9,10 @@ import (
 )
 
 type Group struct {
-	Id          int    `json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	Id          int             `json:"id"`
+	Name        string          `json:"name"`
+	Description string          `json:"description"`
+	Members     []sqlite.Member `json:"members"`
 }
 
 func ServeSingleGroup(w http.ResponseWriter, r *http.Request) {
