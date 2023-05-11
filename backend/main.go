@@ -27,6 +27,7 @@ func main() {
 	http.HandleFunc("/api/serve-group-data", api.ServeSingleGroup)
 	http.HandleFunc("/api/serve-comments", api.ServeComments)
 	http.HandleFunc("/api/group-posting", api.GroupPosting)
+	http.HandleFunc("/api/serve-group-posts", api.ServeGroupPosts)
 
 	log.Println("Server running on port 6969")
 	log.Fatal(http.ListenAndServe(":6969", nil))
