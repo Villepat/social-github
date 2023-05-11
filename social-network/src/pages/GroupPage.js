@@ -1,5 +1,7 @@
 import React from "react";
 import "../styles/Groups.css";
+import EventContainer from "../components/EventContainer";
+import { useAuth } from "../AuthContext"; // import useAuth from AuthContext
 
 const fetchGroupData = async (groupNumber) => {
   const requestOptions = {
@@ -9,7 +11,7 @@ const fetchGroupData = async (groupNumber) => {
   };
 
   const response = await fetch(
-    `http://localhost:6969/api/serve-group-data?id=${groupNumber}`,
+    `http://localhost:6969/api/serve-group-data`,
     requestOptions
   );
 
@@ -46,17 +48,26 @@ const postGroupPost = async (groupNumber) => {
 };
 
 const GroupPage = () => {
+  const { userID } = useAuth(); // Get the userID
   const url = window.location.href;
   const pattern = /groups\/(\d+)/;
   const match = url.match(pattern);
   console.log(match);
   const groupNumber = match[1];
   const [groupData, setGroupData] = React.useState([]);
+  const [eventsData, setEventsData] = React.useState([]);
+  const [newEvent, setNewEvent] = React.useState({
+    title: "",
+    description: "",
+    dateTime: "",
+  });
 
   React.useEffect(() => {
     const getGroupData = async () => {
       const groupDataFromServer = await fetchGroupData(groupNumber);
       setGroupData(groupDataFromServer);
+      const eventsDataFromServer = await fetchEventData(groupNumber);
+      setEventsData(eventsDataFromServer);
     };
     getGroupData();
   }, [groupNumber]);
@@ -69,6 +80,64 @@ const GroupPage = () => {
     e.preventDefault();
     console.log("post submitted");
     postGroupPost(groupNumber);
+  };
+
+  const handleEventChange = (e) => {
+    setNewEvent({
+      ...newEvent,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleEventSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:6969/api/event", {
+      method: "POST",
+      credentials: "include", // to send the session cookie
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        group_id: groupNumber,
+        title: newEvent.title,
+        description: newEvent.description,
+        date_time: newEvent.dateTime,
+      }),
+    });
+    console.log(groupNumber);
+    console.log(newEvent.title);
+    console.log(newEvent.description);
+    console.log(newEvent.dateTime);
+
+    // If response is OK, re-fetch the events
+    if (response.ok) {
+      const eventsDataFromServer = await fetchEventData(groupNumber);
+      setEventsData(eventsDataFromServer);
+    } else {
+      console.error("Failed to create event");
+    }
+  };
+
+  const fetchEventData = async (groupNumber) => {
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    };
+
+    const response = await fetch(
+      `http://localhost:6969/api/serve-events?group_id=${groupNumber}`,
+      requestOptions
+    );
+
+    const data = await response.json();
+    if (response.status === 200) {
+      console.log("events data fetched");
+      console.log(data);
+      return data.events;
+    } else {
+      alert("Error fetching events data.");
+    }
   };
 
   return (
@@ -85,7 +154,38 @@ const GroupPage = () => {
 
       <div className="group-page-event">
         <h1>Events</h1>
-        <p>Event 1</p>
+        <EventContainer
+          groupId={groupNumber}
+          userID={userID}
+          eventsData={eventsData}
+        />
+
+        {/* Use EventContainer component */}
+        {/* Add event form */}
+        <form onSubmit={handleEventSubmit}>
+          <h2>Create event</h2>
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            value={newEvent.title}
+            onChange={handleEventChange}
+          />
+          <input
+            type="text"
+            name="description"
+            placeholder="Description"
+            value={newEvent.description}
+            onChange={handleEventChange}
+          />
+          <input
+            type="datetime-local"
+            name="dateTime"
+            value={newEvent.dateTime}
+            onChange={handleEventChange}
+          />
+          <button type="submit">Create event</button>
+        </form>
       </div>
 
       <div className="group-page-post">
