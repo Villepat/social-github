@@ -29,25 +29,27 @@ function PostContainer() {
   console.log("posts:", posts);
 
   return (
-    <div className="post-container">
-      <PostingForm fetchPosts={fetchPosts} setPosts={setPosts} />
-      {posts.map((post) => {
-        const postImageSrc = post.picture
-          ? `data:image/jpeg;base64,${post.picture}`
-          : null;
+    <div className="allposts">
+      <div className="post-container">
+        <PostingForm fetchPosts={fetchPosts} setPosts={setPosts} />
+        {posts.map((post) => {
+          const postImageSrc = post.picture
+            ? `data:image/jpeg;base64,${post.picture}`
+            : null;
 
-        return (
-          <div key={post.id} className="post">
-            <Link to={`/profile/${post.user_id}`}>{post.full_name}</Link>
-            {postImageSrc && (
-              <img src={postImageSrc} alt="Post" className="post-img" />
-            )}
-            <h3>{post.content}</h3>
-            <h4>{post.date}</h4>
-            <Link to={`/post/${post.id}`}>Open Comments</Link>
-          </div>
-        );
-      })}
+          return (
+            <div key={post.id} className="post">
+              <Link to={`/profile/${post.user_id}`}>{post.full_name}</Link>
+              {postImageSrc && (
+                <img src={postImageSrc} alt="Post" className="post-img" />
+              )}
+              <h3>{post.content}</h3>
+              <h4>{post.date}</h4>
+              <Link to={`/post/${post.id}`}>Open Comments</Link>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

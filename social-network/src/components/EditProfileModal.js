@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../styles/ProfileCard.css";
 
 function EditProfileModal(props) {
   const { show, handleClose, handleSave, userId, currentUserData } = props;
@@ -93,27 +94,27 @@ function EditProfileModal(props) {
               </div>
 
               <div className="newpassword">
-                <label htmlFor="newPassword" className="form-newpassword">
+                <label htmlFor="newpassword" className="form-newpassword">
                   New Password
                 </label>
                 <input
                   type="password"
-                  className="form-control"
-                  id="newPassword"
+                  className="newpassword-box"
+                  id="newpassword"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                 />
               </div>
-              <div className="confirmPassword">
+              <div className="confirmpassword">
                 <label
-                  htmlFor="confirmPassword"
-                  className="form-confirmPassword"
+                  htmlFor="confirmpassword"
+                  className="confirmpassword-box"
                 >
                   Confirm Password
                 </label>
                 <input
                   type="password"
-                  className="form-control"
+                  className="confirmpassword-box"
                   id="confirmPassword"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}

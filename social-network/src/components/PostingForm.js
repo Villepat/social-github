@@ -38,25 +38,29 @@ const PostingForm = ({ fetchPosts, setPosts }) => {
     }
   };
   return (
-    <form>
-      <textarea
-        className="post-box"
-        type="text"
-        rows="10"
-        placeholder="What's on your mind?"
-        id="post"
-      />
-      <label htmlFor="picture">Upload nudes </label>
-      <input type="file" id="picture" />
-      <select id="privacy">
-        <option value="public">Public</option>
-        <option value="friends">Friends</option>
-        <option value="onlyme">Only me</option>
-      </select>
-      <button className="submit-post" onClick={handleSubmit}>
-        Post
-      </button>
-    </form>
+    <div className="posting-form">
+      <form>
+        <textarea
+          className="post-box"
+          type="text"
+          rows="10"
+          placeholder="What's on your mind?"
+          id="post"
+        />
+        <label className="upload" htmlFor="picture">
+          Upload nudes
+        </label>
+        <input type="file" id="picture" />
+        <select id="privacy">
+          <option value="public">Public</option>
+          <option value="friends">Friends</option>
+          <option value="onlyme">Only me</option>
+        </select>
+        <button className="submit-post" onClick={handleSubmit}>
+          Post
+        </button>
+      </form>
+    </div>
   );
 };
 
