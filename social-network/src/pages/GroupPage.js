@@ -45,7 +45,6 @@ const postGroupPost = async (groupNumber) => {
   }
 };
 
-
 const GroupPage = () => {
   const url = window.location.href;
   const pattern = /groups\/(\d+)/;
@@ -60,7 +59,7 @@ const GroupPage = () => {
       setGroupData(groupDataFromServer);
     };
     getGroupData();
-  }, []);
+  }, [groupNumber]);
 
   if (!groupData) {
     return <div>loading...</div>;
@@ -70,65 +69,73 @@ const GroupPage = () => {
     e.preventDefault();
     console.log("post submitted");
     postGroupPost(groupNumber);
-  }
-
+  };
 
   return (
     <div className="group-page">
       <div className="group-page-header">
         <h1>{groupData.name}</h1>
         <p>{groupData.description}</p>
-      <button className="join-group-button">Join Group</button>
+        <button className="join-group-button">Join Group</button>
       </div>
       <div className="group-page-members">
-      <h1>Members</h1>
-      <p>User 1</p>
+        <h1>Members</h1>
+        <p>User 1</p>
       </div>
 
-          <div className="group-page-event">
-            <h1>Events</h1>
-            <p>Event 1</p>
-          </div>
+      <div className="group-page-event">
+        <h1>Events</h1>
+        <p>Event 1</p>
+      </div>
 
-        <div className="group-page-post">
-          <h1>Posts</h1>
-          <div className="group-post-container">
-            <textarea
-              className="post-textarea"
-              placeholder="What's on your mind?"
-              id="post-textarea"
-            />
-            <button type="submit" className="group-button-post" onClick={handleSubmit}>Post</button>
-            <div className="post-display">
-            <h3>display the post here: <br></br>. <br></br>.</h3>
-            </div>
-            </div>
-            </div>
-          <div className="group-chat-modal">
-            <button className="group-button">Open Groupchat</button>
+      <div className="group-page-post">
+        <h1>Posts</h1>
+        <div className="group-post-container">
+          <textarea
+            className="post-textarea"
+            placeholder="What's on your mind?"
+            id="post-textarea"
+          />
+          <button
+            type="submit"
+            className="group-button-post"
+            onClick={handleSubmit}
+          >
+            Post
+          </button>
+          <div className="post-display">
+            <h3>
+              display the post here: <br></br>. <br></br>.
+            </h3>
           </div>
-            <div className="group-chat-modal-content">
-              <div className="group-chat-modal-header">
-                <span className="group-chat-modal-close">&times;</span>
-                <h1>Group Chat</h1>
-              </div>
-                <div className="group-chat-modal-body">
-                  <p>Messages here ... </p>
-                      </div>
-                    <div className="group-chat-modal-footer-input">
-                      <input className="group-chat-modal-input"
-                        type="text"
-                        placeholder="Type a message"
-                        name="msg"
-                        required
-                      />
-                      <button type="submit" className="group-button">
-                        Send
-                      </button>
-                  </div>
-                </div>
-              </div>
-          );
+        </div>
+      </div>
+      <div className="group-chat-modal">
+        <button className="group-button">Open Groupchat</button>
+      </div>
+      <div className="group-chat-modal-content">
+        <div className="group-chat-modal-header">
+          <span className="group-chat-modal-close">&times;</span>
+          <h1>Group Chat</h1>
+        </div>
+        <div className="group-chat-modal-body">
+          <p>Some text</p>
+          <p>Some other text...</p>
+          <div className="group-chat-modal-footer-input">
+            <input
+              type="text"
+              placeholder="Type a message"
+              name="msg"
+              required
+            />
+            <button type="submit" className="group-chat-modal-send">
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default GroupPage;

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-
 import "../styles/ProfileCard.css";
-
 import EditProfileModal from "./EditProfileModal";
+import Follow from "./Follow";
 
 function ProfileCard(props) {
   const { user, ownProfile, setUser, userId } = props;
+  const [shouldFollow, setShouldFollow] = useState(false);
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [avatarSrc, setAvatarSrc] = useState(
@@ -23,9 +23,9 @@ function ProfileCard(props) {
   };
 
   const handleFollow = () => {
-    console.log("follow button pressed");
+    console.log("handleFollow called");
+    setShouldFollow(true);
   };
-
   const handleModalSave = async (updatedData) => {
     const {
       userId,
@@ -123,9 +123,10 @@ function ProfileCard(props) {
             Edit Profile
           </button>
         ) : (
-          <button className="btn btn-primary" onClick={handleFollow}>
-            Follow
-          </button>
+          <>
+            <button onClick={handleFollow}>Follow</button>
+            {shouldFollow && <Follow userId={userId} />}
+          </>
         )}
       </div>
 
