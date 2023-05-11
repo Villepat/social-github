@@ -44,7 +44,7 @@ function PostContainer() {
             )}
             <h3>{post.content}</h3>
             <h4>{post.date}</h4>
-              <Link to={`/post/${post.id}`}>comment here</Link>
+            <Link to={`/post/${post.id}`}>Open Comments</Link>
           </div>
         );
       })}

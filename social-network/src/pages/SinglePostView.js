@@ -113,6 +113,14 @@ const SinglePostView = () => {
       <div>Post</div>
       <div className="og-author">{post.full_name}</div>
       <div className="og-content">{post.content}</div>
+      {post.picture ? (
+        <div className="og-image">
+          <img
+            src={`data:image/jpeg;base64,${post.picture}`}
+            className="pic"
+          ></img>
+        </div>
+      ) : null}
       <div className="og-timecreated">{post.date}</div>
 
       <form>

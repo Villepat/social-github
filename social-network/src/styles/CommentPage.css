@@ -1,56 +1,50 @@
 .comment-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
   max-width: 500px;
   margin: 10px 10px;
-  padding: 0 20px;
+  padding: 10px 10px;
   box-sizing: border-box;
-  border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #fff;
   word-break: break-word;
-  position: relative; /* Add position property */
   z-index: 1;
-  position: absolute;
-  top: 54%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .og-content {
-  width: 100%;
-  height: 180px;
+  height: auto;
   padding: 10px;
-  text-align: center;
 }
 
 .og-timecreated {
   width: 200px;
-  height: 30px;
+  height: 20px;
   padding: 10px;
   margin-bottom: 10px;
+  font-size: small;
 }
 
 .og-author {
-  width: 100%;
-  height: 50px;
+  height: 25px;
   padding: 10px;
   text-decoration: underline;
 }
 
 .comment-box {
-  width: 100%;
+  width: 460px;
   height: 80px;
   padding: 10px;
+  resize: none;
 }
 
 .submit-comment {
   width: 100px;
   height: 25px;
   display: block;
-  margin: 0 auto;
-
+  margin: auto;
   border-radius: 5px;
   border: none;
   background-color: #98dad9;
@@ -60,39 +54,48 @@
 }
 
 .comment-section {
-  width: 100%;
   height: auto;
   padding: 10px;
   text-align: center;
 }
 
 .commentator {
-  width: 100%;
-  height: 50px;
+  height: 20px;
   padding: 10px;
   text-decoration: underline;
 }
 
 .new-comment {
-  width: 100%;
-  height: 50px;
+  height: 20px;
   padding: 10px;
 }
 
 .comment-time {
-  width: 100%;
-  height: 50px;
+  height: 20px;
   padding: 10px;
 }
 
 .yourcomment {
   border: 1px solid black;
-  width: 100%;
+  height: 120px;
+  width: 478px;
 }
 
 .commentbox-container {
-  max-height: 450px;
+  max-height: 244px;
   overflow-y: scroll;
+}
+
+.og-picture {
+  width: 100%;
+  height: 300px;
+}
+
+.pic {
+  max-width: 100%;
+  max-height: 250px;
+  display: block;
+  margin: 0 auto;
 }
 
 @media screen and (max-width: 1000px) {
