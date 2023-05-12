@@ -1,4 +1,5 @@
 import React from "react";
+import GroupPosts from "../components/GroupPosts";
 import "../styles/Groups.css";
 
 const fetchGroupData = async (groupNumber) => {
@@ -23,28 +24,6 @@ const fetchGroupData = async (groupNumber) => {
   }
 };
 
-const postGroupPost = async (groupNumber) => {
-  const postInput = document.getElementById("post-textarea");
-  const post = postInput.value;
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify({ group_id: groupNumber, content: post }),
-  };
-
-  const response = await fetch(
-    `http://localhost:6969/api/group-posting`,
-    requestOptions
-  );
-
-  if (response.status === 200) {
-    console.log("group post submitted");
-  } else {
-    alert("Error posting to group.");
-  }
-};
-
 const GroupPage = () => {
   const url = window.location.href;
   const pattern = /groups\/(\d+)/;
@@ -65,11 +44,6 @@ const GroupPage = () => {
     return <div>loading...</div>;
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("post submitted");
-    postGroupPost(groupNumber);
-  };
 
   return (
     <div className="group-page">
@@ -91,22 +65,9 @@ const GroupPage = () => {
       <div className="group-page-post">
         <h1>Posts</h1>
         <div className="group-post-container">
-          <textarea
-            className="post-textarea"
-            placeholder="What's on your mind?"
-            id="post-textarea"
-          />
-          <button
-            type="submit"
-            className="group-button-post"
-            onClick={handleSubmit}
-          >
-            Post
-          </button>
+    
           <div className="post-display">
-            <h3>
-              display the post here: <br></br>. <br></br>.
-            </h3>
+            <GroupPosts />
           </div>
         </div>
       </div>
