@@ -46,7 +46,9 @@ const PostingForm = ({ fetchPosts, setPosts }) => {
           rows="10"
           placeholder="What's on your mind?"
           id="post"
+          
         />
+     
         <label className="upload" htmlFor="picture">
           Upload nudes
         </label>

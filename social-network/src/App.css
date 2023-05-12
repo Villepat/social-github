@@ -1,5 +1,5 @@
 html {
-  background-color: #2e424d;
+  background-color: #244d61;
 }
 h1 {
   font-size: 36px;
@@ -25,12 +25,6 @@ p {
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -46,23 +40,14 @@ p {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-nav {
+.navbar {
   display: flex;
-
+  width: 100%;
   justify-content: space-between;
   align-items: center;
+  padding: 0 20px;
   height: 80px;
   background-color: #f2eded;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 ul {
@@ -72,7 +57,7 @@ ul {
 }
 
 li:not(:last-child) {
-  margin-right: 20px;
+  margin-right: 40px;
 }
 
 a {

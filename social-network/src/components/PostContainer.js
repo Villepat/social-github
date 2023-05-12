@@ -39,13 +39,18 @@ function PostContainer() {
 
           return (
             <div key={post.id} className="post">
-              <Link to={`/profile/${post.user_id}`}>{post.full_name}</Link>
+              <div className="poster">
+                <Link to={`/profile/${post.user_id}`}>{post.full_name}</Link>
+              </div>
+
               {postImageSrc && (
                 <img src={postImageSrc} alt="Post" className="post-img" />
               )}
-              <h3>{post.content}</h3>
-              <h4>{post.date}</h4>
-              <Link to={`/post/${post.id}`}>Open Comments</Link>
+              <div className="post-content">{post.content}</div>
+              <div className="post-date">{post.date}</div>
+              <div className="opencomments">
+                <Link to={`/post/${post.id}`}>Open Comment section</Link>
+              </div>
             </div>
           );
         })}
