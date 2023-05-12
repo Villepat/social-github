@@ -5,10 +5,11 @@ import (
 	"log"
 	"net/http"
 	"social-network/backend/database/sqlite"
+	"strconv"
 )
 
 type ServeEventsRequest struct {
-	GroupId int `json:"groupId"`
+	GroupId string `json:"groupId"`
 }
 
 func ServeEvents(w http.ResponseWriter, r *http.Request) {
@@ -36,15 +37,23 @@ func ServeEvents(w http.ResponseWriter, r *http.Request) {
 	var request ServeEventsRequest
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
+		log.Println(err, "error parsing the request body")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	// get the group id from the request
 	groupId := request.GroupId
+	//make id into int
+	groupIdInt, err := strconv.Atoi(groupId)
+	if err != nil {
+		log.Println(err, "error converting group id to int")
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
 
 	// get the events from the database
-	events, err := sqlite.GetEvents(groupId)
+	events, err := sqlite.GetEvents(groupIdInt)
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)

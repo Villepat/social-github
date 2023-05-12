@@ -33,7 +33,9 @@ const EventContainer = ({ groupId, userID, eventsData }) => {
     <div>
       {events.map((event) => (
         <div key={event.id}>
-          <h2>{event.title}</h2>
+          <b>
+            <p>{event.title}</p>
+          </b>
           <p>{event.description}</p>
           <p>{new Date(event.dateTime).toLocaleString()}</p>
           <form onSubmit={(e) => handleResponseSubmit(event.id, e)}>

@@ -1,7 +1,6 @@
 package sqlite
 
 import (
-	"database/sql"
 	"log"
 
 	_ "github.com/mattn/go-sqlite3" // Import the SQLite3 package but we won't use it directly
@@ -19,11 +18,12 @@ type Event struct {
 }
 
 func GetEvents(groupId int) ([]Event, error) {
-	db, err := sql.Open("sqlite3", "./socialnetwork.db")
+	db, err := OpenDb()
 	if err != nil {
-		log.Println(err)
+		log.Print(err)
 		return nil, err
 	}
+
 	defer db.Close()
 
 	rows, err := db.Query("SELECT * FROM events WHERE group_id = ?", groupId)
@@ -36,7 +36,7 @@ func GetEvents(groupId int) ([]Event, error) {
 	var events []Event
 	for rows.Next() {
 		var event Event
-		err = rows.Scan(&event.Id, &event.GroupId, &event.CreatorId, &event.Title, &event.Description, &event.DateTime, &event.CreatedAt, &event.UpdatedAt)
+		err = rows.Scan(&event.Id, &event.GroupId, &event.Title, &event.Description, &event.DateTime, &event.CreatedAt, &event.UpdatedAt, &event.CreatorId)
 		if err != nil {
 			log.Println(err)
 			return nil, err

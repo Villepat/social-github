@@ -24,6 +24,28 @@ const fetchGroupData = async (groupNumber) => {
     alert("Error fetching group data.");
   }
 };
+const fetchEventData = async (groupNumber) => {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ groupId: groupNumber }),
+  };
+
+  const response = await fetch(
+    `http://localhost:6969/api/serve-events`,
+    requestOptions
+  );
+
+  const data = await response.json();
+  if (response.status === 200) {
+    console.log("events data fetched");
+    console.log(data);
+    return data.events;
+  } else {
+    alert("Error fetching events data.");
+  }
+};
 
 const postGroupPost = async (groupNumber) => {
   const postInput = document.getElementById("post-textarea");
@@ -52,7 +74,7 @@ const GroupPage = () => {
   const url = window.location.href;
   const pattern = /groups\/(\d+)/;
   const match = url.match(pattern);
-  console.log(match);
+  //console.log(match);
   const groupNumber = match[1];
   const [groupData, setGroupData] = React.useState([]);
   const [eventsData, setEventsData] = React.useState([]);
@@ -66,10 +88,14 @@ const GroupPage = () => {
     const getGroupData = async () => {
       const groupDataFromServer = await fetchGroupData(groupNumber);
       setGroupData(groupDataFromServer);
+    };
+    getGroupData();
+
+    const getEventData = async () => {
       const eventsDataFromServer = await fetchEventData(groupNumber);
       setEventsData(eventsDataFromServer);
     };
-    getGroupData();
+    getEventData();
   }, [groupNumber]);
 
   if (!groupData) {
@@ -117,28 +143,7 @@ const GroupPage = () => {
       console.error("Failed to create event");
     }
   };
-
-  const fetchEventData = async (groupNumber) => {
-    const requestOptions = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    };
-
-    const response = await fetch(
-      `http://localhost:6969/api/serve-events?group_id=${groupNumber}`,
-      requestOptions
-    );
-
-    const data = await response.json();
-    if (response.status === 200) {
-      console.log("events data fetched");
-      console.log(data);
-      return data.events;
-    } else {
-      alert("Error fetching events data.");
-    }
-  };
+  console.log(groupNumber, "group number");
 
   return (
     <div className="group-page">

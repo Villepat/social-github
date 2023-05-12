@@ -28,7 +28,6 @@ func CreateEventAPI(w http.ResponseWriter, r *http.Request) {
 	// if the request method is not POST or OPTIONS, return
 	if r.Method != http.MethodPost && r.Method != http.MethodOptions {
 		w.WriteHeader(http.StatusMethodNotAllowed)
-		fmt.Println("method not allowed")
 		return
 	}
 
@@ -67,14 +66,14 @@ func CreateEventAPI(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
-	log.Println("session found", session.UserID)
 
 	//print request data and user id
-	log.Println("request data:", groupId, eventTitle, eventDescription, eventDateTime)
-	log.Println("user id:", session.UserID)
+	// log.Println("request data:", groupId, eventTitle, eventDescription, eventDateTime)
+	// log.Println("user id:", session.UserID)
+
 	//make groupid into int
 	groupIdInt, err := strconv.Atoi(groupId)
-	fmt.Println(groupId, "aaaaaaaa")
+
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
