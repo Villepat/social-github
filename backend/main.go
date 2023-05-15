@@ -30,6 +30,7 @@ func main() {
 	http.HandleFunc("/api/group-posting", api.GroupPosting)
 	http.HandleFunc("/api/serve-group-posts", api.ServeGroupPosts)
 	http.HandleFunc("/api/follow", api.FollowAPI)
+	http.HandleFunc("/api/post/like", api.HandlingLikes)
 
 	ws.SetupRoutes()
 

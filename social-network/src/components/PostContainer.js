@@ -15,6 +15,19 @@ async function fetchPosts() {
   }
 }
 
+async function likePost(postId) {
+  const response = await fetch(`http://localhost:6969/api/post/like?id=${postId}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include"
+  });
+  if (response.status === 200) {
+    console.log(`Post ${postId} liked`);
+  } else {
+    alert(`Error liking post ${postId}`);
+  }
+}
+
 function PostContainer() {
   const [posts, setPosts] = React.useState([]);
 
@@ -27,6 +40,12 @@ function PostContainer() {
   }, []);
 
   console.log("posts:", posts);
+
+  const handleLikeClick = async (postId) => {
+    await likePost(postId);
+    const updatedPosts = await fetchPosts();
+    setPosts(updatedPosts);
+  };
 
   return (
     <div className="post-container">
@@ -44,6 +63,8 @@ function PostContainer() {
             )}
             <h3>{post.content}</h3>
             <h4>{post.date}</h4>
+            <button onClick={() => handleLikeClick(post.id)}>Like</button>
+            <span>{post.likes} likes</span>
             <Link to={`/post/${post.id}`}>Open Comments</Link>
           </div>
         );
