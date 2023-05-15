@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/CommentPage.css";
 import ErrorPage from "./ErrorPage";
 
@@ -35,15 +36,18 @@ const fetchComments = async (postId) => {
 };
 
 const SinglePostView = () => {
+  const navigate = useNavigate();
   const url = window.location.href;
-  console.log(url);
-  //localhost:3000/posts/1
   const pattern = /(\d+)$/;
   const match = url.match(pattern);
-  console.log(match);
   const postId = match[1];
   const [post, setPost] = React.useState([]);
   const [comments, setComments] = React.useState([]);
+
+  const redirectToHome = () => {
+    navigate("/");
+  };
+
   React.useEffect(() => {
     const getPost = async () => {
       const postFromServer = await fetchSinglePost(postId);
@@ -51,6 +55,7 @@ const SinglePostView = () => {
     };
     getPost();
   }, []);
+
   React.useEffect(() => {
     const getComments = async () => {
       const commentsFromServer = await fetchComments(postId);
@@ -106,30 +111,33 @@ const SinglePostView = () => {
   if (!post) {
     return <ErrorPage errorType="500" />;
   }
+
   return (
     <div className="comment-container">
-      <div className="postview-title">SinglePostView</div>
-
-      <div>Post</div>
-      <div className="og-author">{post.full_name}</div>
-      <div className="og-content">{post.content}</div>
-      {post.picture ? (
-        <div className="og-image">
-          <img
-            src={`data:image/jpeg;base64,${post.picture}`}
-            className="pic"
-          ></img>
-        </div>
-      ) : null}
-      <div className="og-timecreated">{post.date}</div>
-
+      <div className="postview-title">SinglePostViewXD</div>
+      <button className="back-button" onClick={redirectToHome}>
+        X
+      </button>
+      <div className="singlepost">
+        <div className="og-author">{post.full_name}</div>
+        <div className="og-content">{post.content}</div>
+        {post.picture ? (
+          <div className="og-image">
+            <img
+              src={`data:image/jpeg;base64,${post.picture}`}
+              className="pic"
+            ></img>
+          </div>
+        ) : null}
+        <div className="og-timecreated">{post.date}</div>
+      </div>
       <form>
         <input type="hidden" id="post_id" value={post.id} />
         <textarea
           className="comment-box"
           type="text"
           rows="5"
-          placeholder="Comment here"
+          placeholder="Comment here..."
           id="comment"
         />
         <button className="submit-comment" onClick={SubmitComment}>

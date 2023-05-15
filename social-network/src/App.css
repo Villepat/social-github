@@ -39,13 +39,13 @@ p {
 .App-link {
   color: #61dafb;
 }
-
+/* removed padding causing page to slide from side to side  */
 .navbar {
   display: flex;
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+
   height: 80px;
   background-color: #f2eded;
 }
