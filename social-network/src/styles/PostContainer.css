@@ -14,7 +14,6 @@
   word-break: break-word;
   position: relative; /* Add position property */
   z-index: 1;
-  
 }
 /* user made post  */
 .post {
@@ -24,7 +23,6 @@
   margin-bottom: 10px;
   box-shadow: #000000 0px 0px 5px;
   transform: translateY(0px, -5px);
-  
 }
 
 .post:hover {
@@ -282,6 +280,23 @@
   font-weight: bold;
   resize: none;
 }
+.fa {
+  display: flex;
+  margin-top: 10px;
+  font-size: 30px;
+  cursor: pointer;
+  user-select: none;
+  color: #2e424d;
+}
+
+.fa:hover {
+  color: #1a6d36;
+}
+
+.fa.liked {
+  color: #0c812b;
+}
+
 @media screen and (max-width: 1000px) {
   .user-list-container {
     position: static;
