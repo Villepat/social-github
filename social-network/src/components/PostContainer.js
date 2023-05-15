@@ -16,14 +16,11 @@ async function fetchPosts() {
 }
 
 async function likePost(postId) {
-  const response = await fetch(
-    `http://localhost:6969/api/post/like?id=${postId}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-    }
-  );
+  const response = await fetch(`http://localhost:6969/api/post/like?id=${postId}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include"
+  });
   if (response.status === 200) {
     console.log(`Post ${postId} liked`);
   } else {
@@ -66,6 +63,8 @@ function PostContainer() {
             )}
             <h3>{post.content}</h3>
             <h4>{post.date}</h4>
+            <button onClick={() => handleLikeClick(post.id)}>Like</button>
+            <span>{post.likes} likes</span>
             <button onClick={() => handleLikeClick(post.id)}>Like</button>
             <span>{post.likes} likes</span>
             <Link to={`/post/${post.id}`}>Open Comments</Link>
