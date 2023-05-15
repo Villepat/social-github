@@ -14,6 +14,7 @@
   word-break: break-word;
   position: relative; /* Add position property */
   z-index: 1;
+  
 }
 /* user made post  */
 .post {
@@ -23,6 +24,7 @@
   margin-bottom: 10px;
   box-shadow: #000000 0px 0px 5px;
   transform: translateY(0px, -5px);
+  
 }
 
 .post:hover {
