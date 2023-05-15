@@ -65,6 +65,8 @@ function PostContainer() {
             <h4>{post.date}</h4>
             <button onClick={() => handleLikeClick(post.id)}>Like</button>
             <span>{post.likes} likes</span>
+            <button onClick={() => handleLikeClick(post.id)}>Like</button>
+            <span>{post.likes} likes</span>
             <Link to={`/post/${post.id}`}>Open Comments</Link>
           </div>
         );
