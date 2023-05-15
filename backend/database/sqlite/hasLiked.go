@@ -15,14 +15,12 @@ func HasLiked(userID, postID int) (int, error) {
 	var status int
 	_ = db.QueryRow("SELECT reaction_type FROM reactions WHERE user_id = ? AND post_id = ?", userID, postID).Scan(&status)
 	if status == 0 {
-		return 1, nil
+		return 0, nil
 	}
 
 	if status == 1 {
-		return 2, nil
-	} else if status == 2 {
 		return 1, nil
+	} else {
+		return 2, nil
 	}
-
-	return 0, nil
 }

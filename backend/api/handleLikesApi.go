@@ -1,5 +1,7 @@
-// Handles the likes and dislikes of posts
-// 1 = like and 2 = dislike
+// Handles the likes and unlikes of posts
+// 0 = no reaction
+// 1 = has liked and unliked
+// 2 = active like
 
 package api
 
@@ -68,8 +70,10 @@ func HandlingLikes(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	log.Println("liked:", liked)
+
 	// like or dislike the post
-	err = sqlite.AddLike(session.UserID, postIDInt, liked)
+	err = sqlite.AddLike(session.UserID, postIDInt)
 	if err != nil {
 		fmt.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
@@ -78,4 +82,6 @@ func HandlingLikes(w http.ResponseWriter, r *http.Request) {
 
 	// return success
 	w.WriteHeader(http.StatusOK)
+
+	log.Println("handling likes success")
 }
