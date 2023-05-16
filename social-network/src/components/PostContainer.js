@@ -15,6 +15,22 @@ async function fetchPosts() {
   }
 }
 
+async function likePost(postId) {
+  const response = await fetch(
+    `http://localhost:6969/api/post/like?id=${postId}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    }
+  );
+  if (response.status === 200) {
+    console.log(`Post ${postId} liked`);
+  } else {
+    alert(`Error liking post ${postId}`);
+  }
+}
+
 function PostContainer() {
   const [posts, setPosts] = React.useState([]);
 
@@ -28,26 +44,65 @@ function PostContainer() {
 
   console.log("posts:", posts);
 
-  return (
-    <div className="post-container">
-      <PostingForm fetchPosts={fetchPosts} setPosts={setPosts} />
-      {posts.map((post) => {
-        const postImageSrc = post.picture
-          ? `data:image/jpeg;base64,${post.picture}`
-          : null;
+  const handleLikeClick = async (postId) => {
+    await likePost(postId);
+    const updatedPosts = await fetchPosts();
+    setPosts(updatedPosts);
+  };
 
-        return (
-          <div key={post.id} className="post">
-            <Link to={`/profile/${post.user_id}`}>{post.full_name}</Link>
-            {postImageSrc && (
-              <img src={postImageSrc} alt="Post" className="post-img" />
-            )}
-            <h3>{post.content}</h3>
-            <h4>{post.date}</h4>
-            <Link to={`/post/${post.id}`}>Open Comments</Link>
-          </div>
-        );
-      })}
+  const [likedPosts, setLikedPosts] = React.useState([]);
+
+  const toggleLike = (postId) => {
+    if (likedPosts.includes(postId)) {
+      setLikedPosts(likedPosts.filter((id) => id !== postId));
+    } else {
+      setLikedPosts([...likedPosts, postId]);
+    }
+  };
+
+  return (
+    <div className="allposts">
+      <div className="post-container">
+        <PostingForm fetchPosts={fetchPosts} setPosts={setPosts} />
+        {posts.map((post) => {
+          const postImageSrc = post.picture
+            ? `data:image/jpeg;base64,${post.picture}`
+            : null;
+
+          const isLiked = likedPosts.includes(post.id);
+
+          return (
+            <div key={post.id} className="post">
+              <div className="poster">
+                <Link to={`/profile/${post.user_id}`}>{post.full_name}</Link>
+              </div>
+
+              {postImageSrc && (
+                <img src={postImageSrc} alt="Post" className="post-img" />
+              )}
+              <div className="post-content">{post.content}</div>
+              <div className="post-date">{post.date}</div>
+
+              <i
+                onClick={() => {
+                  toggleLike(post.id);
+                  handleLikeClick(post.id);
+                }}
+                className={`fa fa-thumbs-up ${isLiked ? "liked" : ""}`}
+              ></i>
+              <div className="likes">
+                <span>{post.like_count} </span>
+              </div>
+
+              <div className="opencomments">
+                <Link to={`/post/${post.id}`}>Open Comments</Link>
+              </div>
+
+              <span>{post.likes} </span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

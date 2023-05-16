@@ -1,3 +1,4 @@
+/* contains all post and the post box */
 .post-container {
   display: flex;
   flex-direction: column;
@@ -6,35 +7,62 @@
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box;
-  border: 1px solid #ccc;
+  border: 2px solid #000000;
   border-radius: 5px;
   margin-bottom: 20px;
-  background-color: #fff;
+  background-color: #eaebed;
   word-break: break-word;
   position: relative; /* Add position property */
   z-index: 1;
 }
-
+/* user made post  */
 .post {
-  display: flex;
-  flex-direction: column;
-  border-width: 0ch;
-  box-sizing: border-box;
   padding: 10px 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-shadow: #000000 0px 0px 5px;
+  transform: translateY(0px, -5px);
 }
+
+.post:hover {
+  box-shadow: #000000 0px 0px 10px;
+  transform: translateY(0px, -10px);
+}
+
+.poster {
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-bottom: 10px;
+}
+
+.post-date {
+  font-size: 14px;
+  margin-top: 10px;
+  text-decoration: underline;
+}
+
+.opencomments {
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* basically the same as post-container but only ability is to scroll the page  */
+.allposts {
+  overflow-y: scroll;
+  max-height: 920px;
+}
+/* posts image if there is one  */
 .post-img {
   max-width: 100%;
   max-height: 400px;
   display: block;
-  margin: 0 auto;;
+  margin: 0 auto;
 }
-
-.post input {
-  width: 30px;
-  height: 30px;
-}
-
+/* the text box that user writes in  */
 .post-box {
   margin-top: 20px;
   display: flex;
@@ -48,9 +76,11 @@
   max-width: 50vh;
   max-height: 30vh;
   resize: none;
+  border: 2px solid #000000;
+  border-radius: 5px;
 }
-
-.post-header {
+/* what is this? */
+/* .post-header {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -61,53 +91,94 @@
   padding: 10px 10px;
   max-width: 50vh;
   max-height: 30vh;
-}
+} */
 
+/* the button that determines how you want to post it */
 #privacy {
   margin-bottom: 7px;
   width: 100px;
   height: 25px;
-  margin-left: 164px;
   margin-top: 7px;
+
+  border: 1px solid #000000;
   border-radius: 5px;
-  border: none;
-  background-color: #98dad9;
+  background-color: #75e2ff;
   color: #2e424d;
   font-size: 1rem;
   cursor: pointer;
+  box-shadow: #4752a4 0px 0px 2px;
+  transform: translateY(0px, -5px);
 }
 
+#privacy:hover {
+  box-shadow: #000000 0px 0px 5px;
+  transform: translateY(0px, -5px);
+}
+/* the text infront of choose file button */
+/* #upload {
+  height: 25px;
+  border-radius: 5px;
+  cursor: pointer;
+} */
+/* choose file button */
+#picture {
+  margin-top: 10px;
+  width: 200px;
+  height: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+/* the box for everything needed to post a post */
+.posting-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  border-radius: 5px;
+  word-break: break-word;
+  position: relative; /* Add position property */
+  z-index: 1;
+}
+/* button for submitting post */
 .submit-post {
   width: 100px;
   height: 25px;
   margin-left: 20px;
   margin-top: 7px;
+  border: 1px solid #000000;
   border-radius: 5px;
-  border: none;
-  background-color: #98dad9;
+  background-color: #75e2ff;
   color: #2e424d;
   font-size: 1rem;
   cursor: pointer;
+  box-shadow: #4752a4 0px 0px 2px;
+  transform: translateY(0px, -5px);
 }
-
+.submit-post:hover {
+  box-shadow: #000000 0px 0px 5px;
+  transform: translateY(0px, -5px);
+}
+/* the whole page only reason is to keep the post-container bit to the left  */
 .social-network-header {
   margin-left: 10px;
 }
-
+/* welcome message maybe redundant */
 .welcome {
   text-align: center;
   color: white;
   font-size: 32px;
 }
-
+/* user boxes title */
 .user-list-header {
-  color: #fff;
-
+  color: #eaebed;
   margin-left: 1px;
   font-size: 20px;
   font-weight: bold;
 }
-
+/* contains all the users atm will be changed to friends  */
 .user-list-container {
   position: fixed;
   top: 98px;
@@ -115,74 +186,72 @@
   width: 200px;
   z-index: 2;
 }
-
+/* just the user inside the user list container   */
 .user-list-item {
   margin-bottom: 5px;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 2px solid #000000;
   border-radius: 5px;
+  background-color: #eaebed;
+  box-shadow: #000000 0px 0px 5px;
+  transform: translateY(0px, -5px);
 }
 
+.user-list-item:hover {
+  box-shadow: #000000 0px 0px 10px;
+  transform: translateY(0px, -5px);
+}
+/* users name */
 .user-list-item a {
   text-decoration: none;
-  color: #f7f7f7;
+  color: #000000;
 }
 
+/* edit profile things  */
 .profile-edit-box {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  top: 10px;
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
   margin: 0 auto;
-  padding: 0 20px;
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-bottom: 20px;
   background-color: #fff;
   word-break: break-word;
   position: relative; /* Add position property */
   z-index: 1;
 }
-
 .title {
   font-size: 20px;
   font-weight: bold;
 }
-
 .newavatar {
   font-size: 20px;
   font-weight: bold;
 }
-
 .avatar-box {
-  margin-bottom: 10px;
   font-size: 20px;
   font-weight: bold;
   resize: none;
 }
-
 .avatar-box {
   font-size: 20px;
   font-weight: bold;
   text-align: center;
 }
-
 .newnickname {
   display: flex;
   flex-direction: column;
   font-size: 20px;
   font-weight: bold;
-  margin-bottom: 10px;
 }
-
 .title-wrapper {
   margin-bottom: 5px;
 }
-
 .input-wrapper {
   display: flex;
   flex-direction: column;
@@ -191,18 +260,43 @@
   font-size: 20px;
   font-weight: bold;
 }
-
 .newabout {
   font-size: 20px;
   font-weight: bold;
   resize: none;
 }
-
-.about-textarea {
-  margin-bottom: 10px;
+.newpassword {
   font-size: 20px;
   font-weight: bold;
   resize: none;
+}
+.confirmpassword {
+  font-size: 20px;
+  font-weight: bold;
+  resize: none;
+}
+.about-textarea {
+  font-size: 20px;
+  font-weight: bold;
+  resize: none;
+}
+
+/* thumbs up  */
+.fa {
+  display: flex;
+  margin-top: 10px;
+  font-size: 30px;
+  cursor: pointer;
+  user-select: none;
+  color: #2e424d;
+}
+
+.fa:hover {
+  color: #1a6d36;
+}
+
+.fa.liked {
+  color: #0c812b;
 }
 
 @media screen and (max-width: 1000px) {
@@ -221,6 +315,7 @@
     z-index: 1;
   }
   .post-box {
+    background-color: #eaebed;
     margin-left: 0px;
     width: 100%;
     max-width: 100%;

@@ -19,6 +19,7 @@ func main() {
 	http.HandleFunc("/api/logout", api.LogoutAPI)
 	http.HandleFunc("/api/posting", api.ServePosting)
 	http.HandleFunc("/api/posts", api.ServePosts)
+	http.HandleFunc("/api/like-counter", api.ServeLikeCounter)
 	http.HandleFunc("/api/user/", api.ServeUser)
 	http.HandleFunc("/api/userlist", api.UserListAPI)
 	http.HandleFunc("/api/create-group", api.CreateGroupAPI)
@@ -30,6 +31,7 @@ func main() {
 	http.HandleFunc("/api/group-posting", api.GroupPosting)
 	http.HandleFunc("/api/serve-group-posts", api.ServeGroupPosts)
 	http.HandleFunc("/api/follow", api.FollowAPI)
+	http.HandleFunc("/api/post/like", api.HandlingLikes)
 	http.HandleFunc("/api/event", api.CreateEventAPI)
 	http.HandleFunc("/api/serve-events", api.ServeEvents)
 

@@ -9,7 +9,7 @@
   padding: 10px 10px;
   box-sizing: border-box;
   border-radius: 5px;
-  background-color: #fff;
+  background-color: #ffffff;
   word-break: break-word;
   z-index: 1;
 }
@@ -20,24 +20,25 @@
 }
 
 .og-timecreated {
-  width: 200px;
-  height: 20px;
-  padding: 10px;
+  font-size: 14px;
   margin-bottom: 10px;
-  font-size: small;
-}
-
-.og-author {
-  height: 25px;
-  padding: 10px;
   text-decoration: underline;
 }
 
+.og-author {
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-bottom: 10px;
+}
+
 .comment-box {
-  width: 460px;
-  height: 80px;
-  padding: 10px;
+  width: 452px;
+  height: 70px;
+  margin: 10px;
   resize: none;
+  border: 2px solid #000000;
+  border-radius: 5px;
 }
 
 .submit-comment {
@@ -46,11 +47,17 @@
   display: block;
   margin: auto;
   border-radius: 5px;
-  border: none;
-  background-color: #98dad9;
+  background-color: #75e2ff;
+  border: 1px solid #000000;
   color: #2e424d;
+  box-shadow: #4752a4 0px 0px 2px;
   font-size: 1rem;
   cursor: pointer;
+}
+
+.submit-comment:hover {
+  box-shadow: #000000 0px 0px 5px;
+  transform: translateY(0px, -5px);
 }
 
 .comment-section {
@@ -61,7 +68,7 @@
 
 .commentator {
   height: 20px;
-  padding: 10px;
+  padding: 5px;
   text-decoration: underline;
 }
 
@@ -71,18 +78,21 @@
 }
 
 .comment-time {
-  height: 20px;
-  padding: 10px;
+  font-size: 12px;
+
+  padding: 5px;
 }
 
 .yourcomment {
-  border: 1px solid black;
-  height: 120px;
-  width: 478px;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+  box-shadow: #000000 0px 0px 5px;
 }
 
 .commentbox-container {
-  max-height: 244px;
+  max-height: 240px;
   overflow-y: scroll;
 }
 
@@ -98,8 +108,41 @@
   margin: 0 auto;
 }
 
+.back-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 25px;
+  border-radius: 5px;
+  background-color: #75e2ff;
+  border: 1px solid #000000;
+  color: #2e424d;
+  box-shadow: #4752a4 0px 0px 2px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  box-shadow: #000000 0px 0px 5px;
+  transform: translateY(0px, -5px);
+}
+
+.singlepost {
+  border: 2px solid #000000;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 10px;
+  box-shadow: #000000 0px 0px 5px;
+}
+
+.singlepost:hover {
+  box-shadow: #000000 0px 0px 10px;
+  transform: translateY(0px, -5px);
+}
+
 @media screen and (max-width: 1000px) {
-  .nav {
+  .navbar {
     display: flex;
 
     justify-content: space-between;
@@ -133,14 +176,13 @@
 }
 
 @media screen and (max-width: 375px) {
-  .nav {
+  .navbar {
     display: flex;
-
+    width: 100%;
     justify-content: space-between;
     align-items: center;
     height: 80px;
     background-color: #f2eded;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 2;
   }
 

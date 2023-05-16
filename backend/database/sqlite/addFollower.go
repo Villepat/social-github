@@ -20,6 +20,21 @@ func AddFollower(follower, followee int) error {
 		return err
 	}
 
+	// check if the user is already following the user
+	exists, err := checkFollow(follower, followee)
+	if err != nil {
+		log.Println(err)
+		tx.Rollback()
+		return err
+	}
+
+	// if the user is already following the user, return an error
+	if exists {
+		log.Println("User is already following the user")
+		tx.Rollback()
+		return err
+	}
+
 	status := 2
 	log.Println("follower: ", follower)
 	log.Println("followee: ", followee)
@@ -58,4 +73,29 @@ func AddFollower(follower, followee int) error {
 
 	return nil
 
+}
+
+// Function to check if a user is already following the user
+func checkFollow(follower, followee int) (bool, error) {
+	// open the database connection
+	db, err := OpenDb()
+	if err != nil {
+		return false, err
+	}
+
+	// defer the closing of the database connection
+	defer db.Close()
+
+	// query the database
+	rows, err := db.Query("SELECT * FROM followers WHERE user_id = ? AND follower_id = ?", followee, follower)
+	if err != nil {
+		return false, err
+	}
+
+	// check if the user exists
+	if rows.Next() {
+		return true, nil
+	}
+
+	return false, nil
 }
