@@ -26,7 +26,7 @@ const EventContainer = ({ groupId, userID, eventsData }) => {
   };
 
   if (!eventsData) {
-    return <div>Loading events...</div>;
+    return <div>We have no events happening yet. Take initiative!</div>;
   }
 
   return (

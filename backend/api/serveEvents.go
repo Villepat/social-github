@@ -13,7 +13,7 @@ type ServeEventsRequest struct {
 }
 
 func ServeEvents(w http.ResponseWriter, r *http.Request) {
-	log.Println("ServeEvents called")
+	//log.Println("ServeEvents called")
 
 	// set cors headers
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
@@ -76,5 +76,5 @@ func ServeEvents(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// return a success status code
-	w.WriteHeader(http.StatusOK)
+	//w.WriteHeader(http.StatusOK)
 }

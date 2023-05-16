@@ -36,7 +36,7 @@ func GetEvents(groupId int) ([]Event, error) {
 	var events []Event
 	for rows.Next() {
 		var event Event
-		err = rows.Scan(&event.Id, &event.GroupId, &event.Title, &event.Description, &event.DateTime, &event.CreatedAt, &event.UpdatedAt, &event.CreatorId)
+		err = rows.Scan(&event.Id, &event.GroupId, &event.CreatorId, &event.Title, &event.Description, &event.DateTime, &event.CreatedAt, &event.UpdatedAt)
 		if err != nil {
 			log.Println(err)
 			return nil, err

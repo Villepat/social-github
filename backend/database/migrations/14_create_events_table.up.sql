@@ -1,1 +1,0 @@
-ALTER TABLE events ADD COLUMN creator_id INTEGER;

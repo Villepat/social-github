@@ -2,12 +2,32 @@ package api
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
+	"regexp"
 	"social-network/backend/database/sqlite"
 	"strconv"
 )
+
+func validateInput(title string, description string, dateTime string) error {
+	titleRegex := regexp.MustCompile("^[a-zA-Z0-9\\s.,!?;:]{1,50}$")
+	descriptionRegex := regexp.MustCompile("^[a-zA-Z0-9\\s.,!?;:]{1,256}$")
+	dateTimeRegex := regexp.MustCompile("^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}$") // assuming dateTime follows "YYYY-MM-DDThh:mm" format
+
+	if !titleRegex.MatchString(title) {
+		return errors.New("invalid title")
+	}
+	if !descriptionRegex.MatchString(description) {
+		return errors.New("invalid description")
+	}
+	if !dateTimeRegex.MatchString(dateTime) {
+		return errors.New("invalid dateTime")
+	}
+
+	return nil
+}
 
 type CreateEventRequest struct {
 	GroupId          string `json:"group_id"`
@@ -42,6 +62,13 @@ func CreateEventAPI(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if err != nil {
 		fmt.Println("error decoding json")
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	// validate input
+	err = validateInput(request.EventTitle, request.EventDescription, request.EventDateTime)
+	if err != nil {
+		fmt.Println(err)
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}

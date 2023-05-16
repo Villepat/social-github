@@ -81,7 +81,6 @@ const GroupPage = () => {
     return <div>loading...</div>;
   }
 
-
   const handleEventChange = (e) => {
     setNewEvent({
       ...newEvent,
@@ -104,10 +103,10 @@ const GroupPage = () => {
         date_time: newEvent.dateTime,
       }),
     });
-    console.log(groupNumber);
-    console.log(newEvent.title);
-    console.log(newEvent.description);
-    console.log(newEvent.dateTime);
+    // console.log(groupNumber);
+    // console.log(newEvent.title);
+    // console.log(newEvent.description);
+    // console.log(newEvent.dateTime);
 
     // If response is OK, re-fetch the events
     if (response.ok) {
@@ -116,6 +115,11 @@ const GroupPage = () => {
     } else {
       console.error("Failed to create event");
     }
+    setNewEvent({
+      title: "",
+      description: "",
+      dateTime: "",
+    });
   };
   console.log(groupNumber, "group number");
 
@@ -149,6 +153,9 @@ const GroupPage = () => {
             placeholder="Title"
             value={newEvent.title}
             onChange={handleEventChange}
+            required
+            pattern="^[a-zA-Z0-9\s.,!?;:]{1,50}$"
+            title="Event title should be 1-50 alphanumeric characters (.,!?;: allowed)."
           />
           <input
             type="text"
@@ -156,12 +163,17 @@ const GroupPage = () => {
             placeholder="Description"
             value={newEvent.description}
             onChange={handleEventChange}
+            required
+            pattern="^[a-zA-Z0-9\s.,!?;:]{1,50}$"
+            title="Event description should be 1-256 alphanumeric characters (.,!?;: allowed)."
           />
           <input
             type="datetime-local"
             name="dateTime"
             value={newEvent.dateTime}
             onChange={handleEventChange}
+            required
+            min={new Date().toISOString().substring(0, 16)}
           />
           <button type="submit">Create event</button>
         </form>
@@ -170,7 +182,6 @@ const GroupPage = () => {
       <div className="group-page-post">
         <h1>Posts</h1>
         <div className="group-post-container">
-    
           <div className="post-display">
             <GroupPosts />
           </div>
