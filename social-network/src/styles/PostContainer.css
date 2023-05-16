@@ -157,7 +157,6 @@
   box-shadow: #4752a4 0px 0px 2px;
   transform: translateY(0px, -5px);
 }
-
 .submit-post:hover {
   box-shadow: #000000 0px 0px 5px;
   transform: translateY(0px, -5px);
@@ -207,6 +206,8 @@
   text-decoration: none;
   color: #000000;
 }
+
+/* edit profile things  */
 .profile-edit-box {
   display: flex;
   flex-direction: column;
@@ -224,7 +225,6 @@
   position: relative; /* Add position property */
   z-index: 1;
 }
-
 .title {
   font-size: 20px;
   font-weight: bold;
@@ -280,6 +280,8 @@
   font-weight: bold;
   resize: none;
 }
+
+/* thumbs up  */
 .fa {
   display: flex;
   margin-top: 10px;
