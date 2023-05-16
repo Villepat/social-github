@@ -90,6 +90,9 @@ function PostContainer() {
                 }}
                 className={`fa fa-thumbs-up ${isLiked ? "liked" : ""}`}
               ></i>
+              <div className="likes">
+                <span>{post.like_count} </span>
+              </div>
 
               <div className="opencomments">
                 <Link to={`/post/${post.id}`}>Open Comments</Link>

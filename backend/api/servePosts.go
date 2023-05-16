@@ -17,12 +17,13 @@ type Response struct {
 
 // struct for the posts
 type PostForResponse struct {
-	Id       int    `json:"id"`
-	UserId   int    `json:"user_id"`
-	FullName string `json:"full_name"`
-	Content  string `json:"content"`
-	Picture  string `json:"picture"`
-	Date     string `json:"date"`
+	Id        int    `json:"id"`
+	UserId    int    `json:"user_id"`
+	FullName  string `json:"full_name"`
+	Content   string `json:"content"`
+	Picture   string `json:"picture"`
+	Date      string `json:"date"`
+	LikeCount int    `json:"like_count"`
 }
 
 func ServePosts(w http.ResponseWriter, r *http.Request) {
@@ -88,7 +89,6 @@ func ServePosts(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
 	}
 
-
 	// create the response
 	response := Response{
 		Posts: posts,
@@ -136,6 +136,13 @@ func GetPosts() ([]PostForResponse, error) {
 		if imageData != nil {
 			post.Picture = base64.StdEncoding.EncodeToString(imageData)
 		}
+
+		// get the like count
+		likeCount, err := sqlite.GetLikes(post.Id)
+		if err != nil {
+			log.Println("Error getting the like count, GetPosts(): ", err)
+		}
+		post.LikeCount = likeCount
 
 		posts = append(posts, post)
 	}
