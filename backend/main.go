@@ -19,7 +19,6 @@ func main() {
 	http.HandleFunc("/api/logout", api.LogoutAPI)
 	http.HandleFunc("/api/posting", api.ServePosting)
 	http.HandleFunc("/api/posts", api.ServePosts)
-	http.HandleFunc("/api/like-counter", api.ServeLikeCounter)
 	http.HandleFunc("/api/user/", api.ServeUser)
 	http.HandleFunc("/api/userlist", api.UserListAPI)
 	http.HandleFunc("/api/create-group", api.CreateGroupAPI)

@@ -27,6 +27,8 @@ type PostForResponse struct {
 }
 
 func ServePosts(w http.ResponseWriter, r *http.Request) {
+	const internalServerErrorMessage = "{\"status\": 500, \"message\": \"internal server error\"}"
+
 	// set the response headers
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
@@ -73,7 +75,7 @@ func ServePosts(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Println(err)
 			// send a response with the error
-			fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
+			fmt.Fprint(w, internalServerErrorMessage)
 		}
 
 		// write the response
@@ -86,7 +88,7 @@ func ServePosts(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 		// send a response with the error
-		fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
+		fmt.Fprint(w, internalServerErrorMessage)
 	}
 
 	// create the response
@@ -99,7 +101,7 @@ func ServePosts(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 		// send a response with the error
-		fmt.Fprintf(w, "{\"status\": 500, \"message\": \"internal server error\"}")
+		fmt.Fprint(w, internalServerErrorMessage)
 	}
 
 	// write the response
@@ -181,6 +183,13 @@ func fetchSinglePost(PostID int) (PostForResponse, error) {
 			post.Picture = base64.StdEncoding.EncodeToString(imageData)
 			log.Println("has image")
 		}
+
+		// get the like count
+		likeCount, err := sqlite.GetLikes(post.Id)
+		if err != nil {
+			log.Println("Error getting the like count, GetPosts(): ", err)
+		}
+		post.LikeCount = likeCount
 	}
 
 	return post, nil
