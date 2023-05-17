@@ -12,7 +12,7 @@ const fetchGroupData = async (groupNumber) => {
   };
 
   const response = await fetch(
-    `http://localhost:6969/api/serve-group-data`,
+    `http://localhost:6969/api/serve-group-data?id=${groupNumber}`,
     requestOptions
   );
 
@@ -124,30 +124,26 @@ const GroupPage = () => {
   console.log(groupNumber, "group number");
 
   return (
+
     <div className="group-page">
       <div className="group-page-header">
-        <h1>{groupData.name}</h1>
+        <h2>{groupData.name}</h2>
         <p>{groupData.description}</p>
         <button className="join-group-button">Join Group</button>
       </div>
       <div className="group-page-members">
-        <h1>Members</h1>
-        <p>User 1</p>
+        <h2>Members</h2>
+        <p>Add user here</p>
       </div>
 
       <div className="group-page-event">
         <h1>Events</h1>
-        <EventContainer
-          groupId={groupNumber}
-          userID={userID}
-          eventsData={eventsData}
-        />
-
-        {/* Use EventContainer component */}
+               {/* Use EventContainer component */}
         {/* Add event form */}
         <form onSubmit={handleEventSubmit}>
+          <div className="group-page-event-form">
           <h2>Create event</h2>
-          <input
+          <input className="event-input"
             type="text"
             name="title"
             placeholder="Title"
@@ -157,7 +153,7 @@ const GroupPage = () => {
             pattern="^[a-zA-Z0-9\s.,!?;:]{1,50}$"
             title="Event title should be 1-50 alphanumeric characters (.,!?;: allowed)."
           />
-          <input
+          <input className="event-description"
             type="text"
             name="description"
             placeholder="Description"
@@ -167,7 +163,7 @@ const GroupPage = () => {
             pattern="^[a-zA-Z0-9\s.,!?;:]{1,50}$"
             title="Event description should be 1-256 alphanumeric characters (.,!?;: allowed)."
           />
-          <input
+          <input className="event-date"
             type="datetime-local"
             name="dateTime"
             value={newEvent.dateTime}
@@ -175,7 +171,14 @@ const GroupPage = () => {
             required
             min={new Date().toISOString().substring(0, 16)}
           />
-          <button type="submit">Create event</button>
+          <button className="create-event-button" type="submit">Create event</button>
+        </div>
+        <h2>Uppcoming Events:</h2>
+        <EventContainer
+          groupId={groupNumber}
+          userID={userID}
+          eventsData={eventsData}
+        />
         </form>
       </div>
 
