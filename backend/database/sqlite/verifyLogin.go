@@ -31,18 +31,16 @@ func VerifyUser(email, passwordInput string) (int, string, error) {
 	}
 	defer rows.Close()
 
-	var user_id int
+	var userId int
 	var nickname, password string
 	if rows.Next() {
-		rows.Scan(&user_id, &email, &nickname, &password)
+		rows.Scan(&userId, &email, &nickname, &password)
 		if CheckPasswordHash(passwordInput, password) {
-			return user_id, nickname, nil
+			return userId, nickname, nil
 		}
 	}
 
-
-
-	return 0,"", fmt.Errorf("username or password does not match")
+	return 0, "", fmt.Errorf("username or password does not match")
 }
 
 func CheckPasswordHash(password, hash string) bool {

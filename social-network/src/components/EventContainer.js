@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/EventContainer.css"
 
 const EventContainer = ({ groupId, userID, eventsData }) => {
   const [events, setEvents] = React.useState([]);
@@ -29,19 +30,33 @@ const EventContainer = ({ groupId, userID, eventsData }) => {
     return <div>We have no events happening yet. Take initiative!</div>;
   }
 
+  const formatDateTime = (dateTime) => {
+    const options = {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      hour: "numeric",
+      minute: "numeric",
+    };
+    return new Date(dateTime).toLocaleString(undefined, options);
+  };
+
   return (
     <div>
       {events.map((event) => (
         <div key={event.id}>
+          <div className="event-container" key={event.id}>
           <b>
-            <p>{event.title}</p>
+            
+            <h2>{event.title}</ h2>
           </b>
+          <h4>{formatDateTime(event.dateTime)}</h4>
           <p>{event.description}</p>
-          <p>{new Date(event.dateTime).toLocaleString()}</p>
           <form onSubmit={(e) => handleResponseSubmit(event.id, e)}>
             <label>
               Going:
               <input
+              className="event-going-radio-button"
                 type="radio"
                 name={`response-${event.id}`}
                 value="going"
@@ -52,6 +67,7 @@ const EventContainer = ({ groupId, userID, eventsData }) => {
             <label>
               Not Going:
               <input
+                className="event-going-radio-button"
                 type="radio"
                 name={`response-${event.id}`}
                 value="not going"
@@ -59,8 +75,9 @@ const EventContainer = ({ groupId, userID, eventsData }) => {
                 onChange={(e) => handleResponseChange(event.id, e)}
               />
             </label>
-            <button type="submit">Submit</button>
+            <button className="event-submitt-button" type="submit">Submit</button>
           </form>
+        </div>
         </div>
       ))}
     </div>

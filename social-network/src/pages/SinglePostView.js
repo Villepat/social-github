@@ -149,12 +149,10 @@ const SinglePostView = () => {
           <div className="comment-section">Comment Section</div>
           <div className="commentbox-container">
             {comments.map((comment) => (
-              <div className="yourcomment">
-                <div key={comment.id}>
-                  <div className="commentator">{comment.full_name}</div>
-                  <div className="new-comment">{comment.content}</div>
-                  <div className="comment-time">{comment.created_at}</div>
-                </div>
+              <div className="yourcomment" key={comment.id}>
+                <div className="commentator">{comment.full_name}</div>
+                <div className="new-comment">{comment.content}</div>
+                <div className="comment-time">{comment.created_at}</div>
               </div>
             ))}
           </div>

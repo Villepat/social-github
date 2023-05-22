@@ -2,8 +2,47 @@
   display: flex;
   flex-direction: column;
   /* align-items: center; */
-  padding: 20px;
+  padding: 40px;
   max-width: 450px;
+  
+}
+
+.group-page-event, .group-post {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 10px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-shadow: #000000 0px 0px 5px;
+  transform: translateY(0px, -5px);
+  background-color: #f2f2f2;
+  
+  
+}
+.group-page-event-form {
+  box-shadow: #000000 0px 0px 5px;
+}
+.group-page-event h1, .group-post-container h1 {
+  font-size: 35px;
+  margin-bottom: 20px;
+  color: #2e424d;
+}
+
+.create-event-button {
+  width: 130px;
+  height: 35px;
+  margin-left: 200px;
+  margin-top: -58px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  background-color: #75e2ff;
+  color: #2e424d;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: #4752a4 0px 0px 2px;
+  transform: translateY(0px, -5px);
 }
 
 .group-form {
@@ -13,11 +52,6 @@
 .group-form-header {
   font-size: 28px;
   margin-bottom: 20px;
-}
-
-.group-form-label {
-  display: block;
-  margin-bottom: 10px;
 }
 
 .group-form-input {
@@ -65,36 +99,20 @@
   margin-bottom: 10px;
 }
 
-.group-button {
-  padding: 10px 20px;
-  background-color: #008cba;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
 
-.group-button-post {
-  padding: 10px 20px;
-  background-color: #008cba;
-  margin: 5px auto;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 20px;
+.group-button, .group-button-post, .join-group-button {
   width: 150px;
-}
-.join-group-button {
-  padding: 10px 20px;
-  background-color: #008cba;
-  margin: 5px auto;
-  color: white;
-  border: none;
-  border-radius: 4px;
+  height: 30px;
+  margin-left: 20px;
+  margin-top: 7px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  background-color: #75e2ff;
+  color: #2e424d;
+  font-size: 1rem;
   cursor: pointer;
-  margin-bottom: 20px;
-  width: 150px;
+  box-shadow: #4752a4 0px 0px 2px;
+  transform: translateY(0px, -5px);
 }
 
 .group-listview-title {
@@ -112,6 +130,8 @@
 .group-form-label {
   font-size: large;
   color: #fdfdfd;
+  display: block;
+  margin-bottom: 10px;
 }
 
 .timestamp {
@@ -124,32 +144,25 @@
   resize: none;
 }
 
-.group-page-header, .group-page-post, .group-page-event, .group-chat-modal-content, .group-page-members {
+.group-page-header, .group-post-container, .group-page-event, .group-chat-modal-content, .group-page-members {
+  padding: 10px 10px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  box-shadow: #000000 0px 0px 5px;
+  /* transform: translateY(0px, -5px); */
+  background-color: #f2f2f2;
   display: flex;
   flex-direction: column;
-  max-width: 600px;
-  margin: 20px;
-  padding: 10px 20px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
 }
 
-.group-post-container {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  justify-content: left;
-  width: 80%;
-  margin-bottom: 20px;
-  margin-left: 20px;
-  padding: 20px;
-}
 
 .post-display {
   margin: 20px;
   padding: 10px;
-  background-color: #fff;
+  width: 100%;
   border-radius: 3px;
   color: #2e424d;
 }
@@ -160,6 +173,7 @@
   resize: none;
   margin-bottom: 20px;
 }
+
 
 .group-chat-modal-close {
   color: #aaa;
@@ -181,4 +195,55 @@
   .group-page-header, .group-page-post, .group-page-event, .group-chat-modal-content, .group-page-members {
     width: 100%;
   }
+}
+
+.event-input {
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.event-description {
+  width: 300px;
+  padding: 10px;
+  resize: none;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.event-date {
+  width: 190px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.group-page-event-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px 20px;
+  box-sizing: border-box;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background-color: #eaebed;
+  word-break: break-word;
+  position: relative; /* Add position property */
+  z-index: 1;
+}
+
+.group-post h4 {
+  margin: 5px;
+  font-size: 15px;
+  margin-bottom: 10px;
 }

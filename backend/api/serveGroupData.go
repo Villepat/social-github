@@ -20,6 +20,7 @@ func ServeSingleGroup(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 
 	// if the request method is not GET or OPTIONS, return
 	if r.Method != http.MethodGet && r.Method != http.MethodOptions {
@@ -50,6 +51,8 @@ func ServeSingleGroup(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+
+	log.Println(group)
 
 	// write the group data to the response
 	w.WriteHeader(http.StatusOK)

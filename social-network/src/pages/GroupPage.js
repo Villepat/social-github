@@ -12,7 +12,7 @@ const fetchGroupData = async (groupNumber) => {
   };
 
   const response = await fetch(
-    `http://localhost:6969/api/serve-group-data`,
+    `http://localhost:6969/api/serve-group-data?id=${groupNumber}`,
     requestOptions
   );
 
@@ -53,7 +53,6 @@ const GroupPage = () => {
   const url = window.location.href;
   const pattern = /groups\/(\d+)/;
   const match = url.match(pattern);
-  //console.log(match);
   const groupNumber = match[1];
   const [groupData, setGroupData] = React.useState([]);
   const [eventsData, setEventsData] = React.useState([]);
@@ -103,10 +102,6 @@ const GroupPage = () => {
         date_time: newEvent.dateTime,
       }),
     });
-    // console.log(groupNumber);
-    // console.log(newEvent.title);
-    // console.log(newEvent.description);
-    // console.log(newEvent.dateTime);
 
     // If response is OK, re-fetch the events
     if (response.ok) {
@@ -124,30 +119,27 @@ const GroupPage = () => {
   console.log(groupNumber, "group number");
 
   return (
+
     <div className="group-page">
       <div className="group-page-header">
-        <h1>{groupData.name}</h1>
+        <h2>{groupData.name}</h2>
         <p>{groupData.description}</p>
         <button className="join-group-button">Join Group</button>
       </div>
+      <h1>Members</h1>
       <div className="group-page-members">
-        <h1>Members</h1>
-        <p>User 1</p>
+        {/* <h2>Members</h2> */}
+        <p>Add user here</p>
       </div>
-
+      <h1>Group Events</h1>
       <div className="group-page-event">
-        <h1>Events</h1>
-        <EventContainer
-          groupId={groupNumber}
-          userID={userID}
-          eventsData={eventsData}
-        />
-
-        {/* Use EventContainer component */}
+        {/* <h1>Events</h1> */}
+               {/* Use EventContainer component */}
         {/* Add event form */}
         <form onSubmit={handleEventSubmit}>
+          <div className="group-page-event-form">
           <h2>Create event</h2>
-          <input
+          <input className="event-input"
             type="text"
             name="title"
             placeholder="Title"
@@ -157,7 +149,7 @@ const GroupPage = () => {
             pattern="^[a-zA-Z0-9\s.,!?;:]{1,50}$"
             title="Event title should be 1-50 alphanumeric characters (.,!?;: allowed)."
           />
-          <input
+          <input className="event-description"
             type="text"
             name="description"
             placeholder="Description"
@@ -167,7 +159,7 @@ const GroupPage = () => {
             pattern="^[a-zA-Z0-9\s.,!?;:]{1,50}$"
             title="Event description should be 1-256 alphanumeric characters (.,!?;: allowed)."
           />
-          <input
+          <input className="event-date"
             type="datetime-local"
             name="dateTime"
             value={newEvent.dateTime}
@@ -175,12 +167,21 @@ const GroupPage = () => {
             required
             min={new Date().toISOString().substring(0, 16)}
           />
-          <button type="submit">Create event</button>
+          <button className="create-event-button" type="submit">Create event</button>
+        </div>
         </form>
+        </div>
+        <h1>Uppcoming Events:</h1>
+        <div className="group-page-event">
+        <EventContainer
+          groupId={groupNumber}
+          userID={userID}
+          eventsData={eventsData}
+        />
       </div>
 
       <div className="group-page-post">
-        <h1>Posts</h1>
+        <h1>Group Posts</h1>
         <div className="group-post-container">
           <div className="post-display">
             <GroupPosts />
@@ -190,28 +191,7 @@ const GroupPage = () => {
       <div className="group-chat-modal">
         <button className="group-button">Open Groupchat</button>
       </div>
-      <div className="group-chat-modal-content">
-        <div className="group-chat-modal-header">
-          <span className="group-chat-modal-close">&times;</span>
-          <h1>Group Chat</h1>
         </div>
-        <div className="group-chat-modal-body">
-          <p>Some text</p>
-          <p>Some other text...</p>
-          <div className="group-chat-modal-footer-input">
-            <input
-              type="text"
-              placeholder="Type a message"
-              name="msg"
-              required
-            />
-            <button type="submit" className="group-chat-modal-send">
-              Send
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
   );
 };
 

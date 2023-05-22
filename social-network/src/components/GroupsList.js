@@ -51,7 +51,6 @@ const createGroup = async () => {
     return 200;
   } else {
     alert("Error creating group.");
-    return;
   }
 };
 

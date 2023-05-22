@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import ProfileCard from "../components/ProfileCard";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../AuthContext";

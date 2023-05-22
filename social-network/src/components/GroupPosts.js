@@ -1,4 +1,6 @@
 import React from 'react'
+import PostContainer from './PostContainer'
+import '../styles/Groups.css'
 
 const fetchGroupPosts = async (groupId) => {
     const requestOptions = {
@@ -69,15 +71,29 @@ const GroupPosts = () => {
         console.log("post submitted");
         const updatedPosts = await postGroupPost(groupId);
         setGroupPosts(updatedPosts);
-    };
+
+        //set the createadAt to display with date, month with letters and time in houers and minutes
+        // const formatCreatedAt = (CreatedAt) => {
+        //     const options = {
+        //         month: "long",
+        //         day: "numeric",
+        //         hour: "numeric",
+        //         minutes: "numeric",
+        //     };
+        //     return new Date(CreatedAt).toLocaleDateString(undefined, options);
+        // };
 
     console.log('group posts', groupPosts)
 
-  return (
+    };
+
+    
+
+return (
     <div>
         <div className='group-post-input'>
-            <h1>Group Posts</h1>
-            <h1>Posts</h1>
+            {/* <h1>Group Posts</h1>
+            <h1>Posts</h1> */}
             <div className="group-post-container">
             <textarea
                 className="post-textarea"
@@ -95,17 +111,18 @@ const GroupPosts = () => {
         </div>
         {groupPosts ? (
             groupPosts.map((groupPost) => (
-                <div key={groupPost.Id}>
+                <div className="group-post" key={groupPost.Id}>
                 <h3>{groupPost.Post}</h3>
+                <h4>{groupPost.FullName} </h4>
                 <h4>{groupPost.CreatedAt}</h4>
-                <h4>{groupPost.FullName}</h4>
+                {/* <h4>{formatCreatedAt(groupPost.CreatedAt)}</h4> */}
                 </div>
             ))
         ) : (
             <div>loading...</div>
         )}
     </div>
-  )
+)
 }
 
 export default GroupPosts
