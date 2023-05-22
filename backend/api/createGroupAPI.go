@@ -44,6 +44,12 @@ func CreateGroupAPI(w http.ResponseWriter, r *http.Request) {
 	// get the group name and description from the request
 	groupName := request.GroupName
 	groupDescription := request.GroupDescription
+	// check if the group name is at least 1 character long and at most 50 characters long
+	//check if the description is at least 10 character long and at most 500 characters long
+	if len(groupName) < 1 || len(groupName) > 50 || len(groupDescription) < 10 || len(groupDescription) > 500 {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
 
 	// get the user id from the session
 	//check if the request cookie is in the sessions map

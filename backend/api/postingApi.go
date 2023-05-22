@@ -64,6 +64,12 @@ func ServePosting(w http.ResponseWriter, r *http.Request) {
 	// Get the form values
 	content := r.FormValue("content")
 	privacy := r.FormValue("privacy")
+	//validate that content is 10-500 characters long
+	if len(content) < 10 || len(content) > 500 {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "{\"status\": 400, \"message\": \"bad request\"}")
+		return
+	}
 
 	// Access the file
 	file, fileHeader, err := r.FormFile("picture")

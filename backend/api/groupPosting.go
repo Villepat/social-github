@@ -41,6 +41,12 @@ func GroupPosting(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	//check that the content is at least 10 characters long and at most 500 characters long
+	if len(request.Content) < 10 || len(request.Content) > 500 {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
 	log.Println("request:", request)
 
 	// get the group name from the request

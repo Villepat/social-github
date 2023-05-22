@@ -4,8 +4,13 @@ const PostingForm = ({ fetchPosts, setPosts }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("post submitted");
-    // send post to database
+
+    // send post to database after validation
     const post = document.getElementById("post").value;
+    if (post.length < 10 || post.length > 500) {
+      alert("Post must be 10-500 characters long.");
+      return;
+    }
     const privacyInput = document.getElementById("privacy");
     const picture = document.getElementById("picture");
 
@@ -46,9 +51,12 @@ const PostingForm = ({ fetchPosts, setPosts }) => {
           rows="10"
           placeholder="What's on your mind?"
           id="post"
-          
+          required
+          maxLength="500"
+          minLength="10"
+          title="Post should be 10-500 characters."
         />
-     
+
         <label className="upload" htmlFor="picture">
           Upload nudes
         </label>

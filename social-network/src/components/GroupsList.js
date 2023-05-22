@@ -60,6 +60,18 @@ const GroupsList = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("submit");
+    const groupName = document.getElementById("group-name").value;
+    const groupDescription = document.getElementById("group-description").value;
+
+    if (groupName.length < 1) {
+      alert("Group Name must be at least 1 character long");
+      return;
+    }
+
+    if (groupDescription.length < 10) {
+      alert("Group Description must be at least 10 characters long");
+      return;
+    }
     const status = await createGroup();
     if (status === 200) {
       setGroups(await fetchGroups());
@@ -87,15 +99,23 @@ const GroupsList = () => {
           <input
             className="group-form-input"
             type="text"
-            placeholder="Group Name"
+            placeholder="Group Name (1-50 characters)"
             id="group-name"
+            required
+            maxLength="50"
+            minLength={1}
+            title="Group name should be 1-50 characters."
           />
           <label className="group-form-label">Group Description</label>
           <textarea
             className="group-form-input"
             type="textarea"
-            placeholder="Group Description"
+            placeholder="Group Description (10-500 characters)"
             id="group-description"
+            required
+            maxLength="500"
+            minLength="10"
+            title="Group description should be 1-500 characters."
           />
           <button className="group-form-button" onClick={handleSubmit}>
             Create Group
