@@ -126,13 +126,14 @@ const GroupPage = () => {
         <p>{groupData.description}</p>
         <button className="join-group-button">Join Group</button>
       </div>
+      <h1>Members</h1>
       <div className="group-page-members">
-        <h2>Members</h2>
+        {/* <h2>Members</h2> */}
         <p>Add user here</p>
       </div>
-
+      <h1>Group Events</h1>
       <div className="group-page-event">
-        <h1>Events</h1>
+        {/* <h1>Events</h1> */}
                {/* Use EventContainer component */}
         {/* Add event form */}
         <form onSubmit={handleEventSubmit}>
@@ -168,17 +169,19 @@ const GroupPage = () => {
           />
           <button className="create-event-button" type="submit">Create event</button>
         </div>
-        <h2>Uppcoming Events:</h2>
+        </form>
+        </div>
+        <h1>Uppcoming Events:</h1>
+        <div className="group-page-event">
         <EventContainer
           groupId={groupNumber}
           userID={userID}
           eventsData={eventsData}
         />
-        </form>
       </div>
 
       <div className="group-page-post">
-        <h1>Posts</h1>
+        <h1>Group Posts</h1>
         <div className="group-post-container">
           <div className="post-display">
             <GroupPosts />
@@ -188,28 +191,7 @@ const GroupPage = () => {
       <div className="group-chat-modal">
         <button className="group-button">Open Groupchat</button>
       </div>
-      <div className="group-chat-modal-content">
-        <div className="group-chat-modal-header">
-          <span className="group-chat-modal-close">&times;</span>
-          <h1>Group Chat</h1>
         </div>
-        <div className="group-chat-modal-body">
-          <p>Some text</p>
-          <p>Some other text...</p>
-          <div className="group-chat-modal-footer-input">
-            <input
-              type="text"
-              placeholder="Type a message"
-              name="msg"
-              required
-            />
-            <button type="submit" className="group-chat-modal-send">
-              Send
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
   );
 };
 
