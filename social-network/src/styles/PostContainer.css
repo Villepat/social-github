@@ -15,6 +15,7 @@
   position: relative; /* Add position property */
   z-index: 1;
 }
+
 /* user made post  */
 .post {
   padding: 10px 10px;
@@ -55,6 +56,7 @@
   overflow-y: scroll;
   max-height: 920px;
 }
+
 /* posts image if there is one  */
 .post-img {
   max-width: 100%;
@@ -62,6 +64,7 @@
   display: block;
   margin: 0 auto;
 }
+
 /* the text box that user writes in  */
 .post-box {
   margin-top: 20px;
@@ -79,6 +82,7 @@
   border: 2px solid #000000;
   border-radius: 5px;
 }
+
 /* what is this? */
 /* .post-header {
   display: flex;
@@ -114,6 +118,7 @@
   box-shadow: #000000 0px 0px 5px;
   transform: translateY(0px, -5px);
 }
+
 /* the text infront of choose file button */
 /* #upload {
   height: 25px;
@@ -128,6 +133,7 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
 /* the box for everything needed to post a post */
 .posting-form {
   display: flex;
@@ -142,6 +148,7 @@
   position: relative; /* Add position property */
   z-index: 1;
 }
+
 /* button for submitting post */
 .submit-post {
   width: 100px;
@@ -157,20 +164,24 @@
   box-shadow: #4752a4 0px 0px 2px;
   transform: translateY(0px, -5px);
 }
+
 .submit-post:hover {
   box-shadow: #000000 0px 0px 5px;
   transform: translateY(0px, -5px);
 }
+
 /* the whole page only reason is to keep the post-container bit to the left  */
 .social-network-header {
   margin-left: 10px;
 }
+
 /* welcome message maybe redundant */
 .welcome {
   text-align: center;
   color: white;
   font-size: 32px;
 }
+
 /* user boxes title */
 .user-list-header {
   color: #eaebed;
@@ -178,6 +189,7 @@
   font-size: 20px;
   font-weight: bold;
 }
+
 /* contains all the users atm will be changed to friends  */
 .user-list-container {
   position: fixed;
@@ -186,6 +198,7 @@
   width: 200px;
   z-index: 2;
 }
+
 /* just the user inside the user list container   */
 .user-list-item {
   margin-bottom: 5px;
@@ -201,6 +214,7 @@
   box-shadow: #000000 0px 0px 10px;
   transform: translateY(0px, -5px);
 }
+
 /* users name */
 .user-list-item a {
   text-decoration: none;
@@ -225,56 +239,63 @@
   position: relative; /* Add position property */
   z-index: 1;
 }
+
 .title {
   font-size: 20px;
   font-weight: bold;
 }
+
 .newavatar {
   font-size: 20px;
   font-weight: bold;
 }
+
 .avatar-box {
   font-size: 20px;
   font-weight: bold;
   resize: none;
-}
-.avatar-box {
-  font-size: 20px;
-  font-weight: bold;
   text-align: center;
 }
+
 .newnickname {
   display: flex;
   flex-direction: column;
   font-size: 20px;
   font-weight: bold;
 }
+
 .title-wrapper {
   margin-bottom: 5px;
 }
+
 .input-wrapper {
   display: flex;
   flex-direction: column;
 }
+
 .newemail {
   font-size: 20px;
   font-weight: bold;
 }
+
 .newabout {
   font-size: 20px;
   font-weight: bold;
   resize: none;
 }
+
 .newpassword {
   font-size: 20px;
   font-weight: bold;
   resize: none;
 }
+
 .confirmpassword {
   font-size: 20px;
   font-weight: bold;
   resize: none;
 }
+
 .about-textarea {
   font-size: 20px;
   font-weight: bold;

@@ -24,6 +24,7 @@ type PostForResponse struct {
 	Picture   string `json:"picture"`
 	Date      string `json:"date"`
 	LikeCount int    `json:"like_count"`
+	Likers    []int  `json:"likers"`
 }
 
 func ServePosts(w http.ResponseWriter, r *http.Request) {
@@ -146,6 +147,13 @@ func GetPosts() ([]PostForResponse, error) {
 		}
 		post.LikeCount = likeCount
 
+		// get the likers
+		likers, err := getLikersList(post.Id)
+		if err != nil {
+			log.Println("Error getting the likers, GetPosts(): ", err)
+		}
+		post.Likers = likers
+
 		posts = append(posts, post)
 	}
 
@@ -193,4 +201,39 @@ func fetchSinglePost(PostID int) (PostForResponse, error) {
 	}
 
 	return post, nil
+}
+
+func getLikersList(postID int) ([]int, error) {
+	db, err := sqlite.OpenDb()
+	if err != nil {
+		log.Println("Error opening the database, GetPosts(): ", err)
+		return nil, err
+	}
+
+	defer db.Close()
+
+	// get the likers
+	likers := []int{}
+
+	rows, err := db.Query("SELECT user_id FROM reactions WHERE post_id = ?", postID)
+
+	if err != nil {
+		log.Println("Error getting the likers, GetPosts(): ", err)
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var liker int
+		err := rows.Scan(&liker)
+		if err != nil {
+			log.Println("Error scanning the likers, GetPosts(): ", err)
+			return nil, err
+		}
+
+		likers = append(likers, liker)
+	}
+
+	return likers, nil
 }
