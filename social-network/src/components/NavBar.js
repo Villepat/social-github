@@ -1,7 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
-import { useNavigate } from "react-router-dom";
+import Notifications from "./Notifications";
+
 
 function Navbar() {
   const { loggedIn, logout } = useAuth();
@@ -38,6 +39,9 @@ function Navbar() {
             <Link to="/login">Login</Link>
           </li>
         )}
+        <li>
+          <Notifications />
+        </li>
       </ul>
     </nav>
   );

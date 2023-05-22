@@ -53,7 +53,6 @@ const GroupPage = () => {
   const url = window.location.href;
   const pattern = /groups\/(\d+)/;
   const match = url.match(pattern);
-  //console.log(match);
   const groupNumber = match[1];
   const [groupData, setGroupData] = React.useState([]);
   const [eventsData, setEventsData] = React.useState([]);
@@ -103,10 +102,6 @@ const GroupPage = () => {
         date_time: newEvent.dateTime,
       }),
     });
-    // console.log(groupNumber);
-    // console.log(newEvent.title);
-    // console.log(newEvent.description);
-    // console.log(newEvent.dateTime);
 
     // If response is OK, re-fetch the events
     if (response.ok) {

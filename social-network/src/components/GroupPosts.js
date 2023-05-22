@@ -1,5 +1,4 @@
 import React from 'react'
-import PostContainer from './PostContainer'
 
 const fetchGroupPosts = async (groupId) => {
     const requestOptions = {
