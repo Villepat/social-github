@@ -98,6 +98,10 @@ function ProfileCard(props) {
     }
   };
 
+  //cut out the time from the birthday
+  const birthday = user.birthday;
+  const birthdayDate = birthday.split("T")[0];
+  user.birthday = birthdayDate;
   return (
     <div className="card">
       <div className="card-body">

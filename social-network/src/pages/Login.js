@@ -130,6 +130,9 @@ function Login() {
               autoComplete="username"
               value={registerEmail}
               onChange={(event) => setRegisterEmail(event.target.value)}
+              required
+              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+              title="Please enter a valid email address, for example: kek@kek.org"
             />
           </div>
           <div>
@@ -140,6 +143,9 @@ function Login() {
               autoComplete="new-password"
               value={registerPassword}
               onChange={(event) => setRegisterPassword(event.target.value)}
+              required
+              pattern="^(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,}$"
+              title="Password must be at least 8 characters long, contain at least one uppercase character and one special character"
             />
           </div>
           <div>
@@ -152,6 +158,8 @@ function Login() {
               onChange={(event) =>
                 setRegisterConfirmPassword(event.target.value)
               }
+              required
+              pattern="^(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,}$"
             />
           </div>
           <div>
@@ -161,6 +169,10 @@ function Login() {
               id="registerNickname"
               value={registerNickname}
               onChange={(event) => setRegisterNickname(event.target.value)}
+              required
+              pattern="^[a-zA-Z0-9]+$"
+              maxLength="25"
+              title="Nickname max length is 25 alphanumerical characters"
             />
           </div>
           <div>
@@ -170,6 +182,10 @@ function Login() {
               id="registerFirstName"
               value={registerFirstName}
               onChange={(event) => setRegisterFirstName(event.target.value)}
+              required
+              pattern="^[a-zA-Z0-9]+$"
+              maxlength="25"
+              title="First name max length is 25 alphanumerical characters"
             />
           </div>
           <div>
@@ -179,6 +195,10 @@ function Login() {
               id="registerLastName"
               value={registerLastName}
               onChange={(event) => setRegisterLastName(event.target.value)}
+              required
+              pattern="^[a-zA-Z0-9]+$"
+              maxlength="25"
+              title="Last name max length is 25 alphanumerical characters"
             />
           </div>
           <div>
@@ -188,6 +208,9 @@ function Login() {
               id="registerBirthday"
               value={registerBirthday}
               onChange={(event) => setRegisterBirthday(event.target.value)}
+              required
+              pattern="^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/(19|20)\d\d$" // DD/MM/YYYY
+              title="Please enter a valid date, for example: 01/01/2000 (DD/MM/YYYY)"
             />
           </div>
           <div>
@@ -197,6 +220,8 @@ function Login() {
               id="registerAboutMe"
               value={registerAboutMe}
               onChange={(event) => setRegisterAboutMe(event.target.value)}
+              maxLength="500"
+              title="About me max length is 500 characters"
             />
           </div>
           <div>

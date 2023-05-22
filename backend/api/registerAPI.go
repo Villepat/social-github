@@ -5,8 +5,11 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/mail"
 	"os"
+	"regexp"
 	"social-network/backend/database/sqlite"
+	"time"
 )
 
 const defaultProfilePicturePath = "./database/pictures/pepega.png"
@@ -54,6 +57,28 @@ func RegisterAPI(w http.ResponseWriter, r *http.Request) {
 	aboutMe := r.FormValue("aboutMe")
 	fullname := firstName + " " + lastName
 
+	// Input validation
+	if !IsValidEmail(email) {
+		http.Error(w, "Invalid email format", http.StatusBadRequest)
+		return
+	}
+	if !IsAlphaNumericOnly(nickname) || !IsAlphaNumericOnly(firstName) || !IsAlphaNumericOnly(lastName) {
+		http.Error(w, "Nickname, FirstName, and LastName should only consist of alphanumeric characters", http.StatusBadRequest)
+		return
+	}
+	if !IsValidPassword(password) {
+		http.Error(w, "Invalid password. It must be at least 8 characters long, contain at least one uppercase character and one special character", http.StatusBadRequest)
+		return
+	}
+	if !IsValidDate(birthday) {
+		http.Error(w, "Invalid date format. It must be in format DD/MM/YYYY", http.StatusBadRequest)
+		return
+	}
+	if !IsValidAboutMe(aboutMe) {
+		http.Error(w, "AboutMe is too long. It should have a maximum length of 500 characters", http.StatusBadRequest)
+		return
+	}
+
 	// Access uploaded file
 	file, fileHeader, err := r.FormFile("profilePicture")
 	var fileContent []byte
@@ -93,6 +118,9 @@ func RegisterAPI(w http.ResponseWriter, r *http.Request) {
 		fileName = fileHeader.Filename
 	}
 
+	//change birthday format to YYYY-MM-DD to match expected format in database
+	birthday = birthday[6:10] + "-" + birthday[3:5] + "-" + birthday[0:2]
+
 	// Perform registration logic (e.g. insert user into database)
 	err = sqlite.RegisterUser(email, nickname, password, birthday, aboutMe, firstName, lastName, fullname, fileName, fileContent)
 	if err != nil {
@@ -106,4 +134,44 @@ func RegisterAPI(w http.ResponseWriter, r *http.Request) {
 		Message: "User registered successfully",
 	}
 	json.NewEncoder(w).Encode(response)
+}
+
+func IsValidEmail(email string) bool {
+	_, err := mail.ParseAddress(email)
+	return err == nil
+}
+
+func IsAlphaNumericOnly(s string) bool {
+	// Matches only alphanumeric characters
+	alphaNumRegexp := regexp.MustCompile(`^[a-zA-Z0-9]+$`)
+	return alphaNumRegexp.MatchString(s)
+}
+
+func IsValidPassword(password string) bool {
+	// At least 8 characters long, with at least one uppercase character and one special character
+	//passRegexp := regexp.MustCompile(`^(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,}$`)
+	//range over string to check for uppercase and special characters
+	var hasUpper, hasSpecial bool
+	for _, c := range password {
+		if c >= 'A' && c <= 'Z' {
+			hasUpper = true
+		} else if c >= '!' && c <= '/' || c >= ':' && c <= '@' || c >= '[' && c <= '`' || c >= '{' && c <= '~' {
+			hasSpecial = true
+		}
+	}
+	return len(password) >= 8 && hasUpper && hasSpecial
+	//
+
+	//return passRegexp.MatchString(password)
+}
+
+func IsValidDate(birthdate string) bool {
+	// Check if birthdate is in format DD/MM/YYYY
+	_, err := time.Parse("02/01/2006", birthdate)
+	return err == nil
+}
+
+func IsValidAboutMe(aboutMe string) bool {
+	// AboutMe should have a maximum length of 500 characters
+	return len(aboutMe) <= 500
 }
