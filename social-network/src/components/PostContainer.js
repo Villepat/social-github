@@ -3,6 +3,17 @@ import "../styles/PostContainer.css";
 import PostingForm from "./PostingForm";
 import { Link } from "react-router-dom";
 
+// Function to retrieve liked post IDs from localStorage
+function getLikedPostsFromStorage() {
+  const likedPosts = localStorage.getItem("likedPosts");
+  return likedPosts ? JSON.parse(likedPosts) : [];
+}
+
+// Function to save liked post IDs to localStorage
+function saveLikedPostsToStorage(likedPosts) {
+  localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
+}
+
 async function fetchPosts() {
   const response = await fetch("http://localhost:6969/api/posts");
   const data = await response.json();
@@ -14,7 +25,6 @@ async function fetchPosts() {
     alert("Error fetching posts.");
   }
 }
-
 async function likePost(postId) {
   const response = await fetch(
     `http://localhost:6969/api/post/like?id=${postId}`,
@@ -33,6 +43,7 @@ async function likePost(postId) {
 
 function PostContainer() {
   const [posts, setPosts] = React.useState([]);
+  const [likedPosts, setLikedPosts] = React.useState(getLikedPostsFromStorage);
 
   React.useEffect(() => {
     const getPosts = async () => {
@@ -42,6 +53,11 @@ function PostContainer() {
     getPosts();
   }, []);
 
+  React.useEffect(() => {
+    // Update localStorage when likedPosts state changes
+    saveLikedPostsToStorage(likedPosts);
+  }, [likedPosts]);
+
   console.log("posts:", posts);
 
   const handleLikeClick = async (postId) => {
@@ -49,8 +65,6 @@ function PostContainer() {
     const updatedPosts = await fetchPosts();
     setPosts(updatedPosts);
   };
-
-  const [likedPosts, setLikedPosts] = React.useState([]);
 
   const toggleLike = (postId) => {
     if (likedPosts.includes(postId)) {
@@ -70,6 +84,17 @@ function PostContainer() {
             : null;
 
           const isLiked = likedPosts.includes(post.id);
+          const activeUserLike = posts[0].likers.find(
+            (liker) => liker === sessionStorage.getItem("userID")
+          );
+          let temp = false;
+          if (activeUserLike !== undefined) {
+            temp = true;
+          } else {
+            temp = false;
+          }
+
+          console.log("activeUserLike:", activeUserLike);
 
           return (
             <div key={post.id} className="post">
@@ -88,7 +113,7 @@ function PostContainer() {
                   toggleLike(post.id);
                   handleLikeClick(post.id);
                 }}
-                className={`fa fa-thumbs-up ${isLiked ? "liked" : ""}`}
+                className={`fa fa-thumbs-up ${temp ? "liked" : ""}`}
               ></i>
               <div className="likes">
                 <span>{post.like_count} </span>

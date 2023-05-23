@@ -24,6 +24,8 @@ export function AuthProvider({ children }) {
         const data = await response.json();
         setLoggedIn(true);
         setUserID(data.userID);
+        //storing user id in session storage
+        sessionStorage.setItem("userID", data.userID);
         setNickname(data.nickname);
 
         // Create a WebSocket connection when the user is logged in

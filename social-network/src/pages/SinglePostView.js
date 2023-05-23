@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/CommentPage.css";
 import ErrorPage from "./ErrorPage";
+import { Link } from "react-router-dom";
 
 const fetchSinglePost = async (postId) => {
   const response = await fetch(`http://localhost:6969/api/posts?id=${postId}`);
@@ -119,7 +120,10 @@ const SinglePostView = () => {
         X
       </button>
       <div className="singlepost">
-        <div className="og-author">{post.full_name}</div>
+        <div className="og-author">
+          
+          <Link to={`/profile/${post.user_id}`}>{post.full_name}</Link>
+        </div>
         <div className="og-content">{post.content}</div>
         {post.picture ? (
           <div className="og-image">

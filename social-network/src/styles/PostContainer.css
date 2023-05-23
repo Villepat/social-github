@@ -49,6 +49,8 @@
   margin-top: 10px;
   text-align: center;
   cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold;
 }
 
 /* basically the same as post-container but only ability is to scroll the page  */
