@@ -58,22 +58,22 @@ func RegisterAPI(w http.ResponseWriter, r *http.Request) {
 	fullname := firstName + " " + lastName
 
 	// Input validation
-	if !IsValidEmail(email) {
-		http.Error(w, "Invalid email format", http.StatusBadRequest)
-		return
-	}
+	// if !IsValidEmail(email) {
+	// 	http.Error(w, "Invalid email format", http.StatusBadRequest)
+	// 	return
+	// }
 	if !IsAlphaNumericOnly(nickname) || !IsAlphaNumericOnly(firstName) || !IsAlphaNumericOnly(lastName) {
 		http.Error(w, "Nickname, FirstName, and LastName should only consist of alphanumeric characters", http.StatusBadRequest)
 		return
 	}
-	if !IsValidPassword(password) {
-		http.Error(w, "Invalid password. It must be at least 8 characters long, contain at least one uppercase character and one special character", http.StatusBadRequest)
-		return
-	}
-	if !IsValidDate(birthday) {
-		http.Error(w, "Invalid date format. It must be in format DD/MM/YYYY", http.StatusBadRequest)
-		return
-	}
+	// if !IsValidPassword(password) {
+	// 	http.Error(w, "Invalid password. It must be at least 8 characters long, contain at least one uppercase character and one special character", http.StatusBadRequest)
+	// 	return
+	// }
+	// if !IsValidDate(birthday) {
+	// 	http.Error(w, "Invalid date format. It must be in format DD/MM/YYYY", http.StatusBadRequest)
+	// 	return
+	// }
 	if !IsValidAboutMe(aboutMe) {
 		http.Error(w, "AboutMe is too long. It should have a maximum length of 500 characters", http.StatusBadRequest)
 		return
@@ -119,7 +119,7 @@ func RegisterAPI(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//change birthday format to YYYY-MM-DD to match expected format in database
-	birthday = birthday[6:10] + "-" + birthday[3:5] + "-" + birthday[0:2]
+	// birthday = birthday[6:10] + "-" + birthday[3:5] + "-" + birthday[0:2]
 
 	// Perform registration logic (e.g. insert user into database)
 	err = sqlite.RegisterUser(email, nickname, password, birthday, aboutMe, firstName, lastName, fullname, fileName, fileContent)
