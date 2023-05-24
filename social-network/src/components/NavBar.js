@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import Notifications from "./Notifications";
-
+import SearchBar from "./SearchBar";
 
 function Navbar() {
   const { loggedIn, logout } = useAuth();
@@ -41,6 +41,9 @@ function Navbar() {
         )}
         <li>
           <Notifications />
+        </li>
+        <li>
+          <SearchBar />
         </li>
       </ul>
     </nav>
