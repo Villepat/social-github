@@ -31,6 +31,12 @@ function Navbar() {
               <Link to="/profile">Profile</Link>
             </li>
             <li>
+              <Notifications />
+            </li>
+            <li>
+              <SearchBar />
+            </li>
+            <li>
               <button onClick={handleLogout}>Logout</button>
             </li>
           </>
@@ -39,12 +45,13 @@ function Navbar() {
             <Link to="/login">Login</Link>
           </li>
         )}
-        <li>
+        {/* commented out for now they only appear when you are logged in */}
+        {/* <li>
           <Notifications />
         </li>
         <li>
           <SearchBar />
-        </li>
+        </li> */}
       </ul>
     </nav>
   );

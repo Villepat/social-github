@@ -34,6 +34,10 @@ func main() {
 	http.HandleFunc("/api/event", api.CreateEventAPI)
 	http.HandleFunc("/api/serve-events", api.ServeEvents)
 	http.HandleFunc("/api/search-users", api.SearchUserAPI)
+	http.HandleFunc("/api/serve-group-comments", api.ServeGroupComments)
+	http.HandleFunc("/api/group-commenting", api.GroupCommentingAPI)
+	
+
 
 	ws.SetupRoutes()
 

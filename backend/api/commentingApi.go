@@ -91,14 +91,14 @@ func CommentingAPI(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if img != nil {
-		err = sqlite.AddComment(postId, userId, content, img, createdAt)
+		err = sqlite.AddComment(postId, userId, content, img, createdAt, false)
 		if err != nil {
 			log.Println(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 	} else {
-		err = sqlite.AddComment(postId, userId, content, nil, createdAt)
+		err = sqlite.AddComment(postId, userId, content, nil, createdAt, false)
 		if err != nil {
 			log.Println(err)
 			w.WriteHeader(http.StatusInternalServerError)

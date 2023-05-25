@@ -1,5 +1,6 @@
 import React from "react";
-import PostContainer from "./PostContainer";
+import { Link } from "react-router-dom";
+
 import "../styles/Groups.css";
 
 const fetchGroupPosts = async (groupId) => {
@@ -80,12 +81,9 @@ const GroupPosts = () => {
     const updatedPosts = await postGroupPost(groupId);
     setGroupPosts(updatedPosts);
 
-  
-
-
     console.log("group posts", groupPosts);
   };
-  
+
   const formatTimestamp = (dateTime) => {
     const options = {
       day: "numeric",
@@ -126,6 +124,12 @@ const GroupPosts = () => {
             <h3>{groupPost.Post}</h3>
             <h4>{groupPost.FullName} </h4>
             <h4>{formatTimestamp(groupPost.CreatedAt)}</h4>
+            <div className="group-post-comment-section">
+              <Link to={`/group/${groupId}/group-post/${groupPost.Id}`}>
+                Open Comments
+              </Link>
+            </div>
+
             {/* <h4>{formatCreatedAt(groupPost.CreatedAt)}</h4> */}
           </div>
         ))

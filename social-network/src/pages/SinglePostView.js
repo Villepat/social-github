@@ -131,7 +131,6 @@ const SinglePostView = () => {
       </button>
       <div className="singlepost">
         <div className="og-author">
-          
           <Link to={`/profile/${post.user_id}`}>{post.full_name}</Link>
         </div>
         <div className="og-content">{post.content}</div>
@@ -166,7 +165,9 @@ const SinglePostView = () => {
               <div className="yourcomment" key={comment.id}>
                 <div className="commentator">{comment.full_name}</div>
                 <div className="new-comment">{comment.content}</div>
-                <div className="comment-time">{formatTimestamp(comment.created_at)}</div>
+                <div className="comment-time">
+                  {formatTimestamp(comment.created_at)}
+                </div>
               </div>
             ))}
           </div>

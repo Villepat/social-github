@@ -11,7 +11,7 @@ import { AuthProvider } from "./AuthContext";
 import Groups from "./pages/Groups";
 import GroupPage from "./pages/GroupPage";
 import SinglePostView from "./pages/SinglePostView";
-
+import GroupCommentSection from "./pages/GroupCommentSection";
 
 function App() {
   return (
@@ -24,9 +24,13 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/:userId" element={<Profile />} />
           <Route path="/about" element={<About />} />
-          <Route path="/post/:postId" element={<SinglePostView/>} />
+          <Route path="/post/:postId" element={<SinglePostView />} />
           <Route path="/groups" element={<Groups />} />
           <Route path="/groups/:groupId" element={<GroupPage />} />
+          <Route
+            path="/group/:groupId/group-post/:postId"
+            element={<GroupCommentSection />}
+          />
 
           <Route path="*" element={<ErrorPage errorType={"404"} />} />
         </Routes>
