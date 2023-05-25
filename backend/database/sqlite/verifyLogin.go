@@ -25,18 +25,18 @@ func VerifyUser(email, passwordInput string) (int, string, error) {
 	}
 
 	//check if password matches
-	rows, err := db.Query("SELECT user_id, email, nickname, password FROM users WHERE email = ?", email)
+	rows, err := db.Query("SELECT user_id, email, fullname, password FROM users WHERE email = ?", email)
 	if err != nil {
 		return 0, "", err
 	}
 	defer rows.Close()
 
 	var userId int
-	var nickname, password string
+	var fullname, password string
 	if rows.Next() {
-		rows.Scan(&userId, &email, &nickname, &password)
+		rows.Scan(&userId, &email, &fullname, &password)
 		if CheckPasswordHash(passwordInput, password) {
-			return userId, nickname, nil
+			return userId, fullname, nil
 		}
 	}
 

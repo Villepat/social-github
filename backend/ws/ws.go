@@ -26,7 +26,7 @@ var ConnectionsByName = make(map[string]*websocket.Conn)
 
 type Message struct {
 	Command   string `json:"command"`
-	Text      string `json:"text"`
+	Text      string `json:"message"`
 	Receiver  string `json:"receiver"`
 	Sender    string `json:"sender"`
 	Timestamp string
@@ -39,13 +39,13 @@ func reader(conn *websocket.Conn) {
 		log.Printf("WebSocket closed with code %d and text: %s", code, text)
 		delete(Connections, conn) // Remove the connection from the map.
 		// Broadcast the "USER_LEFT" message to all other connections.
-		for c := range Connections {
-			err := c.WriteMessage(websocket.TextMessage, []byte("USER_LEFT"))
-			if err != nil {
-				log.Println(err)
-				delete(Connections, c) // Remove the connection from the map.
-			}
-		}
+		// for c := range Connections {
+		// 	err := c.WriteMessage(websocket.TextMessage, []byte("USER_LEFT"))
+		// 	if err != nil {
+		// 		log.Println(err)
+		// 		delete(Connections, c) // Remove the connection from the map.
+		// 	}
+		// }
 		return nil
 	})
 	for {
@@ -76,6 +76,7 @@ func reader(conn *websocket.Conn) {
 			}
 			senderUsername := sender.Username
 			message.Sender = senderUsername
+			log.Println("Sender: ", senderUsername)
 			message.Timestamp = time.Now().Format("2006-01-02 15:04:05")
 
 			// add message to database
@@ -88,7 +89,7 @@ func reader(conn *websocket.Conn) {
 				return
 			}
 			// Check if receiver is online
-			log.Println("connectionsByName: ")
+			log.Println("connectionsByName: " , ConnectionsByName)
 			for c := range ConnectionsByName {
 				log.Println(c)
 			}
@@ -138,15 +139,15 @@ func wsEndpoint(w http.ResponseWriter, r *http.Request) {
 
 	// Add the connection to the list of active connections.
 	Connections[ws] = userconn
-	for c := range Connections {
-		if c != ws {
-			err := c.WriteMessage(websocket.TextMessage, []byte("USER_JOINED"))
-			if err != nil {
-				log.Println(err)
-				delete(Connections, c) // Remove the connection from the map.
-			}
-		}
-	}
+	// for c := range Connections {
+	// 	if c != ws {
+	// 		err := c.WriteMessage(websocket.TextMessage, []byte("USER_JOINED"))
+	// 		if err != nil {
+	// 			log.Println(err)
+	// 			delete(Connections, c) // Remove the connection from the map.
+	// 		}
+	// 	}
+	// }
 	log.Printf("User %s with ID %d successfully connected", userconn.Username, userconn.UserID)
 	log.Println("connections: ", Connections)
 	go reader(ws)
