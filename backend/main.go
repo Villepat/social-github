@@ -33,6 +33,8 @@ func main() {
 	http.HandleFunc("/api/post/like", api.HandlingLikes)
 	http.HandleFunc("/api/event", api.CreateEventAPI)
 	http.HandleFunc("/api/serve-events", api.ServeEvents)
+	http.HandleFunc("/api/event-response", api.EventResponse)
+	http.HandleFunc("/api/serve-event-responses", api.ServeEventResponses)
 
 	ws.SetupRoutes()
 
