@@ -113,6 +113,16 @@ const SinglePostView = () => {
     return <ErrorPage errorType="500" />;
   }
 
+  const formatTimestamp = (dateTime) => {
+    const options = {
+      day: "numeric",
+      month: "long",
+      hour: "numeric",
+      minute: "numeric",
+    };
+    return new Date(dateTime).toLocaleString(undefined, options);
+  };
+
   return (
     <div className="comment-container">
       <div className="postview-title">SinglePostViewXD</div>
@@ -133,7 +143,7 @@ const SinglePostView = () => {
             ></img>
           </div>
         ) : null}
-        <div className="og-timecreated">{post.date}</div>
+        <div className="og-timecreated">{formatTimestamp(post.date)}</div>
       </div>
       <form>
         <input type="hidden" id="post_id" value={post.id} />
@@ -156,7 +166,7 @@ const SinglePostView = () => {
               <div className="yourcomment" key={comment.id}>
                 <div className="commentator">{comment.full_name}</div>
                 <div className="new-comment">{comment.content}</div>
-                <div className="comment-time">{comment.created_at}</div>
+                <div className="comment-time">{formatTimestamp(comment.created_at)}</div>
               </div>
             ))}
           </div>

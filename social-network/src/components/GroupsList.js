@@ -90,6 +90,18 @@ const GroupsList = () => {
   }, []);
 
   console.log("groups:", groups);
+
+  const formatTimestamp = (dateTime) => {
+    const options = {
+      day: "numeric",
+      month: "long",
+      hour: "numeric",
+      minute: "numeric",
+    };
+    return new Date(dateTime).toLocaleString(undefined, options);
+  };
+
+  
   return (
     <div>
       <div className="group-form">
@@ -132,7 +144,7 @@ const GroupsList = () => {
                 <h4 className="group-listview-description">
                   {group.Description}
                 </h4>
-                <h4 className="timestamp">{group.CreatedAt}</h4>
+                <h4 className="timestamp">{formatTimestamp(group.CreatedAt)}</h4>
                 <Link to={`/groups/${group.Id}`}>
                   <button className="group-button">View Group</button>
                 </Link>

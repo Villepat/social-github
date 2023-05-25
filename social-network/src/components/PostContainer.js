@@ -73,6 +73,15 @@ function PostContainer() {
       setLikedPosts([...likedPosts, postId]);
     }
   };
+    const formatTimestamp = (dateTime) => {
+      const options = {
+        day: "numeric",
+        month: "long",
+        hour: "numeric",
+        minute: "numeric",
+      };
+      return new Date(dateTime).toLocaleString(undefined, options);
+    };
 
   return (
     <div className="allposts">
@@ -106,7 +115,7 @@ function PostContainer() {
                 <img src={postImageSrc} alt="Post" className="post-img" />
               )}
               <div className="post-content">{post.content}</div>
-              <div className="post-date">{post.date}</div>
+              <div className="post-date">{formatTimestamp(post.date)}</div>
 
               <i
                 onClick={() => {
