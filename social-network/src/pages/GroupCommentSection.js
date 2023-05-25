@@ -53,7 +53,7 @@ const GroupCommentView = () => {
   const [comments, setComments] = React.useState([]);
 
   const redirectToHome = () => {
-    navigate("/groups");
+    navigate(`/groups/${groupId}`);
   };
 
   React.useEffect(() => {
