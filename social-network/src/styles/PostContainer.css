@@ -322,6 +322,8 @@
   color: #0c812b;
 }
 
+
+
 @media screen and (max-width: 1000px) {
   .user-list-container {
     position: static;

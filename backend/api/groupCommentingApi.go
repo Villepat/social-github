@@ -18,15 +18,15 @@ import (
 // 	"created_at": "2020-01-01 00:00:00"
 // }
 
-type Comment struct {
-	PostId    int    `json:"post_id"`
-	UserId    string `json:"user_id"`
-	Content   string `json:"content"`
-	Image     string `json:"image"`
-	CreatedAt string `json:"created_at"`
-}
+// type GroupComment struct {
+// 	PostId    int    `json:"post_id"`
+// 	UserId    string `json:"user_id"`
+// 	Content   string `json:"content"`
+// 	Image     string `json:"image"`
+// 	CreatedAt string `json:"created_at"`
+// }
 
-func CommentingAPI(w http.ResponseWriter, r *http.Request) {
+func GroupCommentingAPI(w http.ResponseWriter, r *http.Request) {
 	// set cors headers
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
@@ -91,14 +91,14 @@ func CommentingAPI(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if img != nil {
-		err = sqlite.AddComment(postId, userId, content, img, createdAt, false)
+		err = sqlite.AddComment(postId, userId, content, img, createdAt, true)
 		if err != nil {
 			log.Println(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 	} else {
-		err = sqlite.AddComment(postId, userId, content, nil, createdAt, false)
+		err = sqlite.AddComment(postId, userId, content, nil, createdAt, true)
 		if err != nil {
 			log.Println(err)
 			w.WriteHeader(http.StatusInternalServerError)

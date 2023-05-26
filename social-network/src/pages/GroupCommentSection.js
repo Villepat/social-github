@@ -1,16 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/CommentPage.css";
+import "../styles/GroupCommentView.css";
 import ErrorPage from "./ErrorPage";
 import { Link } from "react-router-dom";
 
-const fetchSinglePost = async (postId) => {
-  const response = await fetch(`http://localhost:6969/api/posts?id=${postId}`);
+const fetchSinglePost = async (postId, groupId) => {
+  const response = await fetch(
+    `http://localhost:6969/api/serve-group-posts?group-postID=${postId}&id=${groupId}`
+  );
   const data = await response.json();
   if (response.status === 200) {
     console.log("posts fetched");
     console.log(data.posts);
-    return data.posts[0];
+    return data;
   } else {
     alert("Error fetching posts.");
   }
@@ -23,7 +25,7 @@ const fetchComments = async (postId) => {
     credentials: "include",
   };
   const response = await fetch(
-    `http://localhost:6969/api/serve-comments?id=${postId}`,
+    `http://localhost:6969/api/serve-group-comments?id=${postId}`,
     requestOptions
   );
   const data = await response.json();
@@ -36,22 +38,27 @@ const fetchComments = async (postId) => {
   }
 };
 
-const SinglePostView = () => {
+const GroupCommentView = () => {
   const navigate = useNavigate();
   const url = window.location.href;
   const pattern = /(\d+)$/;
+  const regex = /group\/(\d+)/;
+  const groupIdMatch = url.match(regex);
+  const groupId = groupIdMatch[1];
+  console.log(groupId);
   const match = url.match(pattern);
   const postId = match[1];
+  console.log("post", postId);
   const [post, setPost] = React.useState([]);
   const [comments, setComments] = React.useState([]);
 
   const redirectToHome = () => {
-    navigate("/");
+    navigate(`/groups/${groupId}`);
   };
 
   React.useEffect(() => {
     const getPost = async () => {
-      const postFromServer = await fetchSinglePost(postId);
+      const postFromServer = await fetchSinglePost(postId, groupId);
       setPost(postFromServer);
     };
     getPost();
@@ -93,7 +100,7 @@ const SinglePostView = () => {
     };
 
     const response = await fetch(
-      "http://localhost:6969/api/commenting",
+      "http://localhost:6969/api/group-commenting",
       requestOptions
     );
     if (response.status === 200) {
@@ -179,4 +186,4 @@ const SinglePostView = () => {
   );
 };
 
-export default SinglePostView;
+export default GroupCommentView;

@@ -33,6 +33,10 @@ func main() {
 	http.HandleFunc("/api/post/like", api.HandlingLikes)
 	http.HandleFunc("/api/event", api.CreateEventAPI)
 	http.HandleFunc("/api/serve-events", api.ServeEvents)
+	http.HandleFunc("/api/search-users", api.SearchUserAPI)
+	http.HandleFunc("/api/serve-group-comments", api.ServeGroupComments)
+	http.HandleFunc("/api/group-commenting", api.GroupCommentingAPI)
+
 	http.HandleFunc("/api/event-response", api.EventResponse)
 	http.HandleFunc("/api/serve-event-responses", api.ServeEventResponses)
 

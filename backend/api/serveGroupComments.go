@@ -13,7 +13,7 @@ import (
 
 
 
-func ServeComments(w http.ResponseWriter, r *http.Request) {
+func ServeGroupComments(w http.ResponseWriter, r *http.Request) {
 	// set cors headers
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.Header().Set("Access-Control-Allow-Credentials", "true")
@@ -45,12 +45,13 @@ func ServeComments(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// get the posts from the database
-	comments, err := sqlite.GetComments(PostIDInt, false)
+	comments, err := sqlite.GetComments(PostIDInt, true)
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+
 
 	// write the posts to the response
 	w.WriteHeader(http.StatusOK)

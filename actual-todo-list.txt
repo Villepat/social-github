@@ -1,0 +1,76 @@
+here are all the things that i found that will be necessary in the project
+feel free to add if i missed something:
+
+
+GROUP PAGE:
+
+- when user creates a group, group name, description and the creator should be displayed on the groups section
+- when another user that isn't the creator sees the group they have to request access to the group
+    -> Group creator will have to get notified that someone requested access to the group
+        -> Group creator will have to accept or deny the request
+            -> If accepted, the user will be added to the group
+            -> If denied, the user will not be added to the group
+-Group creator can invite users to the group
+        -> the users will get notified that they have been invited to the group
+        -> If the user accepts the invite, they will be added to the group
+        -> If the user denies the invite, they will not be added to the group
+- when a user is in a group, they can see all the other users in the group
+- when a user is in a group, they can see all the posts in the group
+    -> the group posts have to be able to be commentend on
+- when a user is in a group, they can see all the events in the group
+    -> in the event there has to be a list of users who are attending the event and who are not
+
+
+CHAT:
+
+- public profiles can be messaged by anyone
+- private profiles can only be messaged if they have accepted your following request
+- you cannot send a message to a private profile if the haven't accepted your following request
+- emojis are mandatory in the messages(XD)
+- the name of the user and the time of the messages have to be present in the messages(atleast in the group)
+- allowing pictures and gifs to be sent in the messages(?)
+- group messages are always displayed to everyone in the group
+    -> it doesn't matter if the user in the group isn't following you, they will still see the message
+
+
+NOTIFICATIONS:
+
+- notifications have to be able to see from everypage of the website(topnav)
+- messages need to have a distinct notification, different from the other notifications
+- notifications should go away when you click the notification
+- mandatory notifications:
+    -> Following request
+    -> Group request
+    -> Group invite
+    -> Message
+    -> events
+- non mandatory notifications:
+    -> user likes your post
+    -> user comments on your post
+
+
+AUTHENTICATION:
+
+- when user registering there should be the option to choose whether the profile is private or public
+    -> user has to be able to change this from their edit profile page
+- user has to be logged in until they decide to log out
+
+
+PROFILE:
+- profiles need to display user activity -> all the posts they have made
+- public profiles will display all the information to everybody who visits the profile
+- public profile will have a followers list and a following list
+- private profile will only display username and profile pic
+- if private profile accepts your following request youll be able to see all the information on the profile
+
+POSTS:
+
+- posts need the privacy options
+    -> public, private , friends only
+
+
+FOLLOWERS:
+
+- follows and unfollows
+- if profile is private -> request following
+- if profile is public -> follow
