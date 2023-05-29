@@ -45,10 +45,11 @@ const SearchBar = () => {
 
   const handleInputChange = (event) => {
     setSearchQuery(event.target.value);
-    //set a timeout to send the search query to the server
-    setTimeout(() => {
-        sendSearchQuery(event.target.value);
-    }, 1000);
+    sendSearchQuery(event.target.value);
+    if (event.target.value === "") {
+        const searchResults = document.getElementById("search-results");
+        searchResults.innerHTML = "";
+    }
   };
 
   return (
