@@ -121,7 +121,7 @@ const GroupPage = () => {
   return (
 
     <div className="group-page">
-      <div className="group-page-header">
+      <div className="group-page-header-inside">
         <h2>{groupData.name}</h2>
         <p>{groupData.description}</p>
         <button className="join-group-button">Join Group</button>
@@ -182,7 +182,7 @@ const GroupPage = () => {
 
       <div className="group-page-post">
         <h1>Group Posts</h1>
-        <div className="group-post-container">
+        <div className="group-page-post-container">
           <div className="post-display">
             <GroupPosts />
           </div>
@@ -191,7 +191,7 @@ const GroupPage = () => {
       <div className="group-chat-modal">
         <button className="group-button">Open Groupchat</button>
       </div>
-        </div>
+    </div>
   );
 };
 
