@@ -14,7 +14,7 @@ func SearchUser(searchQuery string) ([]User, error) {
 
 	var users []User
 
-	rows, err := db.Query("SELECT user_id, fullname FROM users WHERE fullname LIKE ? OR email LIKE ?", "%"+searchQuery+"%", "%"+searchQuery+"%")
+	rows, err := db.Query("SELECT user_id, fullname FROM users WHERE (firstname LIKE ? OR lastname LIKE ? OR fullname LIKE ?) OR email LIKE ?", searchQuery+"%", searchQuery+"%", searchQuery+"%", "%"+searchQuery+"%")
 	if err != nil {
 		log.Println(err)
 		return nil, err
