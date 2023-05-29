@@ -97,8 +97,8 @@ const GroupPosts = () => {
   return (
     <div>
       <div className="group-post-input">
-        {/* <h1>Group Posts</h1>
-            <h1>Posts</h1> */}
+        <h1>Create a Post</h1>
+            {/* <h1>Posts</h1> */}
         <div className="group-post-container">
           <textarea
             className="post-textarea"
@@ -117,6 +117,7 @@ const GroupPosts = () => {
             Post
           </button>
         </div>
+      <h1>Posts:</h1>
       </div>
       {groupPosts ? (
         groupPosts.map((groupPost) => (

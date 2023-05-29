@@ -1,32 +1,28 @@
-.Login {
-  background-color: #98dad9;
-  min-height: 33vh;
-  min-width: 30vh;
-  max-width: 35vh;
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: #5b8291;
-  border-radius: 10px;
-  margin-top: 5vh;
-  margin-left: 10vh;
-}
-
-.Login form {
+.login {
+  background-color: #eaebed;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.Login form input {
-  display: block;
-  width: 200px;
+  justify-content: center;
+  margin: 0 auto;
+  width: 500px;
+  font-size: 24px;
+  color: #000000;
+  border: 2px solid #000000;
+  border-radius: 5px;
   margin-bottom: 10px;
+  margin-top: 10px;
 }
 
-.button {
+.login form input {
+  display: block;
+  margin: 0 auto;
+  width: 200px;
+  height: 20px;
+  border: 1px solid #5b8291;
+}
+
+/* button {
   color: #2e424d;
   border-radius: 3px;
   border: 5px solid #2e424d;
@@ -35,34 +31,62 @@
   cursor: pointer;
   margin: 10px;
   background-color: #f8f8f8;
-}
+} */
 
 h2 {
   font-size: 36px;
   color: #2e424d;
   margin-bottom: 20px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .register {
-  background-color: #5b8291;
-  min-height: 65vh;
-  min-width: 30vh;
-  max-width: 45vh;
-  display: inline-flex;
+  background-color: #eaebed;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: calc(4px + 2vmin);
+  justify-content: center;
+  margin: 0 auto;
+  width: 500px;
+  font-size: 24px;
   color: #2e424d;
-  margin-left: 1vh;
-  padding: 3vh;
-  border-radius: 10px;
+  border: 2px solid #000000;
+  border-radius: 5px;
 }
 
-.register form {
-  display: inline-flex;
+.register form input {
+  display: block;
+  margin: 0 auto;
+  width: 200px;
+  height: 20px;
+  border: 1px solid #2e424d;
+}
+
+.register-left {
+  display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.register-right {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* .register {
+  background-color: #eaebed;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 500px;
+  font-size: 32px;
+  color: #2e424d;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .register form input {
@@ -70,5 +94,16 @@ h2 {
   width: 200px;
   height: 20px;
   border: 1px solid #2e424d;
-  margin-bottom: 10px;
 }
+
+.register-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.register-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+} */

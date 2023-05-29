@@ -103,7 +103,7 @@ const GroupsList = () => {
 
   
   return (
-    <div>
+    <div className="create-group-page">
       <div className="group-form">
         <h1 className="group-form-header">Create a Group</h1>
         <form className="group-form-container">

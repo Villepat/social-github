@@ -163,7 +163,12 @@ const SinglePostView = () => {
           <div className="commentbox-container">
             {comments.map((comment) => (
               <div className="yourcomment" key={comment.id}>
-                <div className="commentator">{comment.full_name}</div>
+                {/* {comment.full_name} */}
+                <div className="commentator">
+                  <Link to={`/profile/${comment.user_id}`}>
+                    {comment.full_name}
+                  </Link>
+                </div>
                 <div className="new-comment">{comment.content}</div>
                 <div className="comment-time">
                   {formatTimestamp(comment.created_at)}
