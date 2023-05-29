@@ -36,7 +36,7 @@ func main() {
 	http.HandleFunc("/api/search-users", api.SearchUserAPI)
 	http.HandleFunc("/api/serve-group-comments", api.ServeGroupComments)
 	http.HandleFunc("/api/group-commenting", api.GroupCommentingAPI)
-
+	http.HandleFunc("/api/join-group", api.JoinGroupAPI)
 	http.HandleFunc("/api/event-response", api.EventResponse)
 	http.HandleFunc("/api/serve-event-responses", api.ServeEventResponses)
 

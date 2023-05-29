@@ -78,6 +78,39 @@ func CreateGroupAPI(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// get the group id from the database
+	groupId, err := getGroupId(groupName)
+	if err != nil {
+		log.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	// add the creator of the group to the group
+	err = sqlite.AddGroupMember(userId, groupId, 1)
+	if err != nil {
+		log.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
 	// return a success status code
 	w.WriteHeader(http.StatusOK)
+}
+
+func getGroupId(groupName string) (int, error) {
+	db, err := sqlite.OpenDb()
+	if err != nil {
+		return 0, err
+	}
+
+	defer db.Close()
+
+	var groupId int
+	err = db.QueryRow("SELECT id FROM groups WHERE title = ?", groupName).Scan(&groupId)
+	if err != nil {
+		return 0, err
+	}
+
+	return groupId, nil
 }

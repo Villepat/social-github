@@ -48,6 +48,31 @@ const fetchEventData = async (groupNumber) => {
   }
 };
 
+const joinGroup = async (groupNumber) => {
+  console.log("join group");
+
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      group_id: groupNumber,
+    }),
+    credentials: "include",
+  };
+  const response = await fetch(
+    "http://localhost:6969/api/join-group",
+    requestOptions
+  );
+
+  if (response.status === 200) {
+    console.log("group joined");
+    return 200;
+  } else {
+    alert("Error joining group.");
+  }
+};
+
+
 const GroupPage = () => {
   const { userID } = useAuth(); // Get the userID
   const url = window.location.href;
@@ -118,13 +143,20 @@ const GroupPage = () => {
   };
   console.log(groupNumber, "group number");
 
+  const handleGroupJoin = async () => {
+    const response = await joinGroup(groupNumber);
+    if (response === 200) {
+      console.log("group joined");
+    }
+  };
+
   return (
 
     <div className="group-page">
       <div className="group-page-header-inside">
         <h2>{groupData.name}</h2>
         <p>{groupData.description}</p>
-        <button className="join-group-button">Join Group</button>
+        <button className="join-group-button" onClick={handleGroupJoin}>Join Group</button>
       </div>
       <h1>Members</h1>
       <div className="group-page-members">
