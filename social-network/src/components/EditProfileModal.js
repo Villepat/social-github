@@ -44,107 +44,102 @@ function EditProfileModal(props) {
       className={`modal ${show ? "show" : ""}`}
       style={{ display: show ? "block" : "none" }}
     >
-      <div className="modal-dialog">
-        <div className="profile-edit-box">
-          <div className="modal-header">
-            <h5 className="title">Edit Profile</h5>
-          </div>
-          <div className="modal-body">
-            <form>
-              <div className="newavatar">
-                <label htmlFor="avatar" className="form-avatar">
-                  New Avatar
-                </label>
-              </div>
-              <div className="input-wrapper">
-                <input
-                  type="file"
-                  className="avatar-box"
-                  id="avatar"
-                  onChange={handleFileChange}
-                />
-              </div>
-              <div className="newnickname">
-                <label htmlFor="nickname" className="form-nickname">
-                  New Nickname
-                </label>
-              </div>
-              <div className="input-wrapper">
-                <input
-                  type="text"
-                  className="nickname-box"
-                  id="nickname"
-                  value={nickname}
-                  onChange={(e) => setNickname(e.target.value)}
-                />
-              </div>
-              <div className="newemail">
-                <label htmlFor="email" className="form-email">
-                  New Email
-                </label>
-              </div>
-              <div className="input-wrapper">
-                <input
-                  type="email"
-                  className="email-box"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
+      <div className="profile-edit-box">
+        <div className="modal-header">
+          <h5 className="title">Edit Profile</h5>
+        </div>
+        <div className="modal-body">
+          <form>
+            <div className="newavatar">
+              <label htmlFor="avatar" className="form-avatar">
+                New Avatar
+              </label>
+            </div>
+            <div className="input-wrapper">
+              <input
+                type="file"
+                className="avatar-box"
+                id="avatar"
+                onChange={handleFileChange}
+              />
+            </div>
+            <div className="newnickname">
+              <label htmlFor="nickname" className="form-nickname">
+                New Nickname
+              </label>
+            </div>
+            <div className="input-wrapper">
+              <input
+                type="text"
+                className="nickname-box"
+                id="nickname"
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
+              />
+            </div>
+            <div className="newemail">
+              <label htmlFor="email" className="form-email">
+                New Email
+              </label>
+            </div>
+            <div className="input-wrapper">
+              <input
+                type="email"
+                className="email-box"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
 
-              <div className="newpassword">
-                <label htmlFor="newpassword" className="form-newpassword">
-                  New Password
-                </label>
-                <input
-                  type="password"
-                  className="newpassword-box"
-                  id="newpassword"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                />
-              </div>
-              <div className="confirmpassword">
-                <label
-                  htmlFor="confirmpassword"
-                  className="confirmpassword-box"
-                >
-                  Confirm Password
-                </label>
-                <input
-                  type="password"
-                  className="confirmpassword-box"
-                  id="confirmPassword"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-              </div>
+            <div className="newpassword">
+              <label htmlFor="newpassword" className="form-newpassword">
+                New Password
+              </label>
+              <input
+                type="password"
+                className="newpassword-box"
+                id="newpassword"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
+            </div>
+            <div className="confirmpassword">
+              <label htmlFor="confirmpassword" className="confirmpassword-box">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                className="confirmpassword-box"
+                id="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
 
-              <div className="newabout">
-                <label htmlFor="about-me" className="form-about">
-                  New 'About Me' Text
-                </label>
-              </div>
-              <div className="input-wrapper">
-                <textarea
-                  className="about-textarea"
-                  id="about-me"
-                  rows="5"
-                  value={aboutMe}
-                  onChange={(e) => setAboutMe(e.target.value)}
-                ></textarea>
-              </div>
-            </form>
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn-close" onClick={handleClose}>
-              Close
-            </button>
-            <button type="button" className="btn-save" onClick={handleSubmit}>
-              Save Changes
-            </button>
-          </div>
+            <div className="newabout">
+              <label htmlFor="about-me" className="form-about">
+                New 'About Me' Text
+              </label>
+            </div>
+            <div className="input-wrapper">
+              <textarea
+                className="about-textarea"
+                id="about-me"
+                rows="5"
+                value={aboutMe}
+                onChange={(e) => setAboutMe(e.target.value)}
+              ></textarea>
+            </div>
+          </form>
+        </div>
+        <div className="modal-footer">
+          <button type="button" className="btn-close" onClick={handleClose}>
+            Close
+          </button>
+          <button type="button" className="btn-save" onClick={handleSubmit}>
+            Save Changes
+          </button>
         </div>
       </div>
     </div>

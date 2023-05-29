@@ -22,11 +22,12 @@ function Navbar() {
         <li>
           <Link to="/about">About</Link>
         </li>
-        <li>
-          <Link to="/groups">Groups</Link>
-        </li>
+
         {loggedIn ? (
           <>
+            <li>
+              <Link to="/groups">Groups</Link>
+            </li>
             <li>
               <Link to="/profile">Profile</Link>
             </li>

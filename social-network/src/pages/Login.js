@@ -93,10 +93,10 @@ function Login() {
   }
   return (
     <div>
-      <div className="Login">
+      <div className="login">
         <h2>Login</h2>
         <form onSubmit={handleLoginSubmit}>
-          <div>
+          <div className="logemail">
             <label htmlFor="email">Email:</label>
             <input
               type="email"
@@ -106,7 +106,7 @@ function Login() {
               onChange={(event) => setEmail(event.target.value)}
             />
           </div>
-          <div>
+          <div className="logpassword">
             <label htmlFor="password">Password:</label>
             <input
               type="password"
@@ -122,117 +122,104 @@ function Login() {
       <div className="register">
         <h2>Register</h2>
         <form onSubmit={handleRegisterSubmit}>
-          <div>
-            <label htmlFor="registerEmail">Email:</label>
-            <input
-              type="email"
-              id="registerEmail"
-              autoComplete="username"
-              value={registerEmail}
-              onChange={(event) => setRegisterEmail(event.target.value)}
-              required
-              // pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-              // title="Please enter a valid email address, for example: kek@kek.org"
-            />
+          <div className="register-left">
+            <div className="regemail">
+              <label htmlFor="registerEmail">Email:</label>
+              <input
+                type="email"
+                id="registerEmail"
+                autoComplete="username"
+                value={registerEmail}
+                onChange={(event) => setRegisterEmail(event.target.value)}
+                required
+              />
+            </div>
+            <div className="regpassword">
+              <label htmlFor="registerPassword">Password:</label>
+              <input
+                type="password"
+                id="registerPassword"
+                autoComplete="new-password"
+                value={registerPassword}
+                onChange={(event) => setRegisterPassword(event.target.value)}
+                required
+              />
+            </div>
+            <div className="regconfirmpass">
+              <label htmlFor="registerConfirmPassword">Confirm Password:</label>
+              <input
+                type="password"
+                id="registerConfirmPassword"
+                autoComplete="new-password"
+                value={registerConfirmPassword}
+                onChange={(event) =>
+                  setRegisterConfirmPassword(event.target.value)
+                }
+                required
+              />
+            </div>
+            <div className="regnickname">
+              <label htmlFor="registerNickname">Nickname:</label>
+              <input
+                type="text"
+                id="registerNickname"
+                value={registerNickname}
+                onChange={(event) => setRegisterNickname(event.target.value)}
+                required
+              />
+            </div>
           </div>
-          <div>
-            <label htmlFor="registerPassword">Password:</label>
-            <input
-              type="password"
-              id="registerPassword"
-              autoComplete="new-password"
-              value={registerPassword}
-              onChange={(event) => setRegisterPassword(event.target.value)}
-              required
-              // pattern="^(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,}$"
-              // title="Password must be at least 8 characters long, contain at least one uppercase character and one special character"
-            />
-          </div>
-          <div>
-            <label htmlFor="registerConfirmPassword">Confirm Password:</label>
-            <input
-              type="password"
-              id="registerConfirmPassword"
-              autoComplete="new-password"
-              value={registerConfirmPassword}
-              onChange={(event) =>
-                setRegisterConfirmPassword(event.target.value)
-              }
-              required
-              // pattern="^(?=.*[A-Z])(?=.*[^a-zA-Z\d]).{8,}$"
-            />
-          </div>
-          <div>
-            <label htmlFor="registerNickname">Nickname:</label>
-            <input
-              type="text"
-              id="registerNickname"
-              value={registerNickname}
-              onChange={(event) => setRegisterNickname(event.target.value)}
-              required
-              pattern="^[a-zA-Z0-9]+$"
-              maxLength="25"
-              title="Nickname max length is 25 alphanumerical characters"
-            />
-          </div>
-          <div>
-            <label htmlFor="registerFirstName">First Name:</label>
-            <input
-              type="text"
-              id="registerFirstName"
-              value={registerFirstName}
-              onChange={(event) => setRegisterFirstName(event.target.value)}
-              required
-              pattern="^[a-zA-Z0-9]+$"
-              maxlength="25"
-              title="First name max length is 25 alphanumerical characters"
-            />
-          </div>
-          <div>
-            <label htmlFor="registerLastName">Last Name:</label>
-            <input
-              type="text"
-              id="registerLastName"
-              value={registerLastName}
-              onChange={(event) => setRegisterLastName(event.target.value)}
-              required
-              pattern="^[a-zA-Z0-9]+$"
-              maxlength="25"
-              title="Last name max length is 25 alphanumerical characters"
-            />
-          </div>
-          <div>
-            <label htmlFor="registerBirthday">Birthday:</label>
-            <input
-              type="text"
-              id="registerBirthday"
-              value={registerBirthday}
-              onChange={(event) => setRegisterBirthday(event.target.value)}
-              required
-              // pattern="^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/(19|20)\d\d$" // DD/MM/YYYY
-              // title="Please enter a valid date, for example: 01/01/2000 (DD/MM/YYYY)"
-            />
-          </div>
-          <div>
-            <label htmlFor="registerAboutMe">About Me:</label>
-            <input
-              type="text"
-              id="registerAboutMe"
-              value={registerAboutMe}
-              onChange={(event) => setRegisterAboutMe(event.target.value)}
-              maxLength="500"
-              title="About me max length is 500 characters"
-            />
-          </div>
-          <div>
-            <label htmlFor="registerProfilePicture">Profile Picture:</label>
-            <input
-              type="file"
-              id="registerProfilePicture"
-              onChange={(event) =>
-                setRegisterProfilePicture(event.target.files[0])
-              }
-            />
+          <div className="register-right">
+            <div className="regfirstname">
+              <label htmlFor="registerFirstName">First Name:</label>
+              <input
+                type="text"
+                id="registerFirstName"
+                value={registerFirstName}
+                onChange={(event) => setRegisterFirstName(event.target.value)}
+                required
+              />
+            </div>
+            <div className="reglastname">
+              <label htmlFor="registerLastName">Last Name:</label>
+              <input
+                type="text"
+                id="registerLastName"
+                value={registerLastName}
+                onChange={(event) => setRegisterLastName(event.target.value)}
+                required
+              />
+            </div>
+            <div className="regbirthday">
+              <label htmlFor="registerBirthday">Birthday:</label>
+              <input
+                type="text"
+                id="registerBirthday"
+                value={registerBirthday}
+                onChange={(event) => setRegisterBirthday(event.target.value)}
+                required
+              />
+            </div>
+            <div className="regaboutme">
+              <label htmlFor="registerAboutMe">About Me:</label>
+              <input
+                type="text"
+                id="registerAboutMe"
+                value={registerAboutMe}
+                onChange={(event) => setRegisterAboutMe(event.target.value)}
+                maxLength="500"
+              />
+            </div>
+            <div className="regprofilepic">
+              <label htmlFor="registerProfilePicture">Profile Picture:</label>
+              <input
+                type="file"
+                id="registerProfilePicture"
+                onChange={(event) =>
+                  setRegisterProfilePicture(event.target.files[0])
+                }
+              />
+            </div>
           </div>
           <button type="submit">Register</button>
           {registrationSuccess && <p>Registration successful!</p>}
@@ -244,4 +231,5 @@ function Login() {
     </div>
   );
 }
+
 export default Login;

@@ -14,15 +14,17 @@
   z-index: 1;
 }
 
-.og-content {
-  height: auto;
+.singlepost {
+  border: 2px solid #000000;
+  border-radius: 5px;
+  margin: 5px;
   padding: 10px;
+  box-shadow: #000000 0px 0px 5px;
 }
 
-.og-timecreated {
-  font-size: 14px;
-  margin-bottom: 10px;
-  text-decoration: underline;
+.singlepost:hover {
+  box-shadow: #000000 0px 0px 10px;
+  transform: translateY(0px, -5px);
 }
 
 .og-author {
@@ -30,6 +32,17 @@
   font-weight: bold;
   text-decoration: underline;
   margin-bottom: 10px;
+}
+
+.og-content {
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.og-timecreated {
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-decoration: underline;
 }
 
 .comment-box {
@@ -66,34 +79,35 @@
   text-align: center;
 }
 
-.commentator {
-  height: 20px;
-  padding: 5px;
-  text-decoration: underline;
-}
-
-.new-comment {
-  height: 20px;
-  padding: 10px;
-}
-
-.comment-time {
-  font-size: 12px;
-
-  padding: 5px;
-}
-
 .yourcomment {
   border: 2px solid #000000;
   border-radius: 5px;
   margin: 5px;
-  padding: 5px;
+  padding: 10px;
   box-shadow: #000000 0px 0px 5px;
 }
 
 .commentbox-container {
   max-height: 240px;
   overflow-y: scroll;
+}
+
+.commentator {
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-bottom: 10px;
+}
+
+.new-comment {
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.comment-time {
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-decoration: underline;
 }
 
 .og-picture {
@@ -125,19 +139,6 @@
 
 .back-button:hover {
   box-shadow: #000000 0px 0px 5px;
-  transform: translateY(0px, -5px);
-}
-
-.singlepost {
-  border: 2px solid #000000;
-  border-radius: 5px;
-  margin: 5px;
-  padding: 10px;
-  box-shadow: #000000 0px 0px 5px;
-}
-
-.singlepost:hover {
-  box-shadow: #000000 0px 0px 10px;
   transform: translateY(0px, -5px);
 }
 
