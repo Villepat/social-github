@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"social-network/backend/database/sqlite"
+	"strconv"
 )
 
 func JoinGroupAPI(w http.ResponseWriter, r *http.Request) {
@@ -27,8 +28,17 @@ func JoinGroupAPI(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// parse the JSON request body
-	var groupId int
-	err := json.NewDecoder(r.Body).Decode(&groupId)
+	var request struct {
+		GroupId string `json:"group_id"`
+	}
+	err := json.NewDecoder(r.Body).Decode(&request)
+	if err != nil {
+		log.Println(err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	groupId, err := strconv.Atoi(request.GroupId)
 	if err != nil {
 		log.Println(err)
 		w.WriteHeader(http.StatusBadRequest)
@@ -67,7 +77,7 @@ func JoinGroupAPI(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// insert the user into the group
-	sqlite.AddGroupMember(userId, groupId)
+	sqlite.AddGroupMember(userId, groupId, 0)
 	w.WriteHeader(http.StatusOK)
 }
 

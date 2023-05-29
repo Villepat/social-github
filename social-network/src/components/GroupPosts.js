@@ -135,7 +135,7 @@ const GroupPosts = () => {
           </div>
         ))
       ) : (
-        <div>loading...</div>
+        <div>No posts to show *sad noise*</div>
       )}
     </div>
   );
