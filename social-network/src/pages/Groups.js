@@ -6,7 +6,7 @@ import GroupsList from "../components/GroupsList";
 
 const Groups = () => {
   return (
-    <div className="group-page">
+    <div className="create-group-page">
       <GroupsList />
     </div>
   );
