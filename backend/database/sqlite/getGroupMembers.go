@@ -28,7 +28,7 @@ func GetGroupMembers(groupID int) ([]Member, error) {
 
 	for rows.Next() {
 		var member Member
-		err := rows.Scan(&member.Id, &member.FullName)
+		err := rows.Scan(&member.Id)
 		if err != nil {
 			log.Println(err)
 			return nil, err

@@ -5,6 +5,8 @@ import (
 	"log"
 	"net/http"
 	"social-network/backend/api"
+	"social-network/backend/database/sqlite"
+	"strconv"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -107,8 +109,55 @@ func reader(conn *websocket.Conn) {
 				}
 			}
 		}
-		// add message to database
-		log.Println("message added to database")
+		if message.Command == "GROUP_MESSAGE" {
+			sender, ok := Connections[conn]
+			if !ok {
+				log.Println("Sender not found")
+			}
+
+			senderUsername := sender.Username
+			message.Sender = senderUsername
+			log.Println("Sender: ", senderUsername)
+			message.Timestamp = time.Now().Format("2006-01-02 15:04:05")
+
+			// add message to database
+			log.Println("Message: ", message)
+			// Send message to sender
+			log.Println("Sending message to sender: ", message)
+			err = conn.WriteJSON(message)
+			if err != nil {
+				log.Println(err)
+				return
+			}
+			groupID, err := strconv.Atoi(message.Receiver)
+			if err != nil {
+				log.Println(err)
+			}
+
+			// get all users in the group
+			members, err := sqlite.GetGroupMembers(groupID)
+			if err != nil {
+				log.Println(err)
+			}
+
+			log.Println("members: ", members)
+
+			// Send message to all group members
+			for _, member := range members {
+				if member.FullName != message.Sender {
+					receiverConn, ok := ConnectionsByName[member.FullName]
+					if !ok {
+						log.Printf("Receiver %v is not online, message will be saved to database\n", message.Receiver)
+						continue
+					}
+					log.Println("Sending message to receiver: ", message)
+					err = receiverConn.WriteJSON(message)
+					if err != nil {
+						log.Println(err)
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -170,3 +219,5 @@ func BroadcastNewUser(username string) {
 func SetupRoutes() {
 	http.HandleFunc("/ws", wsEndpoint)
 }
+
+

@@ -77,7 +77,7 @@ func JoinGroupAPI(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// insert the user into the group
-	sqlite.AddGroupMember(userId, groupId, 0)
+	sqlite.AddGroupMember(userId, groupId, 1)
 	w.WriteHeader(http.StatusOK)
 }
 
