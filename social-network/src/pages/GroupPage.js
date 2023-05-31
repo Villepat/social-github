@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import GroupPosts from "../components/GroupPosts";
 import "../styles/Groups.css";
 import EventContainer from "../components/EventContainer";
 import { useAuth } from "../AuthContext"; // import useAuth from AuthContext
+import GroupChatModal from "../components/GroupChat";
 
 const fetchGroupData = async (groupNumber) => {
   const requestOptions = {
@@ -72,7 +73,6 @@ const joinGroup = async (groupNumber) => {
   }
 };
 
-
 const GroupPage = () => {
   const { userID } = useAuth(); // Get the userID
   const url = window.location.href;
@@ -86,6 +86,16 @@ const GroupPage = () => {
     description: "",
     dateTime: "",
   });
+
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
+  const handleOpenChat = () => {
+    setIsChatOpen(true);
+  };
+
+  const handleCloseChat = () => {
+    setIsChatOpen(false);
+  };
 
   React.useEffect(() => {
     const getGroupData = async () => {
@@ -151,12 +161,13 @@ const GroupPage = () => {
   };
 
   return (
-
     <div className="group-page">
       <div className="group-page-header-inside">
         <h2>{groupData.name}</h2>
         <p>{groupData.description}</p>
-        <button className="join-group-button" onClick={handleGroupJoin}>Join Group</button>
+        <button className="join-group-button" onClick={handleGroupJoin}>
+          Join Group
+        </button>
       </div>
       <h1>Members</h1>
       <div className="group-page-members">
@@ -166,45 +177,50 @@ const GroupPage = () => {
       <h1>Group Events</h1>
       <div className="group-page-event">
         {/* <h1>Events</h1> */}
-               {/* Use EventContainer component */}
+        {/* Use EventContainer component */}
         {/* Add event form */}
         <form onSubmit={handleEventSubmit}>
           <div className="group-page-event-form">
-          <h2>Create event</h2>
-          <input className="event-input"
-            type="text"
-            name="title"
-            placeholder="Title"
-            value={newEvent.title}
-            onChange={handleEventChange}
-            required
-            pattern="^[a-zA-Z0-9\s.,!?;:]{1,50}$"
-            title="Event title should be 1-50 alphanumeric characters (.,!?;: allowed)."
-          />
-          <input className="event-description"
-            type="text"
-            name="description"
-            placeholder="Description"
-            value={newEvent.description}
-            onChange={handleEventChange}
-            required
-            pattern="^[a-zA-Z0-9\s.,!?;:]{1,50}$"
-            title="Event description should be 1-256 alphanumeric characters (.,!?;: allowed)."
-          />
-          <input className="event-date"
-            type="datetime-local"
-            name="dateTime"
-            value={newEvent.dateTime}
-            onChange={handleEventChange}
-            required
-            min={new Date().toISOString().substring(0, 16)}
-          />
-          <button className="create-event-button" type="submit">Create event</button>
-        </div>
+            <h2>Create event</h2>
+            <input
+              className="event-input"
+              type="text"
+              name="title"
+              placeholder="Title"
+              value={newEvent.title}
+              onChange={handleEventChange}
+              required
+              pattern="^[a-zA-Z0-9\s.,!?;:]{1,50}$"
+              title="Event title should be 1-50 alphanumeric characters (.,!?;: allowed)."
+            />
+            <input
+              className="event-description"
+              type="text"
+              name="description"
+              placeholder="Description"
+              value={newEvent.description}
+              onChange={handleEventChange}
+              required
+              pattern="^[a-zA-Z0-9\s.,!?;:]{1,50}$"
+              title="Event description should be 1-256 alphanumeric characters (.,!?;: allowed)."
+            />
+            <input
+              className="event-date"
+              type="datetime-local"
+              name="dateTime"
+              value={newEvent.dateTime}
+              onChange={handleEventChange}
+              required
+              min={new Date().toISOString().substring(0, 16)}
+            />
+            <button className="create-event-button" type="submit">
+              Create event
+            </button>
+          </div>
         </form>
-        </div>
-        <h1>Uppcoming Events:</h1>
-        <div className="group-page-event">
+      </div>
+      <h1>Uppcoming Events:</h1>
+      <div className="group-page-event">
         <EventContainer
           groupId={groupNumber}
           userID={userID}
@@ -221,7 +237,12 @@ const GroupPage = () => {
         </div>
       </div>
       <div className="group-chat-modal">
-        <button className="group-button">Open Groupchat</button>
+        <button className="group-button" onClick={handleOpenChat}>
+          Open Groupchat
+        </button>
+        {isChatOpen && (
+          <GroupChatModal group={groupNumber} onClose={handleCloseChat} />
+        )}
       </div>
     </div>
   );
