@@ -11,10 +11,14 @@ function GroupChatModal({ group, onClose }) {
     if (ws) {
       ws.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          { text: data.message, from: data.from },
-        ]);
+        console.log("data: ", data);
+        console.log(":DDD");
+        console.log(group, data.receiver);
+        if (data.receiver === group && data.command === "GROUP_MESSAGE")
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { text: data.message, from: data.from },
+          ]);
       };
     }
 
