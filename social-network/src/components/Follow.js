@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import { useAuth } from "../AuthContext";
-import socket from "../webSocket";
 
 function Follow({ userId }) {
   console.log("inside Follow.js");
-  const { userID } = useAuth();
+  const { userID, ws } = useAuth();
 
   const handleFollow = async () => {
     const requestOptions = {
@@ -33,7 +32,7 @@ function Follow({ userId }) {
       console.log("follow failed");
     }
 
-    socket.send(
+    ws.send(
       JSON.stringify({
         type: "follow",
         followee: userId,
