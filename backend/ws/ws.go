@@ -70,93 +70,10 @@ func reader(conn *websocket.Conn) {
 			return
 		}
 		if message.Command == "NEW_MESSAGE" {
-			log.Printf("Received message: %v\n", message)
-			// get the sender username
-			sender, ok := Connections[conn]
-			if !ok {
-				log.Println("Sender not found")
-			}
-			senderUsername := sender.Username
-			message.Sender = senderUsername
-			log.Println("Sender: ", senderUsername)
-			message.Timestamp = time.Now().Format("2006-01-02 15:04:05")
-
-			// add message to database
-			log.Println("Message: ", message)
-			// Send message to sender
-			log.Println("Sending message to sender: ", message)
-			err = conn.WriteJSON(message)
-			if err != nil {
-				log.Println(err)
-				return
-			}
-			// Check if receiver is online
-			log.Println("connectionsByName: ", ConnectionsByName)
-			for c := range ConnectionsByName {
-				log.Println(c)
-			}
-			receiverConn, ok := ConnectionsByName[message.Receiver]
-			if !ok {
-				log.Printf("Receiver %v is not online, message will be saved to database\n", message.Receiver)
-				continue
-			}
-			// Send message to receiver
-			if message.Receiver != message.Sender {
-				log.Println("Sending message to receiver: ", message)
-				err = receiverConn.WriteJSON(message)
-				if err != nil {
-					log.Println(err)
-				}
-			}
+			handleNewMessage(conn, message)
 		}
 		if message.Command == "GROUP_MESSAGE" {
-			sender, ok := Connections[conn]
-			if !ok {
-				log.Println("Sender not found")
-			}
-
-			senderUsername := sender.Username
-			message.Sender = senderUsername
-			log.Println("Sender: ", senderUsername)
-			message.Timestamp = time.Now().Format("2006-01-02 15:04:05")
-
-			// add message to database
-			log.Println("Message: ", message)
-			// Send message to sender
-			log.Println("Sending message to sender: ", message)
-			err = conn.WriteJSON(message)
-			if err != nil {
-				log.Println(err)
-				return
-			}
-			groupID, err := strconv.Atoi(message.Receiver)
-			if err != nil {
-				log.Println(err)
-			}
-
-			// get all users in the group
-			members, err := sqlite.GetGroupMembers(groupID)
-			if err != nil {
-				log.Println(err)
-			}
-
-			log.Println("members: ", members)
-
-			// Send message to all group members
-			for _, member := range members {
-				if member.FullName != message.Sender {
-					receiverConn, ok := ConnectionsByName[member.FullName]
-					if !ok {
-						log.Printf("Receiver %v is not online, message will be saved to database\n", message.Receiver)
-						continue
-					}
-					log.Println("Sending message to receiver: ", message)
-					err = receiverConn.WriteJSON(message)
-					if err != nil {
-						log.Println(err)
-					}
-				}
-			}
+			handleGroupMessage(conn, message)
 		}
 	}
 }
@@ -217,4 +134,97 @@ func BroadcastNewUser(username string) {
 // function to set up the routes for the websocket server.
 func SetupRoutes() {
 	http.HandleFunc("/ws", wsEndpoint)
+}
+
+func handleNewMessage(conn *websocket.Conn, message Message) {
+	log.Printf("Received message: %v\n", message)
+	// get the sender username
+	sender, ok := Connections[conn]
+	if !ok {
+		log.Println("Sender not found")
+	}
+	senderUsername := sender.Username
+	message.Sender = senderUsername
+	log.Println("Sender: ", senderUsername)
+	message.Timestamp = time.Now().Format("2006-01-02 15:04:05")
+
+	// add message to database
+	log.Println("Message: ", message)
+	// Send message to sender
+	log.Println("Sending message to sender: ", message)
+	err := conn.WriteJSON(message)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	// Check if receiver is online
+	log.Println("connectionsByName: ", ConnectionsByName)
+	for c := range ConnectionsByName {
+		log.Println(c)
+	}
+	receiverConn, ok := ConnectionsByName[message.Receiver]
+	if !ok {
+		log.Printf("Receiver %v is not online, message will be saved to database\n", message.Receiver)
+		return
+	}
+	// Send message to receiver
+	if message.Receiver != message.Sender {
+		log.Println("Sending message to receiver: ", message)
+		err = receiverConn.WriteJSON(message)
+		if err != nil {
+			log.Println(err)
+		}
+	}
+}
+
+func handleGroupMessage(conn *websocket.Conn, message Message) {
+	sender, ok := Connections[conn]
+	if !ok {
+		log.Println("Sender not found")
+	}
+
+	senderUsername := sender.Username
+	message.Sender = senderUsername
+	log.Println("Sender: ", senderUsername)
+	message.Timestamp = time.Now().Format("2006-01-02 15:04:05")
+
+	// add message to database
+	log.Println("Message: ", message)
+	// Send message to sender
+	log.Println("Sending message to sender: ", message)
+	err := conn.WriteJSON(message)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	groupID, err := strconv.Atoi(message.Receiver)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	// get all users in the group
+	members, err := sqlite.GetGroupMembers(groupID)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	log.Println("members: ", members)
+
+	// Send message to all group members
+	for _, member := range members {
+		if member.FullName != message.Sender {
+			receiverConn, ok := ConnectionsByName[member.FullName]
+			if !ok {
+				log.Printf("Receiver %v is not online, message will be saved to database\n", message.Receiver)
+				continue
+			}
+			log.Println("Sending message to receiver: ", message)
+			err = receiverConn.WriteJSON(message)
+			if err != nil {
+				log.Println(err)
+			}
+		}
+	}
 }
