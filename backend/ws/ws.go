@@ -91,7 +91,7 @@ func reader(conn *websocket.Conn) {
 				return
 			}
 			// Check if receiver is online
-			log.Println("connectionsByName: " , ConnectionsByName)
+			log.Println("connectionsByName: ", ConnectionsByName)
 			for c := range ConnectionsByName {
 				log.Println(c)
 			}
@@ -202,7 +202,6 @@ func wsEndpoint(w http.ResponseWriter, r *http.Request) {
 	go reader(ws)
 }
 
-
 // function to broadcast a message when new user is created
 func BroadcastNewUser(username string) {
 	log.Println("new user created")
@@ -219,5 +218,3 @@ func BroadcastNewUser(username string) {
 func SetupRoutes() {
 	http.HandleFunc("/ws", wsEndpoint)
 }
-
-

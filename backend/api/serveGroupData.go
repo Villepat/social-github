@@ -10,6 +10,7 @@ import (
 
 type Group struct {
 	Id          int             `json:"id"`
+	CreatorID   int             `json:"creator_id"`
 	Name        string          `json:"name"`
 	Description string          `json:"description"`
 	Members     []sqlite.Member `json:"members"`
@@ -74,7 +75,7 @@ func GetGroupData(groupID int) (Group, error) {
 
 	defer db.Close()
 
-	stmt, err := db.Prepare("SELECT id, title, description FROM groups WHERE id = ?")
+	stmt, err := db.Prepare("SELECT id, creator_id, title, description FROM groups WHERE id = ?")
 	if err != nil {
 		log.Println(err)
 		return Group{}, err
@@ -83,7 +84,7 @@ func GetGroupData(groupID int) (Group, error) {
 	defer stmt.Close()
 
 	var group Group
-	err = stmt.QueryRow(groupID).Scan(&group.Id, &group.Name, &group.Description)
+	err = stmt.QueryRow(groupID).Scan(&group.Id, &group.CreatorID, &group.Name, &group.Description)
 	if err != nil {
 		log.Println(err)
 		return Group{}, err
